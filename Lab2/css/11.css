@@ -4,26 +4,29 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    padding-top: 40px; 
     background-color: #c7e27b;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     position: relative;
-    flex: 1; /* Добавлено для полной растяжки */
+    flex: 1;
 }
+
 .navbar {
     background-color: rgb(101, 137, 98);
-    height: 50px;
+    height: 50px; 
     padding: 10px 0;
-    position: fixed; /* Оставляем fixed для sticky-поведения */
+    position: fixed;
     width: 100%;
     top: 0;
-    z-index: 2000; /* Увеличиваем z-index для приоритета над всем */
+    z-index: 2000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgb(101, 137, 98); /* Убеждаемся, что фон непрозрачный */
+    background: rgb(101, 137, 98);
+    box-sizing: border-box; 
 }
 
 .product-title {
@@ -51,11 +54,11 @@ body {
     font-size: 1.2em;
 }
 
+
 .site-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 70px;
     flex-grow: 1;
     max-width: 1920px;
     margin-left: auto;
@@ -652,4 +655,175 @@ footer {
         font-size: 1.4em;
     }
 
+}
+@media only screen and (max-width: 320px) {
+    body { 
+        font-size: 14px; 
+        padding-top: 70px; /* Увеличиваем отступ из-за вертикального navbar */
+    }
+    .navbar { 
+        height: auto; /* Позволяем высоте адаптироваться */
+        min-height: 60px; /* Минимальная высота */
+        padding: 5px 0; 
+        flex-direction: column; 
+    }
+    .navbar .product-title { font-size: 1.1em; margin: 5px 0; }
+    .navbar a { font-size: 0.8em; }
+    h1 { font-size: 1.3em; }
+    h2, h3 { font-size: 1em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 0.9em; }
+    .tab-content { padding: 5px; margin: 0; }
+    .reason-img { height: 200px; }
+    .video-section h2 { font-size: 1em; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .review-img { width: 80px; height: 80px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1em; }
+    .left-ad, .right-ad, .salmon-ad, .ad-timer, .ad-wait { display: none !important; }
+    footer p { font-size: 1em; }
+}
+
+/* iPhone 6/7/8 (375x667) и iPhone X/XS/11 Pro (375x812) */
+@media only screen and (min-width: 321px) and (max-width: 375px) {
+    body { 
+        font-size: 15px; 
+        padding-top: 70px; 
+    }
+    .navbar { 
+        height: auto; 
+        min-height: 60px; 
+        padding: 5px 0; 
+        flex-direction: column; 
+    }
+    .navbar .product-title { font-size: 1.2em; margin: 5px 0; }
+    .navbar a { font-size: 0.9em; }
+    h1 { font-size: 1.5em; }
+    h2, h3 { font-size: 1.2em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1.1em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 1em; }
+    .tab-content { padding: 10px; margin: 0; }
+    .reason-img { height: 250px; }
+    .video-section h2 { font-size: 1.2em; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .review-img { width: 100px; height: 100px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1.1em; }
+    .left-ad, .right-ad, .salmon-ad { display: none !important; }
+    .ad-timer { width: 280px; height: 120px; }
+    .ad-timer .ad-image { height: 100px; }
+    .ad-wait { width: 180px; height: 100px; }
+    footer p { font-size: 1.1em; }
+}
+
+/* iPhone 6+/7+/8+ (414x736) и iPhone XS Max/XR/11 (414x896) */
+@media only screen and (min-width: 376px) and (max-width: 414px) {
+    body { 
+        font-size: 16px; 
+        padding-top: 60px; /* Меньший отступ, так как navbar горизонтальный */
+    }
+    .navbar { 
+        height: 50px; 
+        padding: 5px 0; 
+        flex-direction: row; 
+    }
+    .navbar .product-title { font-size: 1.3em; margin-left: 10px; }
+    .navbar a { font-size: 0.9em; }
+    h1 { font-size: 1.6em; }
+    h2, h3 { font-size: 1.3em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1.2em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 1.1em; }
+    .tab-content { padding: 10px; margin: 0; }
+    .reason-img { height: 300px; }
+    .video-section h2 { font-size: 1.3em; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .review-img { width: 100px; height: 100px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1.2em; }
+    .left-ad, .right-ad, .salmon-ad { display: none !important; }
+    .ad-timer { width: 320px; height: 150px; }
+    .ad-timer .ad-image { height: 130px; }
+    .ad-wait { width: 200px; height: 100px; }
+    footer p { font-size: 1.2em; }
+}
+
+/* Small Desktop (1280x1024) */
+@media only screen and (min-width: 415px) and (max-width: 1280px) {
+    body { 
+        font-size: 16px; 
+        padding-top: 70px; 
+    }
+    .navbar { height: 50px; padding: 10px 0; }
+    .navbar .product-title { font-size: 1.6em; }
+    .navbar a { font-size: 1em; }
+    h1 { font-size: 2.2em; }
+    h2, h3 { font-size: 1.8em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1.3em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 1.2em; }
+    .tab-content { margin: 0 150px; padding: 15px; }
+    .reason-img { height: 400px; }
+    .video-section h2 { font-size: 1.8em; }
+    .reviews-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .review-img { width: 110px; height: 110px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1.3em; }
+    .left-ad, .right-ad { width: 150px; max-width: 150px; }
+    .salmon-ad { width: 250px; height: 180px; }
+    .salmon-ad .salmon-img { height: 120px; }
+    .ad-timer { width: 400px; height: 180px; }
+    .ad-timer .ad-image { height: 160px; }
+    .ad-wait { width: 250px; height: 120px; }
+    footer p { font-size: 1.2em; }
+}
+
+/* Medium Desktop (1920x1080) */
+@media only screen and (min-width: 1281px) and (max-width: 1920px) {
+    body { 
+        font-size: 16px; 
+        padding-top: 70px; 
+    }
+    .navbar { height: 50px; padding: 10px 0; }
+    .navbar .product-title { font-size: 1.8em; }
+    .navbar a { font-size: 1.1em; }
+    h1 { font-size: 2.5em; }
+    h2, h3 { font-size: 2em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1.5em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 1.3em; }
+    .tab-content { margin: 0 210px; padding: 20px; }
+    .reason-img { height: 500px; }
+    .video-section h2 { font-size: 2em; }
+    .reviews-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .review-img { width: 120px; height: 120px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1.5em; }
+    .left-ad, .right-ad { width: 200px; max-width: 200px; }
+    .salmon-ad { width: 300px; height: 200px; }
+    .salmon-ad .salmon-img { height: 150px; }
+    .ad-timer { width: 500px; height: 200px; }
+    .ad-timer .ad-image { height: 180px; }
+    .ad-wait { width: 200px; height: 100px; }
+    footer p { font-size: 1.2em; }
+}
+
+/* Big Desktop (2560x1440) */
+@media only screen and (min-width: 1921px) {
+    body { 
+        font-size: 18px; 
+        padding-top: 80px; 
+    }
+    .navbar { height: 60px; padding: 10px 0; }
+    .navbar .product-title { font-size: 2.2em; }
+    .navbar a { font-size: 1.3em; }
+    h1 { font-size: 3em; }
+    h2, h3 { font-size: 2.5em; }
+    p, .slogan, .block-text p, .ad-title, .review-card p, .feature-item, .buy-btn { font-size: 1.8em; }
+    .left-ad p, .right-ad p, .salmon-ad p, .ad-timer p, .ad-wait p { font-size: 1.5em; }
+    .tab-content { margin: 0 250px; padding: 25px; }
+    .reason-img { height: 600px; }
+    .video-section h2 { font-size: 2.5em; }
+    .reviews-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .review-img { width: 150px; height: 150px; }
+    .review-form input, .review-form textarea, .review-form select, .review-form button { font-size: 1.8em; }
+    .left-ad, .right-ad { width: 250px; max-width: 250px; }
+    .salmon-ad { width: 350px; height: 250px; }
+    .salmon-ad .salmon-img { height: 200px; }
+    .ad-timer { width: 600px; height: 250px; }
+    .ad-timer .ad-image { height: 230px; }
+    .ad-wait { width: 250px; height: 120px; }
+    footer p { font-size: 1.5em; }
 }
