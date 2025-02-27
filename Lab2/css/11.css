@@ -1,0 +1,636 @@
+@import "reset.css";
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #c7e27b;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative; /* Устанавливаем контекст для z-index */
+}
+
+.navbar {
+    background-color: rgb(101, 137, 98);
+    height: 50px;
+    padding: 10px 0;
+    position: fixed; /* Оставляем fixed для sticky-поведения */
+    width: 100%;
+    top: 0;
+    z-index: 2000; /* Увеличиваем z-index для приоритета над всем */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(101, 137, 98); /* Убеждаемся, что фон непрозрачный */
+}
+
+.product-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 2em;
+    color: rgb(0, 0, 0);
+    margin-left: 20px;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-right: 20px;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.site-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 70px; /* Учитываем высоту navbar */
+    flex-grow: 1;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+    z-index: 100; /* Устанавливаем z-index ниже navbar */
+}
+
+.left-ad {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: #f0f0f0;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 900;
+    width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.right-ad {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #f0f0f0;
+    padding: 10px;
+    width: 200px;
+    max-width: 200px;
+    z-index: 900;
+    overflow: auto;
+    max-height: calc(140vh - 10px);
+}
+
+.right-ad .bank-img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+}
+
+.right-ad p {
+    text-align: justify;
+}
+
+.ad-title {
+    font-size: 1.8em;
+    color: #000;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+.tab-content {
+    padding: 20px;
+    flex: 1;
+    margin: 0 210px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 500; /* Устанавливаем ниже navbar */
+    min-height: calc(100vh - 70px);
+    overflow-y: visible;
+    position: relative; /* Устанавливаем контекст для z-index */
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 3em;
+    color: #28a745;
+}
+
+h2, h3 {
+    font-size: 2.5em;
+    color: #28a745;
+}
+
+p {
+    font-size: 1.5em;
+    color: #000;
+}
+
+.slogans-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+    background-color: #e9ecef;
+}
+
+.slogan {
+    background-color: #ffd700;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+article {
+    margin-bottom: 20px;
+}
+
+.reasons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.reason-block {
+    background-color: #f8eede;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.block-with-image {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.block-with-image figure {
+    margin: 0;
+    flex: 2;
+    width: 400px;
+}
+
+.block-with-image .block-text {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.reason-img {
+    max-width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.block-text h3 {
+    font-size: 2.2em;
+    color: #28a745;
+    margin: 0 0 10px 0;
+}
+
+.block-text p {
+    font-size: 1.8em;
+    color: #000;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.video-section {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.video-section h2 {
+    font-size: 2.5em;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 600px;
+    background-color: #e9ecef;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+}
+
+.fictional-info {
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.image-gallery-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+    max-width: 100%;
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.product-img {
+    max-width: 30%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.ad-video {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.ad-video iframe {
+    max-width: 560px;
+    width: 100%;
+    height: 315px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.review-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 1.5em;
+}
+
+.review-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.review-form {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.review-form input, .review-form textarea, .review-form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+}
+
+.review-form button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-family: Arial, sans-serif;
+}
+
+.review-form button:hover {
+    background-color: #218838;
+}
+
+.feature-list {
+    margin-top: 10px;
+}
+
+.feature-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.feature-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000000;
+}
+
+.buy-btn {
+    display: inline-block;
+    background-color: #ffd700;
+    color: #000;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 1.5em;
+    display: block;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.buy-btn:hover {
+    background-color: #ffea00;
+}
+
+.salmon-ad {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 300px;
+    height: 200px;
+    background-color: rgb(92, 218, 235);
+    z-index: 1000;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    overflow: hidden;
+}
+
+.salmon-ad .block-with-image {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 5px;
+}
+
+.salmon-ad .block-text {
+    flex: 1;
+    margin: 0;
+    text-align: justify;
+}
+
+.salmon-ad .block-text p {
+    font-size: 0.9em;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.salmon-ad figure {
+    flex: 1;
+    margin: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.salmon-ad .salmon-img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.salmon-ad .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-family: Arial, sans-serif;
+}
+
+.ad-timer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #c0e5f0;
+    color: #000;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    z-index: 1000;
+    display: flex;
+    width: 500px;
+    height: 200px;
+}
+
+.ad-timer .ad-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.ad-timer .ad-image {
+    max-width: 50%;
+    height: 180px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.ad-timer p {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.ad-timer .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-family: Arial, sans-serif;
+}
+
+.ad-wait {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: #c274de;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.5em;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    width: 200px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-wait .ad-content {
+    text-align: center;
+}
+
+.ad-wait p {
+    margin: 0;
+}
+
+.ad-wait .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-family: Arial, sans-serif;
+}
+
+footer {
+    background-color: #c7e27b;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .navbar {
+        height: 40px;
+    }
+
+    .product-title {
+        font-size: 1.4em;
+        margin-left: 10px;
+    }
+
+    .navbar ul {
+        margin-right: 10px;
+    }
+
+    .navbar a {
+        font-size: 1em;
+    }
+
+    .site-container {
+        flex-direction: column;
+    }
+
+    .left-ad, .right-ad {
+        position: static;
+        width: 100%;
+        margin: 5px 0;
+        max-width: 100%;
+    }
+
+    .tab-content {
+        flex: none;
+        margin: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    h1 { font-size: 1.8em; }
+    h2, h3 { font-size: 1.4em; }
+    p, li { font-size: 1.2em; }
+
+    .salmon-ad {
+        width: 150px;
+        height: 120px;
+    }
+
+    .salmon-ad .salmon-img {
+        height: 80px;
+    }
+
+    .salmon-ad .block-text p {
+        font-size: 0.9em;
+    }
+
+    .ad-timer {
+        width: 300px;
+        height: 150px;
+    }
+
+    .ad-timer .ad-image {
+        height: 130px;
+    }
+
+    .ad-wait {
+        width: 150px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 5px 0;
+    }
+
+    .product-title {
+        margin: 5px 0;
+    }
+
+    .navbar ul {
+        margin: 0;
+    }
+
+    .left-ad, .right-ad, .salmon-ad {
+        display: none;
+    }
+
+    .tab-content {
+        margin-top: 50px;
+    }
+}
