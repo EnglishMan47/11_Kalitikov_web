@@ -9,9 +9,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    position: relative; /* Устанавливаем контекст для z-index */
+    position: relative;
+    flex: 1; /* Добавлено для полной растяжки */
 }
-
 .navbar {
     background-color: rgb(101, 137, 98);
     height: 50px;
@@ -55,14 +55,14 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 70px; /* Учитываем высоту navbar */
+    margin-top: 70px;
     flex-grow: 1;
     max-width: 1920px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     position: relative;
-    z-index: 100; /* Устанавливаем z-index ниже navbar */
+    z-index: 100;
 }
 
 .left-ad {
@@ -116,10 +116,10 @@ body {
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 500; /* Устанавливаем ниже navbar */
+    z-index: 500;
     min-height: calc(100vh - 70px);
     overflow-y: visible;
-    position: relative; /* Устанавливаем контекст для z-index */
+    position: relative;
 }
 
 .tab {
@@ -230,6 +230,7 @@ article {
 .video-section {
     margin-top: 60px;
     text-align: center;
+    width: 100%;
 }
 
 .video-section h2 {
@@ -238,15 +239,27 @@ article {
     margin-bottom: 20px;
 }
 
-.video-placeholder {
-    width: 100%;
-    height: 600px;
-    background-color: #e9ecef;
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border: 1px solid #ccc;
+}
+
+/* Удаляем старый .video-placeholder */
+.video-placeholder {
+    display: none; /* Скрываем старый placeholder */
 }
 
 .fictional-info {
@@ -573,12 +586,14 @@ footer {
     }
 
     .tab-content {
-        flex: none;
         margin: 0;
-        width: 100%;
         padding: 10px;
     }
-
+    
+    .video-section h2 {
+        font-size: 1.8em;
+    }
+    
     h1 { font-size: 1.8em; }
     h2, h3 { font-size: 1.4em; }
     p, li { font-size: 1.2em; }
@@ -632,5 +647,9 @@ footer {
 
     .tab-content {
         margin-top: 50px;
+    }
+
+    .video-section h2 {
+        font-size: 1.4em;
     }
 }

@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const tabLinks = document.querySelectorAll('.tab-link');
     const tabs = document.querySelectorAll('.tab');
@@ -6,31 +5,33 @@ document.addEventListener('DOMContentLoaded', () => {
     tabLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-          
             tabLinks.forEach(l => l.classList.remove('active'));
             tabs.forEach(t => t.classList.remove('active'));
-          
             link.classList.add('active');
             const tabId = link.getAttribute('data-tab');
             document.getElementById(tabId).classList.add('active');
-            
         });
     });
-    
-    const videoPlaceholders = document.querySelectorAll('.video-placeholder');
-    videoPlaceholders.forEach(placeholder => {
-        const videoUrl = placeholder.getAttribute('data-video');
-        const iframe = document.createElement('iframe');
-        iframe.src = videoUrl;
-        iframe.width = "560";
-        iframe.height = "315";
-        iframe.frameborder = "0";
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-        iframe.allowFullscreen = true;
-        placeholder.parentNode.replaceChild(iframe, placeholder);
-    });
-});
 
+    // Обновляем обработку видео
+    const videoSections = document.querySelectorAll('.video-section');
+    videoSections.forEach(section => {
+        const placeholder = section.querySelector('.video-placeholder');
+        if (placeholder) {
+            const videoUrl = placeholder.getAttribute('data-video');
+            const wrapper = document.createElement('div');
+            wrapper.className = 'video-wrapper';
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = videoUrl;
+            iframe.frameborder = "0";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            
+            wrapper.appendChild(iframe);
+            section.replaceChild(wrapper, placeholder);
+        }
+    });
 
 const timerAd = document.querySelector('.ad-timer');
 if (timerAd) {
@@ -138,12 +139,4 @@ if (reviewForm && reviewList) {
     });
 }
 
-
-
-
-
-
-
-
-
-
+})
