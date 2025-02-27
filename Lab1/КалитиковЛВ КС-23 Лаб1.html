@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторная работа №1. Вариант 11</title>
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f7eee1; 
+  font-family: "Trebuchet MS", sans-serif; 
+  font-size: 21px; 
+  color: #444; 
+  line-height: 1.6;
+}
+
+header {
+  background-color: #3b5998;
+  text-align: center;
+  padding: 20px;
+}
+header h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 2.7em;
+  font-weight: normal;
+}
+
+.main-content {
+  max-width: 2000px; 
+  margin: auto;
+  background-color: #dce4f8;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section {
+  margin-bottom: 40px;
+}
+section h2 {
+  color: #000; 
+  font-size: 2em;
+  margin-top: 0;
+  border-bottom: 2px solid #000;
+  padding-bottom: 5px;
+}
+
+.sub-block {
+  background-color: #fafafa; 
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+
+.block-with-image {
+  display: flex;
+  flex-direction: row-reverse; 
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 0; 
+}
+
+.block-with-image figure {
+  margin: 0;
+  flex-shrink: 0;
+}
+.block-with-image figure img {
+  width: 900px; 
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.block-text {
+  flex: 1;
+}
+
+h3 {
+  color: #000;
+  margin-top: 0;
+  font-size: 1.7em;
+  margin-bottom: 20px;
+}
+h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #000;
+  font-size: 1.2em;
+}
+
+ul {
+  margin: 0;
+  padding-left: 0;
+}
+ul li {
+  list-style: none; 
+  margin-bottom: 0; 
+}
+
+.quotes-block {
+  background-color: #fdf9f4;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+blockquote {
+  background-color: #fff;
+  border-left: 4px solid #999;
+  padding: 15px;
+  font-style: italic;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.schedule-table thead {
+  background-color: #1B458F; 
+  color: #fff;
+}
+.schedule-table th, .schedule-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+.schedule-table th {
+  background-color: #C4122E; 
+  color: #fff;
+}
+.schedule-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.schedule-table tbody tr:hover {
+  background-color: #ddd;
+}
+.schedule-table tbody td {
+  color: #444;
+}
+
+.logo-center {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.logo-center img {
+  width: 900px; 
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+a {
+  color: #1B458F;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+footer {
+  background-color: #3b5998;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Лабораторная работа №1</h1>
+  </header>
+
+  <div class="main-content">
+    <section>
+      <div class="sub-block">
+        <h2>1. Топ-5 самых смешных фактов/случаев из жизни</h2>
+        <ul>
+          <li>
+            <div class="block-with-image">
+              <figure>
+                <a href="Kabachok.html">
+                  <img src="https://avatars.githubusercontent.com/u/15244556?v=4" alt="Кабачок-кабанчик">
+                </a>
+              </figure>
+              <div class="block-text">
+                <h3>5-ое место: "Кабачок" вместо "кабанчика"</h3>
+                <h4>Однажды я смотрел документалку о природе. На экране показывали детёныша кабана, и я, умилившись, хотел сказать вслух: «Какой кабанчик!». Но вместо этого вырвалось: «Кабачок!».</h4>
+              </div>
+            </div>
+          </li>
+      </div>   
+          
+          </li>
+            <div class="sub-block">
+              <div class="block-with-image">
+                <figure>
+                  <a href="Penckov.html">
+                  <img src="https://psv4.userapi.com/s/v1/d/Asf-Mv3jc1VCju-GraE95cx1XoB_W9XBTuBHYxcfkB3THOQj1qj234Pvw7odvqv4jeQL_ZRzfiaQSFoy3CB5O0OLY4fOBGixOmEgrzuvh5K2ShyceDgj1w/Penkov_Bank.jpg" alt="Пеньков Банк">
+                  </a>
+                </figure>
+                <div class="block-text">
+                  <h3>4-ое место: "Пеньков"</h3>
+                  <h4>В 11-ом классе у меня был репетитор по физике Пеньков Владимир Евгеньевич. Он стал локальным «мемом», потому что очень удачно позировал для фото и был забавным.</h4>
+                </div>
+              </div>
+            </div>
+          </li>
+          <div class="sub-block">
+          </li>
+            <div class="block-with-image">
+              <figure>
+                <a href="Doshirak.html">
+                  <img src="https://psv4.userapi.com/s/v1/d/GX3gazUH59BgGwtHMor44Y2iqIh1u5TYaYeNNhkFUupVBUT43OyTdfe8GiWiGO6WfDDMfefCgMiTATP1b0VveUZLbcjR7CyRznIs_tIMWujQDcFBi_wkdQ/Doshirak.jpg" alt="Доширак">
+                </a>
+              </figure>
+              <div class="block-text">
+                <h3>3-е место: "Приправа из дошика"</h3>
+                <h4>На новогоднем ужине я сравнил вкус утки с приправой из дошика, чем вызвал недоумение семьи, но получилось очень смешно.</h4>
+              </div>
+            </div>
+          </li>
+          </div>
+
+          <div class="sub-block">
+          </li>
+            <div class="block-with-image">
+              <figure>
+                <a href="Gartic_Phone.html">
+                  <img src="https://psv4.userapi.com/s/v1/d/ZtRUSkw39vFeWRJv81iFLeHd-e1-FYmOHad6sTernpFjP2JBo1yFdq-6nJ5z6DoaxazXmi2n9ciqPDpiAggZtFrMg6wMQioKbpRpmhf9rvx6DvL1FPlCCA/Dozhd_s_ogurtsami.png" alt="Дождь из огурцов">
+                </a>
+              </figure>
+              <div class="block-text">
+                <h3>2-ое место: "Дождь из огурцов"</h3>
+                <h4>Во время игры в Gartic Phone фразу «Химия, обожаю химию» игроки превратили в «кислотный дождь и банка рассола». Конечный рисунок подписали «Озеро с пиявками, я хз».</h4>
+              </div>
+            </div>
+          </li>
+          </div>
+
+          <div class="sub-block">
+          </li>
+            <div class="block-with-image">
+              <figure>
+                <a href="Top1.html">
+                  <img src="https://sun9-56.userapi.com/impg/vpCiRu-_yUbbD_lWsN-a6T7HUZsPSDMenRBJ3w/XBaIWXErC_Q.jpg?size=600x480&quality=95&sign=5064c6f0891ee3a539b153ed9d0aef20&type=album" alt="Взрывайка-незамерзайка">
+                </a>
+              </figure>
+              <div class="block-text">
+                <h3>1-ое место: "Взрывайка-незамерзайка"</h3>
+                <h4>В школе мы с другом узнали, что из обычного мыла и незамерзайки теоретически можно получить нитроглицерин. Стало ещё смешнее, когда учитель химии подтвердил, что это возможно на практике.</h4>
+              </div>
+            </div>
+          </li>
+          </div>
+    </ul>
+    </section>
+
+    <section>
+      <div class="sub-block">
+        <h2>2. Обзор последнего просмотренного сериала</h2>
+        <div class="block-with-image">
+          <figure>
+            <a href="Alice_in_Borderlands.html">
+              <img src="https://avatars.mds.yandex.net/i?id=c1fd68e51d3129ca2a1b01a85552d13c_l-5250144-images-thumbs&n=13" alt="Алиса в пограничье">
+            </a>
+          </figure>
+          <div class="block-text">
+            <h3>«Алиса в пограничье (2020-2022)»</h3>
+            <h4>
+              <em>Недавно я закончил просматривать сериал «Алиса в пограничье».  
+              Это довольно интересный японский сериал, в котором герои оказываются в пустом Токио и вынуждены участвовать в смертельно опасных играх, чтобы выжить.  
+              Каждая игра связана с определённой картой, которая определяет её правила и сложность, а сами испытания заставляют персонажей проявлять не только силу, но и интеллект, командную работу или выдержку.  
+              Такие игры, как испытания Червового Валета, Трефового Короля и Бубнового Короля, особенно запомнились непредсказуемостью и качественной игрой актёров.  
+              Визуально сериал выглядит хорошо, хотя сюжет можно назвать довольно предсказуемым. В целом, это достойный проект, который можно посмотреть, если нравятся истории в духе «Игры в кальмара» или «Королевской битвы».</em>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sub-block">
+        <h2>3. Цитаты из фильма "Форрест Гамп" (номер 11 в топе IMDB):</h2>
+        <div class="block-with-image">
+          <figure>
+            <a href="Forrest_Gump.html">
+              <img src="https://www.nashe.ru/uploads/photos/1/2022/09/%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/forrest-gump.jpg" alt="Forrest Gump Poster">
+            </a>
+          </figure>
+          <div class="block-text">
+            <div class="quotes-block">
+              <ul style="margin:0; padding:0; list-style:none;">
+                <li>
+                  <blockquote><q>Жизнь похожа на коробку шоколадных конфет. Никогда не знаешь, что получишь.</q> Форрест Гамп</blockquote>
+                </li>
+                <li>
+                  <blockquote><q>Сейчас вы бы не поверили, если бы я вам сказал, но я мог бежать со скоростью ветра...</q> Форрест Гамп</blockquote>
+                </li>
+                <li>
+                  <blockquote><q>Я был мультимиллионером, поэтому я косил газоны бесплатно!</q> Форрест Гамп</blockquote>
+                </li>
+                <li>
+                  <blockquote><q>Я бежал три года, два месяца, четырнадцать дней и шестнадцать часов. Мне просто нравилось бежать...</q> Форрест Гамп</blockquote>
+                </li>
+                <li>
+                  <blockquote><q>Мама всегда говорила, что о человеке можно судить по его обуви — куда он идёт, где он был... У меня было много обуви...</q> Форрест Гамп</blockquote>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sub-block">
+        <h2>4. Расписание матчей команды АПЛ под номером 12 "Кристалл Пэлас"</h2>
+        <div class="logo-center">
+          <img src="https://photobooth.cdn.sports.ru/preset/post/e/5c/4c5143658449e8239f08ccec8ce29.jpeg" alt="Crystal Palace Logo">
+          <p>Crystal Palace Football Club</p>
+        </div>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Соперник</th>
+              <th>Время</th>
+              <th>Счёт</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>02.02.2025</td>
+              <td>Манчестер Юнайтед</td>
+              <td>17:00</td>
+              <td>0:2</td>
+            </tr>
+            <tr>
+              <td>15.02.2025</td>
+              <td>Эвертон</td>
+              <td>20:30</td>
+              <td>1:2</td>
+            </tr>
+            <tr>
+              <td>22.02.2025</td>
+              <td>Фулхэм</td>
+              <td>18:00</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>25.02.2025</td>
+              <td>Астон Вилла</td>
+              <td>22:30</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>08.03.2025</td>
+              <td>Ипсвич</td>
+              <td>18:00</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>15.03.2025</td>
+              <td>Ньюкасл</td>
+              <td>18:00</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Kalitikov Website</p>
+  </footer>
+</body>
+</html>
