@@ -593,7 +593,7 @@ footer {
     .video-section h2 {
         font-size: 1.8em;
     }
-    
+
     h1 { font-size: 1.8em; }
     h2, h3 { font-size: 1.4em; }
     p, li { font-size: 1.2em; }
@@ -642,14 +642,14 @@ footer {
     }
 
     .left-ad, .right-ad, .salmon-ad {
-        display: none;
+        display: none !important; /* Полное скрытие на мобильных */
     }
 
     .tab-content {
         margin-top: 50px;
     }
-
     .video-section h2 {
         font-size: 1.4em;
     }
+
 }
