@@ -245,6 +245,11 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.review-card h2 {
+    font-size: clamp(1.2rem, 2vw, 2rem);
 }
 
 .review-img {
@@ -260,7 +265,7 @@ body {
 }
 
 .review-title {
-    font-size: clamp(1.5rem, 2vw, 3rem);
+    font-size: clamp(1.4rem, 2vw, 3rem);
     color: #28a745;
     text-align: center;
     margin: 2vw 0;
@@ -355,7 +360,7 @@ body {
     max-width: 600px;
     height: auto;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background 0.3s;
     display: flex;
@@ -364,7 +369,7 @@ body {
 }
 
 .left-ad img {
-    width: 96%;
+    width: 95%;
     height: auto;
     object-fit: scale-down;
     border: 2px dashed #28a745;
@@ -418,6 +423,7 @@ body {
     margin-bottom: 1vw;
     text-align: center;
     justify-content: center;
+    text-transform: uppercase;
 }
 
 .right-ad p {
@@ -430,6 +436,15 @@ body {
 .popup-ads {
     position: fixed;
     z-index: 1000;
+}
+
+#reviews .ad-banner .right-ad .ad-title {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    color: #000; 
+    font-weight: bold;
+    margin-bottom: 1vw;
+    text-align: center;
 }
 
 .salmon-ad {
@@ -506,7 +521,7 @@ body {
 
 .close-btn {
     cursor: pointer;
-    font-size: 1.5vw;
+    font-size: 1rem;
     position: absolute;
     top: 0.5vw;
     right: 0.5vw;
@@ -536,6 +551,13 @@ footer {
 }
 
 @media (max-width: 768px) {
+    html {
+        font-size: 18px; 
+    }
+
+    .fictional-info h2 {
+        font-size: clamp(1.5rem, 2vw, 3rem);
+    }
     .navbar {
         flex-direction: column;
         padding: 2vw;
@@ -548,42 +570,113 @@ footer {
         flex-direction: column;
         align-items: center;
     }
-    .left-ad, .right-ad {
+    .left-ad p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5vw 1vw;
+        border-radius: 5px;
+        text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 90%;
+    }
+    .left-ad {
         width: 100%;
         max-width: 100%;
         height: auto;
+        overflow: hidden;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 3vw;
+        overflow-x: hidden;
     }
-
+    .right-ad {
+        background: #f0f0f0;
+        padding: 3vw;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border: 2px dashed #28a745;
+        text-align: justify;
+        font-family: 'Verdana', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
     .right-ad .ad-title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-size: clamp(1.2rem, 4vw, 2rem);
     }
     .right-ad p {
+        font-family: 'Times New Roman', serif;
         font-size: clamp(0.9rem, 3vw, 1.2rem);
+        color: #333;
+        margin: 0.5vw 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        text-align: justify;
     }
-
-    .left-ad img, .right-ad .bank-img {
+    .right-ad .bank-img {
         width: 100%;
         height: auto;
+        border-radius: 5px;
+        margin-bottom: 1vw;
+        object-fit: contain;
+        max-width: 100%;
+    }
+    .left-ad img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border: 2px dashed #28a745;
+        display: block;
+    }
+    #reviews .ad-banner .right-ad .ad-title {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        color: #000; 
+        font-family: 'Times New Roman', serif;
     }
     .ad-timer {
-        width: 90%;
-        flex-direction: column;
+        width: 90%; 
+        flex-direction: column; 
         text-align: center;
     }
     .ad-timer img {
         width: 80px;
     }
     .ad-timer .ad-text {
-        text-align: center;
-        width: 100%;
+        text-align: center; 
+        width: 100%; 
+    }
+    .close-btn {
+        font-size: 2vw; 
+        width: 3vw;
+        height: 3vw;
     }
     .salmon-ad {
-        display: none;
+        display: none; 
     }
     .reason-block {
         flex-direction: column;
     }
-    .reason-img, .product-img {
+    .reason-img {
+        width: 100%;
+        max-width: 100%;
+    }
+    .product-img {
         width: 100%;
         max-width: 100%;
     }
@@ -591,18 +684,17 @@ footer {
         width: 15vw;
         height: 15vw;
     }
-    .close-btn {
-        font-size: 2vw;
-        width: 3vw;
-        height: 3vw;
+    
+    #reviews h2 {
+        font-size: clamp(1.5rem, 2.5vw, 3rem);
     }
 }
 
 @media (max-width: 480px) {
     .ad-timer {
-        width: 90%;
+        width: 90%; 
     }
     .ad-timer img {
-        width: 60px;
+        width: 60px; 
     }
 }
