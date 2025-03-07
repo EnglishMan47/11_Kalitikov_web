@@ -22,8 +22,7 @@ const costs = {
   "Котлеты": 100, "Куриная ножка": 120, "Бифштекс": 110, "Фуа-Гра": 400, "Бургер": 250,
   "Рис": 40, "Гречка": 40, "Плов": 40, "Картофель фри": 40, "Картофельное пюре": 40,
   "Пицца": 60, "Пирожок": 20, "Круассан": 30, "Беляш": 50, "Чебурек": 50,
-  "Чай": 15, "Компот": 20, "Сок": 20, "Узвар": 20, "Вода (бесплатно)": 0,
-  "Ничего": 0
+  "Чай": 15, "Компот": 20, "Сок": 20, "Узвар": 20, "Вода": 0, "Ничего": 0
 };
 
 let currentTime = 6 * 60; 
@@ -64,7 +63,7 @@ function advanceTime(minutes) {
   if (hunger >= 100 && thirst >= 100 && fatigue >= 100) {
     health = Math.max(0, health - 10);
     if (health <= 0) {
-      endGame("Ваше здоровье упало до 0. Игра окончена.");
+      endGame("Твоё здоровье упало до 0. Игра окончена.");
       return;
     }
   }
@@ -73,10 +72,10 @@ function advanceTime(minutes) {
 
 function addToInventory(item) {
   if (inventory.includes(item)) {
-    alert(`У вас уже есть ${item} в инвентаре.`);
+    alert(`У тебя уже есть ${item} в инвентаре.`);
   } else {
     inventory.push(item);
-    alert(`Вы получили: ${item}.`);
+    alert(`Ты получил: ${item}.`);
   }
 }
 
@@ -94,7 +93,7 @@ function useInventory() {
   }
 
   let inventoryList = "Инвентарь:\n" + inventory.map((item, index) => `${index + 1}. ${item}`).join("\n");
-  let choice = prompt(statusString() + inventoryList + "\nВыберите номер предмета или 0 для выхода:");
+  let choice = prompt(statusString() + inventoryList + "\nВыбери номер предмета или 0 для выхода:");
   if (!choice) return null;
 
   let selectedIndex = parseInt(choice) - 1;
@@ -105,7 +104,7 @@ function useInventory() {
   }
 
   let selectedItem = inventory[selectedIndex];
-  alert(statusString() + `Вы выбрали: ${selectedItem}.`);
+  alert(statusString() + `Ты выбрал: ${selectedItem}.`);
 
   const coffeeEffects = {
     "Латте": { thirst: -15, fatigue: -10 },
@@ -138,13 +137,13 @@ function useInventory() {
     if (effect.thirst) thirst = Math.max(0, thirst + effect.thirst);
     if (effect.fatigue) fatigue = Math.max(0, fatigue + effect.fatigue);
     if (effect.hunger) hunger = Math.max(0, hunger + effect.hunger);
-    alert(`Вы выпили ${selectedItem}. Жажда ${effect.thirst || 0}, усталость ${effect.fatigue || 0}, голод ${effect.hunger || 0}.`);
+    alert(`Ты выпил ${selectedItem}. Жажда ${effect.thirst || 0}, усталость ${effect.fatigue || 0}, голод ${effect.hunger || 0}.`);
     inventory.splice(selectedIndex, 1);
   } else if (snackEffects[selectedItem]) {
     let effect = snackEffects[selectedItem];
     hunger = Math.max(0, hunger + effect.hunger);
     if (effect.fatigue) fatigue = Math.max(0, fatigue + effect.fatigue);
-    alert(`Вы съели ${selectedItem}. Голод ${effect.hunger}${effect.fatigue ? `, усталость ${effect.fatigue}` : ""}.`);
+    alert(`Ты употребил ${selectedItem}. Голод ${effect.hunger}${effect.fatigue ? `, усталость ${effect.fatigue}` : ""}.`);
     inventory.splice(selectedIndex, 1);
   } else if (selectedItem === "Телефон") {
     phoneMenu();
@@ -175,7 +174,7 @@ function alarmClock() {
   if (alarms >= 10) alert("Будильник отключился сам.");
   let isAwake = confirm(statusString() + "Встать с кровати?");
   if (!isAwake) {
-    alert("Вы уснули. Сейчас 12:00. Вы проспали пары.");
+    alert("Ты уснул после будильника. Сейчас 12:00. Ты проспал пары.");
     currentTime = 12 * 60;
     if (!inventory.includes("Телефон")) addToInventory("Телефон");
   }
@@ -183,16 +182,16 @@ function alarmClock() {
 }
 
 function mealEvent(mealType) {
-  let drinkOptions = ["Чай", "Кофе", "Цикорий", "Энергетик Imba", "Вода", "Ничего"];
+  let drinkOptions = ["Чай", "Кофе", "Цикорий", "Энергетик Imba Energy", "Вода", "Ничего"];
   let drinkPrompt = drinkOptions.map((drink, index) => `${index + 1}. ${drink}`).join("\n");
-  let drinkChoice = prompt(statusString() + `Начинается ${mealType}.\nВыберите напиток:\n${drinkPrompt}`);
+  let drinkChoice = prompt(statusString() + `Начинается ${mealType}.\nВыбери напиток:\n${drinkPrompt}`);
   let selectedDrink = drinkOptions[parseInt(drinkChoice) - 1] || "Ничего";
 
   let effects = {
     "Чай": { thirst: -10, fatigue: -5 },
     "Кофе": { thirst: -15, fatigue: -10 },
     "Цикорий": { thirst: -8, fatigue: -3 },
-    "Энергетик Imba": { thirst: -20, fatigue: -20, imbaEnergy: true },
+    "Энергетик Imba Energy": { thirst: -20, fatigue: -20, imbaEnergy: true },
     "Вода": { thirst: -15 },
     "Ничего": {}
   };
@@ -210,7 +209,7 @@ function mealEvent(mealType) {
       thirst = Math.max(0, thirst + (drinkEffect.thirst || 0));
       fatigue = Math.max(0, fatigue + (drinkEffect.fatigue || 0));
       if (drinkEffect.imbaEnergy) imbaEnergyEffect = true;
-      alert(statusString() + `Вы поели.\nГолод -20, жажда ${drinkEffect.thirst || 0}, усталость ${drinkEffect.fatigue || 0}${drinkEffect.imbaEnergy ? "\nПолучен баф: Без утомляемости" : ""}`);
+      alert(statusString() + `Ты поел.\nГолод -20, жажда ${drinkEffect.thirst || 0}, усталость ${drinkEffect.fatigue || 0}${drinkEffect.imbaEnergy ? "\nПолучен баф: Без утомляемости" : ""}`);
       break;
     case "2":
       advanceTime(40);
@@ -218,13 +217,13 @@ function mealEvent(mealType) {
       thirst = Math.max(0, thirst + (drinkEffect.thirst || 0));
       fatigue = Math.max(0, fatigue + (drinkEffect.fatigue || 0));
       if (drinkEffect.imbaEnergy) imbaEnergyEffect = true;
-      alert(statusString() + `Вы поели, смотря YouTube.\nГолод -50, жажда ${drinkEffect.thirst || 0}, усталость ${drinkEffect.fatigue || 0}${drinkEffect.imbaEnergy ? "\nПолучен баф: Без утомляемости" : ""}`);
+      alert(statusString() + `Ты поел, смотря YouTube.\nГолод -50, жажда ${drinkEffect.thirst || 0}, усталость ${drinkEffect.fatigue || 0}${drinkEffect.imbaEnergy ? "\nПолучен баф: Без утомляемости" : ""}`);
       break;
     case "3":
       useInventory();
       break;
     case "4":
-      alert(statusString() + "Вы прекратили есть. Бонусы не применены.");
+      alert(statusString() + "Ты прекратил есть. Бонусы не применены.");
       break;
     default:
       alert(statusString() + "Неверный выбор.");
@@ -236,13 +235,13 @@ function phoneMenu() {
   while (continueMenu) {
     let choice = prompt(statusString() + "Телефон:\n1. Убрать телефон\n2. YouTube\n3. ВКонтакте\n4. Телеграмм\n5. Электрички\n6. ПеньковБанк\n7. Музыка\n8. Будильник");
     if (!choice) {
-      alert("Неверный ввод. Возвращаемся назад.");
+      alert("Неверный ввод. Вернуться назад.");
       return;
     }
     advanceTime(1);
     switch (choice.trim()) {
       case "1": continueMenu = false; break;
-      case "2": alert("Вы смотрите YouTube."); break;
+      case "2": alert("Ты смотришь YouTube."); break;
       case "3": vkMenu(); break;
       case "4": telegramMenu(); break;
       case "5": alert("Расписание электричек утром: 7:15, 7:29, 7:54, 8:10\nРасписание электричек вечером: 17:17, 17:22, 17:37, 18:02"); break;
@@ -260,9 +259,9 @@ function vkMenu() {
     if (!choice) return;
     advanceTime(1);
     switch (choice.trim()) {
-      case "1": alert("Вы посмотрели чатики. Ничего нового."); break;
-      case "2": alert("Вы почитали мемы."); break;
-      case "3": alert("Вы написали друзьям."); break;
+      case "1": alert("Ты посмотрел все чатики. Ничего нового... Как обычно."); break;
+      case "2": alert("Ты почитал мемы."); break;
+      case "3": alert("Ты написал друзьям."); break;
       case "4": return;
       default: alert("Неверный выбор.");
     }
@@ -276,8 +275,8 @@ function telegramMenu() {
     advanceTime(1);
     switch (choice.trim()) {
       case "1": channelActions(); break;
-      case "2": alert("Вы читаете чатики."); break;
-      case "3": alert("Вы написали друзьям."); break;
+      case "2": alert("Ты читаешь все чатики."); break;
+      case "3": alert("Ты написал друзьям."); break;
       case "4": return;
       default: alert("Неверный выбор.");
     }
@@ -290,10 +289,10 @@ function channelActions() {
     if (!action) return;
     advanceTime(1);
     switch (action.trim()) {
-      case "1": alert("Вы оставили реакцию."); break;
-      case "2": alert("Вы сделали пост."); break;
-      case "3": alert("Вы написали комментарий."); break;
-      case "4": alert("Вы поскроллили посты."); break;
+      case "1": alert("Ты оставил реакцию."); break;
+      case "2": alert("Ты сделал пост."); break;
+      case "3": alert("Ты написал комментарий."); break;
+      case "4": alert("Ты поскроллил посты."); break;
       case "5": return;
       default: alert("Неверный выбор.");
     }
@@ -308,7 +307,7 @@ function musicMenu() {
 }
 
 function alarmMenu() {
-  let newTime = prompt(statusString() + `Текущий будильник: ${formatTime(alarmTime)}\nВведите время (ЧЧ:ММ):`);
+  let newTime = prompt(statusString() + `Текущий будильник: ${formatTime(alarmTime)}\nУстановить время (ЧЧ:ММ):`);
   if (!newTime) return;
   let [hrs, mins] = newTime.split(":").map(Number);
   alarmTime = hrs * 60 + mins;
@@ -323,21 +322,21 @@ function laptopMenu() {
       case "1":
         advanceTime(40);
         fatigue += 10;
-        alert("Вы сыграли в Доту. Усталость +10.");
+        alert("Ты сыграл в Доту. Усталость +10.");
         break;
       case "2":
         advanceTime(30);
         fatigue += 5;
-        alert("Вы ботали. Усталость +5.");
+        alert("Ты ботал. Усталость +5.");
         break;
       case "3":
         advanceTime(10);
-        alert("Вы поиграли в Сапёр.");
+        alert("Ты поиграл в Сапёр.");
         break;
       case "4":
         advanceTime(30);
         fatigue += 5;
-        alert("Вы изучали материал лекций. Усталость +5.");
+        alert("Ты изучал материал лекций. Усталость +5.");
         break;
       case "5": return;
       default: alert("Неверный выбор.");
@@ -351,7 +350,7 @@ function dressingUp() {
     if (!inventory.includes(item)) inventory.push(item);
   });
   advanceTime(15);
-  alert(`Вы собрались. В инвентарь добавлены: ${defaultItems.join(", ")}.`);
+  alert(`Ты собрался. В инвентарь добавлены: ${defaultItems.join(", ")}.`);
   
   let extra = prompt(statusString() + "Добавить:\n1. Термос\n2. Повербанк\n3. Ничего");
   if (extra === "1") addToInventory("Термос");
@@ -366,24 +365,24 @@ function platformAndLift(isGoingHome = false) {
   if (!choice) return false;
   if (choice === "2") {
     advanceTime(2);
-    alert(isGoingHome ? "Вы поднялись по лестнице на 7 этаж." : "Вы спустились по лестнице на улицу.");
+    alert(isGoingHome ? "Ты поднялся по лестнице на 7 этаж. Молодец!" : "Ты спустился по лестнице на улицу.");
     return true;
   } else if (choice === "1") {
     while (true) {
-      let floor = prompt(statusString() + `Текущий этаж: ${currentFloor}\nВыберите этаж (1-14):`);
+      let floor = prompt(statusString() + `Текущий этаж: ${currentFloor}\nВыбери этаж (1-14):`);
       if (!floor) return false;
       let selectedFloor = parseInt(floor);
       if (isNaN(selectedFloor) || selectedFloor < 1 || selectedFloor > 14) {
-        alert("Неверный этаж. Введите число от 1 до 14.");
+        alert("Неверный этаж. Введи число от 1 до 14.");
         continue;
       }
       advanceTime(Math.abs(currentFloor - selectedFloor));
       currentFloor = selectedFloor;
       if (currentFloor === targetFloor) {
-        alert(isGoingHome ? "Вы поднялись на 7 этаж." : "Вы спустились на 1 этаж и вышли на улицу.");
+        alert(isGoingHome ? "Ты поднялся на 7 этаж." : "Ты спустился на 1 этаж и вышел на улицу.");
         return true;
       } else {
-        alert(statusString() + "Неверный этаж! Вы остаётесь в лифте.");
+        alert(statusString() + "Неверный этаж! Ты остаёшься в лифте.");
       }
     }
   }
@@ -395,7 +394,7 @@ function handleSpeedUp() {
   let speedCount = 0;
 
   while (speedCount < 5) {
-    let choice = prompt(statusString() + `Вы ускоряетесь (попытка ${speedCount + 1}/5):\n1. Продолжить ускоряться\n2. Перейти на шаг`);
+    let choice = prompt(statusString() + `Ты ускоряешься (попытка ${speedCount + 1}/5):\n1. Продолжить ускоряться\n2. Перейти на шаг`);
     if (!choice) return Math.round(totalTime);
     if (choice === "1") {
       speedCount++;
@@ -411,9 +410,9 @@ function handleSpeedUp() {
 
   if (speedCount === 5) {
     totalTime = 11;
-    alert("Вы ускорились до предела и перешли на шаг.");
+    alert("Ты ускорился до предела и перешёл на шаг.");
   } else {
-    alert("Вы перестали ускоряться.");
+    alert("Ты перестал ускоряться.");
   }
   return Math.round(totalTime);
 }
@@ -423,7 +422,7 @@ function handleRunning() {
   let runCount = 0;
 
   while (runCount < 5) {
-    let choice = prompt(statusString() + `Вы бежите (попытка ${runCount + 1}/5):\n1. Продолжить бежать (+5 усталости)\n2. Перейти на шаг`);
+    let choice = prompt(statusString() + `Ты бежишь (попытка ${runCount + 1}/5):\n1. Продолжить бежать (+5 усталости)\n2. Перейти на шаг`);
     if (!choice) return Math.round(totalTime);
     if (choice === "1") {
       runCount++;
@@ -440,9 +439,9 @@ function handleRunning() {
 
   if (runCount === 5) {
     totalTime = 9;
-    alert("Вы устали бежать и перешли на шаг.");
+    alert("Ты устал бежать и перешёл на шаг.");
   } else {
-    alert("Вы перестали бежать.");
+    alert("Ты перестал бежать.");
   }
   return Math.round(totalTime);
 }
@@ -466,23 +465,23 @@ function trainEvent() {
   let timeSpent = 0;
 
   switch (choice) {
-    case "1": timeSpent = 12; alert("Вы идёте спокойно."); break;
+    case "1": timeSpent = 12; alert("Ты идёшь спокойно."); break;
     case "2": timeSpent = handleSpeedUp(); break;
     case "3": timeSpent = handleRunning(); break;
     default: alert("Неверный выбор."); return trainEvent();
   }
 
   advanceTime(timeSpent);
-  alert(`Вы пришли на станцию в ${formatTime(currentTime)}.`);
+  alert(`Ты пришёл на станцию в ${formatTime(currentTime)}.`);
   
   if (!nextTrain || currentTime > nextTrain) {
-    alert("Вы опоздали на ближайшую электричку.");
+    alert("Ты опоздал на ближайшую электричку.");
     nextTrain = followingTrain;
     timeToNext = followingTrain ? followingTrain - currentTime : "Нет";
   }
 
   if (!nextTrain) {
-    alert("Следующей электрички нет. Вы возвращаетесь домой.");
+    alert("Следующей электрички нет. Ты возвращаешься домой.");
     advanceTime(15);
     returnToHome();
     return false;
@@ -490,16 +489,16 @@ function trainEvent() {
 
   if (balance >= ticketCost) {
     balance -= ticketCost;
-    alert(`Вы купили билет за ${ticketCost} деняк. Остаток: ${balance} деняк.`);
+    alert(`Ты купил билет за ${ticketCost} деняк. Остаток: ${balance} деняк.`);
     if (currentTime <= nextTrain) {
       advanceTime(nextTrain + 80 - currentTime);
       fatigue += 20;
-      alert(`Вы успели на электричку в ${formatTime(nextTrain)}.`);
-      alert("Вы доехали до вуза.");
+      alert(`Ты успел на электричку в ${formatTime(nextTrain)}.`);
+      alert("Ты доехал до вуза.");
       turnstileEvent(true);
       return true;
     } else {
-      alert("Вы опоздали на электричку.");
+      alert("Ты опоздал на электричку.");
       return trainEvent();
     }
   } else {
@@ -514,7 +513,7 @@ function turnstileEvent(isEntering = true) {
   let action = isEntering ? "Войти в вуз" : "Выйти из вуза";
   let item = useInventory();
   if (item && item === "Пропуск") {
-    alert(statusString() + `Вы использовали пропуск и ${isEntering ? "вошли в вуз" : "вышли из вуза"}.`);
+    alert(statusString() + `Ты использовал пропуск и ${isEntering ? "вошёл в вуз" : "вышел из вуза"}.`);
     return true;
   } else {
     alert(statusString() + `Нужен пропуск, чтобы ${action}!`);
@@ -523,11 +522,11 @@ function turnstileEvent(isEntering = true) {
 }
 
 function university() {
-  alert(`Время ${formatTime(currentTime)}. Вы вошли в вуз.`);
+  alert(`Время ${formatTime(currentTime)}. Ты вошёл в вуз.`);
   advanceTime(1);
-  alert("Вы зашли в гардероб, сняли верхнюю одежду (1 мин).");
+  alert("Ты зашёл в гардероб, снял верхнюю одежду (1 мин).");
   while (true) {
-    let choice = prompt(statusString() + "Вы в вузе. Выберите действие:\n1. Открыть инвентарь\n2. Потратить время\n3. Пойти на пары\n4. Выйти на улицу\n5. Пойти на Планерную");
+    let choice = prompt(statusString() + "Ты в вузе. Выбери действие:\n1. Открыть инвентарь\n2. Потратить время\n3. Пойти на пары\n4. Выйти на улицу\n5. Пойти на Планерную");
     if (!choice) break;
     if (choice === "1") {
       useInventory();
@@ -563,23 +562,23 @@ function eveningTrainEvent() {
 
   let promptText = statusString() + `До ближайшей электрички (${nextTrain ? formatTime(nextTrain) : "Нет"}): ${timeToNext} мин.\n`;
   promptText += `До следующей (${followingTrain ? formatTime(followingTrain) : "Нет"}): ${timeToFollowing} мин.\n`;
-  promptText += `Вы на станции. Купить билет? (59 деняк)\n1. Да\n2. Нет`;
+  promptText += `Ты на станции. Купить билет? (59 деняк)\n1. Да\n2. Нет`;
 
   let choice = prompt(promptText);
   if (!choice) return false;
   if (choice === "1") {
     if (balance >= ticketCost) {
       balance -= ticketCost;
-      alert(`Вы купили билет за ${ticketCost} деняк. Остаток: ${balance} деняк.`);
+      alert(`Ты купил билет за ${ticketCost} деняк. Остаток: ${balance} деняк.`);
       if (currentTime <= nextTrain) {
         advanceTime(nextTrain + 80 - currentTime);
         fatigue += 20;
-        alert(`Вы успели на электричку в ${formatTime(nextTrain)}.`);
-        alert("Вы доехали домой и стоите у подъезда.");
+        alert(`Ты успел на электричку в ${formatTime(nextTrain)}.`);
+        alert("Ты доехал домой и стоишь у подъезда.");
         returnToHome();
         return true;
       } else {
-        alert("Вы опоздали на электричку.");
+        alert("Ты опоздал на электричку.");
         return eveningTrainEvent();
       }
     } else {
@@ -587,16 +586,16 @@ function eveningTrainEvent() {
       return false;
     }
   } else {
-    alert("Вы не купили билет и остались на станции.");
+    alert("Ты не купил билет и остался на станции.");
     return false;
   }
 }
 
 function returnToHome() {
-  alert(statusString() + "Вы подошли к подъезду.");
+  alert(statusString() + "Ты подошёл к подъезду.");
   let item = useInventory();
   if (item && item === "Ключи") {
-    alert(statusString() + "Вы открыли дверь подъезда.");
+    alert(statusString() + "ты открыл дверь подъезда.");
     if(platformAndLift(true)) {
       homeAtNight();
     }
@@ -613,7 +612,7 @@ function spendTime() {
     case "1": buyCoffee(); break;
     case "2": buySnack(); break;
     case "3": canteen(); break;
-    case "4": advanceTime(5); alert("Вы погуляли."); break;
+    case "4": advanceTime(5); alert("Ты погулял."); break;
     default: alert("Неверный выбор.");
   }
 }
@@ -623,7 +622,7 @@ function buyCoffee() {
     "Латте (125 деняк)", "Эспрессо (90 деняк)", "Американо (100 деняк)",
     "Капучино (125 деняк)", "Кисель (50 деняк)", "Чай (70 деняк)", "Кротовуха (100 деняк)"
   ];
-  let choice = prompt(statusString() + `Выберите кофе:\n${coffeeOptions.map((c, i) => `${i + 1}. ${c}`).join("\n")}`);
+  let choice = prompt(statusString() + `Выбери кофе:\n${coffeeOptions.map((c, i) => `${i + 1}. ${c}`).join("\n")}`);
   if (!choice) return;
   let selected = coffeeOptions[parseInt(choice) - 1];
   if (!selected) return;
@@ -635,7 +634,7 @@ function buyCoffee() {
     if (balance >= price) {
       balance -= price;
       addToInventory(coffee);
-      alert(`Вы купили ${coffee} за ${price} деняк.`);
+      alert(`Ты купил ${coffee} за ${price} деняк.`);
     } else {
       alert("Недостаточно средств.");
     }
@@ -650,7 +649,7 @@ function buySnack() {
     "Шоколадный батончик (70 деняк)", "Чипсы (70 деняк)", "Энергетик (70 деняк)",
     "Прикормка (70 деняк)", "Вафли (70 деняк)", "Шаурма (70 деняк)"
   ];
-  let choice = prompt(statusString() + `Выберите снек:\n${snackOptions.map((s, i) => `${i + 1}. ${s}`).join("\n")}`);
+  let choice = prompt(statusString() + `Выбери снек:\n${snackOptions.map((s, i) => `${i + 1}. ${s}`).join("\n")}`);
   if (!choice) return;
   let selected = snackOptions[parseInt(choice) - 1];
   if (!selected) return;
@@ -662,7 +661,7 @@ function buySnack() {
     if (balance >= price) {
       balance -= price;
       addToInventory(snack);
-      alert(`Вы купили ${snack} за ${price} деняк.`);
+      alert(`Ты купил ${snack} за ${price} деняк.`);
     } else {
       alert("Недостаточно средств.");
     }
@@ -696,15 +695,15 @@ function lectures() {
 
     let startTime = Math.max(currentTime, lectureTimes[i]);
     let endTime = breakTimes[i];
-    alert(`Пара начинается в ${formatTime(lectureTimes[i])}. Вы пришли в ${formatTime(startTime)}.`);
+    alert(`Пара начинается в ${formatTime(lectureTimes[i])}. Ты пришёл в ${formatTime(startTime)}.`);
 
     while (currentTime < endTime) {
       let timeLeft = endTime - currentTime;
       let action = prompt(
         statusString() +
-        `До конца пары: ${timeLeft} мин.\nВыберите действие:\n` +
+        `До конца пары: ${timeLeft} мин.\nВыберидействие:\n` +
         `1. Ботать (30 мин)\n2. Играть в Доту (40 мин)\n3. Смотреть YouTube (40 мин)\n` +
-        `4. Писать лекции (20 мин)\n5. Слушать препода (5 мин)\n6. Ничего (5 мин)\n7. Пропустить пару`
+        `4. Писать лекции (20 мин)\n5. Слушать препода (5 мин)\n6. Ничего (1 мин)\n7. Пропустить пару`
       );
       if (!action) break;
 
@@ -715,17 +714,17 @@ function lectures() {
         case "3": actionTime = 40; break;
         case "4": actionTime = 20; break;
         case "5": actionTime = 5; break;
-        case "6": actionTime = 5; break;
+        case "6": actionTime = 1; break;
         case "7":
           advanceTime(endTime - currentTime);
-          alert(`Вы пропустили пару. Текущее время: ${formatTime(currentTime)}.`);
+          alert(`Ты пропустил пару. Текущее время: ${formatTime(currentTime)}.`);
           break;
         default: alert("Неверный выбор."); continue;
       }
 
       if (action === "7") break;
       if (currentTime + actionTime > endTime) {
-        alert("Недостаточно времени для этого действия. Вы можете подождать или пропустить пару.");
+        alert("Недостаточно времени для этого действия. Ты можешь подождать или пропустить пару.");
         continue;
       }
       advanceTime(actionTime);
@@ -742,14 +741,14 @@ function lectures() {
       while (currentTime < lectureTimes[i + 1]) {
         let choice = prompt(
           statusString() +
-          "Перерыв. Выберите действие:\n1. Открыть инвентарь\n2. Потратить время\n3. Погулять\n4. Ждать"
+          "Перерыв. Выбери действие:\n1. Открыть инвентарь\n2. Потратить время\n3. Погулять\n4. Ждать"
         );
         if (!choice) break;
         switch (choice) {
           case "1": useInventory(); break;
           case "2": spendTime(); break;
-          case "3": advanceTime(5); alert("Вы погуляли."); break;
-          case "4": advanceTime(1); alert("Вы ждёте."); break;
+          case "3": advanceTime(5); alert("Ты погулял."); break;
+          case "4": advanceTime(1); alert("Ты ждёшь."); break;
           default: alert("Неверный выбор.");
         }
       }
@@ -762,11 +761,11 @@ function canteen() {
   let effects = { hunger: 0, thirst: 0, fatigue: 0 };
 
   if (canteenTrayTime && currentTime - canteenTrayTime <= 15) {
-    alert("Вы вернулись к своему подносу.");
+    alert("Ты вернулся к своему подносу.");
 
   } else {
     canteenTrayTime = null;
-    alert("Вы пришли в столовую, взяли поднос и приборы.");
+    alert("Ты пришёл в столовую, взял поднос и приборы.");
     let chosenItems = [];
     let totalCost = 0;
     const foodEffects = {
@@ -807,7 +806,7 @@ function canteen() {
       "Узвар": { thirst: -15, hunger: -5 }
     };
 
-    let saladChoice = prompt(statusString() + `Выберите салат:\n${salads.map((s, i) => `${i+1}. ${s} (${costs[s]} деняк)`).join("\n")}`);
+    let saladChoice = prompt(statusString() + `Выбери салат:\n${salads.map((s, i) => `${i+1}. ${s} (${costs[s]} деняк)`).join("\n")}`);
     if (!saladChoice) return;
     let salad = salads[parseInt(saladChoice) - 1] || "Ничего";
     if (salad !== "Ничего") {
@@ -816,7 +815,7 @@ function canteen() {
       Object.keys(foodEffects[salad]).forEach(key => effects[key] += foodEffects[salad][key]);
     }
 
-    let dessertChoice = prompt(statusString() + `Выберите десерт:\n${desserts.map((d, i) => `${i+1}. ${d} (${costs[d]} деняк)`).join("\n")}`);
+    let dessertChoice = prompt(statusString() + `Выбери десерт:\n${desserts.map((d, i) => `${i+1}. ${d} (${costs[d]} деняк)`).join("\n")}`);
     if (!dessertChoice) return;
     let dessert = desserts[parseInt(dessertChoice) - 1] || "Ничего";
     if (dessert !== "Ничего") {
@@ -825,7 +824,7 @@ function canteen() {
       Object.keys(foodEffects[dessert]).forEach(key => effects[key] += foodEffects[dessert][key]);
     }
 
-    let firstCourseChoice = prompt(statusString() + `Выберите первое:\n${firstCourses.map((f, i) => `${i+1}. ${f} (${costs[f]} деняк)`).join("\n")}`);
+    let firstCourseChoice = prompt(statusString() + `Выбери первое блюдо:\n${firstCourses.map((f, i) => `${i+1}. ${f} (${costs[f]} деняк)`).join("\n")}`);
     if (!firstCourseChoice) return;
     let firstCourse = firstCourses[parseInt(firstCourseChoice) - 1] || "Ничего";
     if (firstCourse !== "Ничего") {
@@ -834,7 +833,7 @@ function canteen() {
       Object.keys(foodEffects[firstCourse]).forEach(key => effects[key] += foodEffects[firstCourse][key]);
     }
 
-    let mainCourseChoice = prompt(statusString() + `Выберите второе:\n${mainCourses.map((m, i) => `${i+1}. ${m} (${costs[m]} деняк)`).join("\n")}`);
+    let mainCourseChoice = prompt(statusString() + `Выбери второе блюдо:\n${mainCourses.map((m, i) => `${i+1}. ${m} (${costs[m]} деняк)`).join("\n")}`);
     if (!mainCourseChoice) return;
     let mainCourse = mainCourses[parseInt(mainCourseChoice) - 1] || "Ничего";
     if (mainCourse !== "Ничего") {
@@ -843,7 +842,7 @@ function canteen() {
       Object.keys(foodEffects[mainCourse]).forEach(key => effects[key] += foodEffects[mainCourse][key]);
     }
 
-    let sideDishChoice = prompt(statusString() + `Выберите гарнир:\n${sideDishes.map((s, i) => `${i+1}. ${s} (${costs[s]} деняк)`).join("\n")}`);
+    let sideDishChoice = prompt(statusString() + `Выбери гарнир:\n${sideDishes.map((s, i) => `${i+1}. ${s} (${costs[s]} деняк)`).join("\n")}`);
     if (!sideDishChoice) return;
     let sideDish = sideDishes[parseInt(sideDishChoice) - 1] || "Ничего";
     if (sideDish !== "Ничего") {
@@ -852,7 +851,7 @@ function canteen() {
       Object.keys(foodEffects[sideDish]).forEach(key => effects[key] += foodEffects[sideDish][key]);
     }
 
-    let pastryChoice = prompt(statusString() + `Выберите выпечку:\n${pastries.map((p, i) => `${i+1}. ${p} (${costs[p]} деняк)`).join("\n")}`);
+    let pastryChoice = prompt(statusString() + `Выбери выпечку:\n${pastries.map((p, i) => `${i+1}. ${p} (${costs[p]} деняк)`).join("\n")}`);
     if (!pastryChoice) return;
     let pastry = pastries[parseInt(pastryChoice) - 1] || "Ничего";
     if (pastry !== "Ничего") {
@@ -861,7 +860,7 @@ function canteen() {
       Object.keys(foodEffects[pastry]).forEach(key => effects[key] += foodEffects[pastry][key]);
     }
 
-    let drinkChoice = prompt(statusString() + `Выберите напиток:\n${drinks.map((d, i) => `${i+1}. ${d} (${costs[d]} деняк)`).join("\n")}`);
+    let drinkChoice = prompt(statusString() + `Выбери напиток:\n${drinks.map((d, i) => `${i+1}. ${d} (${costs[d]} деняк)`).join("\n")}`);
     if (!drinkChoice) return;
     let drink = drinks[parseInt(drinkChoice) - 1] || "Ничего";
     if (drink !== "Ничего") {
@@ -894,7 +893,7 @@ function canteen() {
     if (action === "1") {
       advanceTime(15);
       applyMealEffects(effects);
-      alert(statusString() + `Вы поели. Голод ${effects.hunger}, жажда ${effects.thirst}, усталость ${effects.fatigue}`);
+      alert(statusString() + `Ты поел. Голод ${effects.hunger}, жажда ${effects.thirst}, усталость ${effects.fatigue}`);
       canteenTrayTime = null;
       break;
     } else if (action === "2") {
@@ -905,7 +904,7 @@ function canteen() {
       } else if (subChoice === "2") {
         advanceTime(15);
         applyMealEffects(effects);
-        alert(statusString() + `Вы поели. Голод ${effects.hunger}, жажда ${effects.thirst}, усталость ${effects.fatigue}`);
+        alert(statusString() + `Ты поел. Голод ${effects.hunger}, жажда ${effects.thirst}, усталость ${effects.fatigue}`);
         canteenTrayTime = null;
         break;
       } else {
@@ -920,7 +919,7 @@ function canteen() {
 }
 
 function oversleptHome() {
-  alert("Вы проспали пары. Теперь вы дома и можете заняться делами.");
+  alert("Ты проспал пары. Теперь ты дома и можешь заняться своими делами.");
   mealEvent("завтрак"); 
   
   let hasEatenLunch = false;
@@ -938,7 +937,7 @@ function oversleptHome() {
       continue;
     }
 
-    let choice = prompt(statusString() + "Вы дома. Что будете делать?\n1. Ботать (2 ч)\n2. Отдохнуть (2 ч)\n3. Открыть инвентарь\n4. Подождать (1 ч)\n5. Пойти спать");
+    let choice = prompt(statusString() + "Ты дома. Что будете делать?\n1. Ботать (2 ч)\n2. Отдохнуть (2 ч)\n3. Открыть инвентарь\n4. Подождать (1 ч)\n5. Пойти спать");
     if (!choice) {
       alert("Неверный ввод. Продолжаем...");
       continue;
@@ -948,25 +947,25 @@ function oversleptHome() {
       case "1":
         advanceTime(120);
         fatigue += 20;
-        alert("Вы ботали 2 часа. Усталость +20.");
+        alert("Ты ботал 2 часа. Усталость +20.");
         break;
       case "2":
         advanceTime(120);
         fatigue = Math.max(0, fatigue - 10);
-        alert("Вы отдохнули 2 часа. Усталость -10.");
+        alert("Ты отдохнул 2 часа. Усталость -10.");
         break;
       case "3":
         useInventory();
         break;
       case "4":
         advanceTime(60);
-        alert("Вы ждали 1 час.");
+        alert("Ты ждал 1 час.");
         break;
       case "5":
         if (currentTime < 3 * 60) {
           alert("Слишком рано спать. Нужно дождаться 03:00.");
         } else {
-          alert("Вы легли спать. Новый день начинается!");
+          alert("Ты лёг спать. Новый день начинается!");
           resetGame(); 
           myFunc(); 
           return;
@@ -985,12 +984,12 @@ function oversleptHome() {
 
 function street() {
   while (true) {
-    let choice = prompt(statusString() + "Вы на улице. Выберите действие:\n1. Пойти на задний двор (10 мин)\n2. Пятёрочка (10 мин)\n3. Планерная (20 мин)\n4. Вернуться в вуз");
+    let choice = prompt(statusString() + "Ты на улице. Выбери действие:\n1. Пойти на задний двор (10 мин)\n2. Пятёрочка (10 мин)\n3. Планерная (20 мин)\n4. Вернуться в вуз");
     if (!choice) return;
     switch (choice) {
       case "1":
         advanceTime(10);
-        alert("Вы прогулялись на заднем дворе.");
+        alert("Ты прогулялся на заднем дворе.");
         break;
       case "2":
         pyaterochka();
@@ -1009,9 +1008,9 @@ function street() {
 }
 
 function planernaya() {
-  alert("Вы на Планерной.");
+  alert("Ты на Планерной.");
   while (true) {
-    let choice = prompt(statusString() + "Выберите действие:\n1. Зайти в Перекрёсток (15 мин)\n2. Вернуться в вуз (20 мин)\n3. Поехать домой");
+    let choice = prompt(statusString() + "Выберидействие:\n1. Зайти в Перекрёсток (15 мин)\n2. Вернуться в вуз (20 мин)\n3. Поехать домой");
     if (!choice) return;
     switch (choice) {
       case "1":
@@ -1070,11 +1069,11 @@ function myFunc() {
 
 function dayProcess() {
   if (!inventory.includes("Телефон")) addToInventory("Телефон");
-  alert("Вы встали с кровати.");
-  alert(statusString() + "Вы приняли душ, сходили в туалет и оделись.");
+  alert("Ты встал с кровати.");
+  alert(statusString() + "Ты принял душ, сходил в туалет и оделся.");
   advanceTime(20);
   mealEvent("завтрак");
-  if (confirm("Хотите использовать телефон?")) phoneMenu();
+  if (confirm("Хотчешь использовать телефон?")) phoneMenu();
   dressingUp();
   if (platformAndLift()) {
     if (trainEvent()) {
@@ -1112,17 +1111,17 @@ function homeAtNight() {
     }
     if (choice === "1") {
       advanceTime(60);
-      alert("Вы занимались делами 1 час.");
+      alert("Вы занимался делами 1 час.");
     } else if (choice === "2") {
       advanceTime(120);
       fatigue = Math.max(0, fatigue - 10);
-      alert("Вы отдохнули 2 часа.");
+      alert("Ты отдохнул 2 часа.");
     } else if (choice === "3") {
       if (currentTime < 3 * 60) {
-        alert("Слишком рано спать. Подождите до 03:00.");
+        alert("Слишком рано спать. Подожди до 03:00.");
         continue;
       } else {
-        alert("Вы легли спать. Новый день начинается!");
+        alert("Ты лёг спать. Новый день начинается!");
         resetGame(); 
         myFunc(); 
         return;
