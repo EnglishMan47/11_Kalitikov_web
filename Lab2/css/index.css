@@ -7,6 +7,53 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    margin: 0 0 16px 0; 
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 4vw;
+}
+h2 {
+    font-size: 3.5vw;
+}
+h3 {
+    font-size: 3vw;
+}
+h4 {
+    font-size: 2.5vw;
+}
+h5 {
+    font-size: 2vw;
+}
+h6 {
+    font-size: 1.5vw;
+}
+
+p {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+a {
+    color: #0000EE;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+button, input, select, textarea {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
 }
 
 .navbar {
@@ -253,10 +300,13 @@ body {
 }
 
 .review-img {
-    width: 8vw;
-    height: 8vw;
-    border-radius: 50%;
-    margin-bottom: 1vw;
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 10px;
+    max-width: 100%; 
+    max-height: 100%; 
 }
 
 .stars {
@@ -323,6 +373,39 @@ body {
     position: absolute;
     left: 0;
     color: #28a745;
+}
+
+.icon-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    justify-content: center;
+    margin: 1vw 0;
+}
+
+.icon-options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon-options input[type="radio"] {
+    margin-bottom: 0.5vw;
+}
+
+.icon-options img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #28a745;
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.icon-options input[type="radio"]:checked + img {
+    transform: scale(1.1);
+    border-color: #ffd700;
 }
 
 .buy-btn {
@@ -551,6 +634,83 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .ad-timer {
+        display: none !important;
+    }
+    h1 {
+        font-size: 3.5vw;
+    }
+    h2 {
+        font-size: 3vw;
+    }
+    h3 {
+        font-size: 2.5vw;
+    }
+    h4 {
+        font-size: 2vw;
+    }
+    h5 {
+        font-size: 1.8vw;
+    }
+    h6 {
+        font-size: 1.5vw;
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
+        gap: 2vw;
+        padding: 2vw 0;
+    }
+
+    .review-card {
+        background: #fff;
+        padding: 1.5vw;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+    }
+
+    .review-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .review-form input, .review-form textarea, .review-form select {
+        width: 100%;
+        padding: 1vw;
+        margin: 1vw 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: clamp(1rem, 1.2vw, 1.5rem);
+    }
+
+    .icon-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1vw;
+        justify-content: center;
+        margin: 1vw 0;
+    }
+
+    .icon-options img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #28a745;
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+
+    .icon-options input[type="radio"]:checked + img {
+        transform: scale(1.1);
+        border-color: #ffd700;
+    }
+
     html {
         font-size: 18px; 
     }
@@ -558,18 +718,17 @@ footer {
     .fictional-info h2 {
         font-size: clamp(1.5rem, 2vw, 3rem);
     }
+
     .navbar {
         flex-direction: column;
         padding: 2vw;
     }
+
     .navbar ul {
         flex-direction: column;
         gap: 1vw;
     }
-    .ad-banner {
-        flex-direction: column;
-        align-items: center;
-    }
+
     .left-ad p {
         position: absolute;
         top: 50%;
@@ -581,10 +740,12 @@ footer {
         padding: 0.5vw 1vw;
         border-radius: 5px;
         text-align: center;
+        z-index: 1;
+        max-width: 90%;
         word-wrap: break-word;
         overflow-wrap: break-word;
-        max-width: 90%;
     }
+
     .left-ad {
         width: 100%;
         max-width: 100%;
@@ -600,6 +761,7 @@ footer {
         padding: 3vw;
         overflow-x: hidden;
     }
+
     .right-ad {
         background: #f0f0f0;
         padding: 3vw;
@@ -616,9 +778,11 @@ footer {
         overflow-x: hidden;
         box-sizing: border-box;
     }
-    .right-ad .ad-title {
+
+    .right-ad  {
         font-size: clamp(1.2rem, 4vw, 2rem);
     }
+
     .right-ad p {
         font-family: 'Times New Roman', serif;
         font-size: clamp(0.9rem, 3vw, 1.2rem);
@@ -629,6 +793,7 @@ footer {
         max-width: 100%;
         text-align: justify;
     }
+
     .right-ad .bank-img {
         width: 100%;
         height: auto;
@@ -637,6 +802,7 @@ footer {
         object-fit: contain;
         max-width: 100%;
     }
+
     .left-ad img {
         width: 100%;
         height: auto;
@@ -644,57 +810,55 @@ footer {
         border: 2px dashed #28a745;
         display: block;
     }
-    #reviews .ad-banner .right-ad .ad-title {
+
+    #reviews .ad-banner .right-ad {
         font-size: clamp(1.2rem, 3vw, 2rem);
         color: #000; 
         font-family: 'Times New Roman', serif;
     }
-    .ad-timer {
-        width: 90%; 
-        flex-direction: column; 
-        text-align: center;
-    }
-    .ad-timer img {
-        width: 80px;
-    }
-    .ad-timer .ad-text {
-        text-align: center; 
-        width: 100%; 
-    }
-    .close-btn {
-        font-size: 2vw; 
-        width: 3vw;
-        height: 3vw;
-    }
-    .salmon-ad {
-        display: none; 
-    }
+
     .reason-block {
         flex-direction: column;
     }
+
     .reason-img {
         width: 100%;
         max-width: 100%;
     }
+
     .product-img {
         width: 100%;
         max-width: 100%;
     }
-    .review-img {
-        width: 15vw;
-        height: 15vw;
+    .salmon-ad{
+        display: none;
     }
-    
+    .block-text p,
+    .fictional-info p, .feature-item {
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+    }
+
     #reviews h2 {
-        font-size: clamp(1.5rem, 2.5vw, 3rem);
+        font-size: clamp(1.2rem, 2.5vw, 3rem);
     }
 }
 
 @media (max-width: 480px) {
-    .ad-timer {
-        width: 90%; 
+    h1 {
+        font-size: 6vw;
     }
-    .ad-timer img {
-        width: 60px; 
+    h2 {
+        font-size: 5vw;
+    }
+
+    .ad-timer {
+        display: none; 
+    }
+}
+
+@media (min-width: 1200px) {
+    .review-img {
+        width: 100px; 
+        height: 100px;
     }
 }

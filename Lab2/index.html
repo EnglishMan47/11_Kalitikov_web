@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 	<title>Avo Saver - Спасите свои авокадо!</title>
-	<link rel="stylesheet" href="css/11.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -150,41 +151,74 @@
 
 		<section id="reviews" class="tab">
 			<h2>Отзывы наших пользователей</h2>
-			<div id="review-list" class="reviews-grid">
-				<div class="review-card">
-					<img src="https://sun9-72.userapi.com/impg/Bgfn1LEnsVzVEn-u2FSaPN5agBQcX5l0OLtcGw/G3Is0UVPhOE.jpg?size=1536x2048&quality=95&sign=8944e40d3c2ae3318ebf220433e532de&type=album" alt="Алблак Пясятдва" class="review-img">
-					<p>"Моя жизнь изменилась! Авокадо всегда свежие." <span class="stars">★★★★★</span></p>
-					<p><strong>— Алблак Пясятдва, 20 лет</strong></p>
-				</div>
-				<div class="review-card">
-					<img src="https://i.pinimg.com/originals/cf/cb/2d/cfcb2d41a08ba4305c7337ac4cb1f967.jpg" alt="Мария" class="review-img">
-					<p>"Лучшее, что я покупала за 99 рублей!" <span class="stars">★★★★☆</span></p>
-					<p><strong>— Наталья, 300 метров от вас</strong></p>
-				</div>
-				<div class="review-card">
-					<img src="https://sun9-5.userapi.com/impg/oJZwfIBxOUBl5voecuj3KCc4vcM1FdykVkTfdw/3qxLGTeSRBQ.jpg?size=1620x2160&quality=95&sign=94e832da758aab544961f7b2ce85e80d&type=album" alt="Ольга" class="review-img">
-					<p>"Теперь я ем авокадо каждый день!" <span class="stars">★★★★★</span></p>
-					<p><strong>— Строитель Дюрант, 20 лет</strong></p>
-				</div>
-			</div>
-			<h3 class="review-title">Оставьте свой отзыв</h3>
-			<div class="review-form">
-				<form id="review-form">
-					<label for="name">Имя:</label>
-					<input type="text" id="name" name="name" required>
-					<label for="review">Отзыв:</label>
-					<textarea id="review" name="review" required></textarea>
-					<label for="rating">Оценка:</label>
-					<select id="rating" name="rating">
-                        <option value="5">5 звёзд</option>
-                        <option value="4">4 звезды</option>
-                        <option value="3">3 звезды</option>
-                        <option value="2">2 звезды</option>
-                        <option value="1">1 звезда</option>
-                    </select>
-					<button type="submit">Отправить</button>
-				</form>
-			</div>
+    <div id="review-list" class="reviews-grid">
+        <div class="review-card">
+            <img src="https://sun9-72.userapi.com/impg/Bgfn1LEnsVzVEn-u2FSaPN5agBQcX5l0OLtcGw/G3Is0UVPhOE.jpg?size=1536x2048&quality=95&sign=8944e40d3c2ae3318ebf220433e532de&type=album" alt="Алблак Пясятдва" class="review-img">
+            <p>"Моя жизнь изменилась! Авокадо всегда свежие." <span class="stars">★★★★★</span></p>
+            <p><strong>— Алблак Пясятдва, 20 лет</strong></p>
+        </div>
+        <div class="review-card">
+            <img src="https://i.pinimg.com/originals/cf/cb/2d/cfcb2d41a08ba4305c7337ac4cb1f967.jpg" alt="Мария" class="review-img">
+            <p>"Лучшее, что я покупала за 99 рублей!" <span class="stars">★★★★☆</span></p>
+            <p><strong>— Наталья, 300 метров от вас</strong></p>
+        </div>
+        <div class="review-card">
+            <img src="https://sun9-5.userapi.com/impg/oJZwfIBxOUBl5voecuj3KCc4vcM1FdykVkTfdw/3qxLGTeSRBQ.jpg?size=1620x2160&quality=95&sign=94e832da758aab544961f7b2ce85e80d&type=album" alt="Ольга" class="review-img">
+            <p>"Теперь я ем авокадо каждый день!" <span class="stars">★★★★★</span></p>
+            <p><strong>— Строитель Дюрант, 20 лет</strong></p>
+        </div>
+    </div>
+    <h3 class="review-title">Оставьте свой отзыв</h3>
+    <div class="review-form">
+        <form id="review-form">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="review">Отзыв:</label>
+            <textarea id="review" name="review" required></textarea>
+            <label for="rating">Оценка:</label>
+            <select id="rating" name="rating">
+                <option value="5">5 звёзд</option>
+                <option value="4">4 звезды</option>
+                <option value="3">3 звезды</option>
+                <option value="2">2 звезды</option>
+                <option value="1">1 звезда</option>
+            </select>
+            <label>Иконка:</label>
+			<div class="icon-options">
+				<label>
+				  <input type="radio" name="icon" value="img/gigachad.jpg">
+				  <img src="https://memepedia.ru/wp-content/uploads/2020/03/gigachad.jpg" alt="Иконка 1" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Скала.jpg">
+				  <img src="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc" alt="Иконка 2" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Пеньков удивляется.png">
+				  <img src="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png" alt="Иконка 3" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Cyn.jpg">
+				  <img src="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg" alt="Иконка 4" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Miuing.jpg">
+				  <img src="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg" alt="Иконка 5" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Смотри, лосось.jpg">
+				  <img src="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg" alt="Иконка 6" width="100" height="100">
+				</label>
+				<label>
+				  <input type="radio" name="icon" value="img/Юра Борисов.png">
+				  <img src="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png" alt="Иконка 7" width="100" height="100">
+				</label>
+			  </div>
+            <label for="custom-icon">Или загрузите свою иконку:</label>
+            <input type="file" id="custom-icon" name="custom-icon" accept="image/*">
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
 			<aside class="ad-banner">
 				<div class="left-ad">
 					<img src="https://via.placeholder.com/300x200" alt="Reload Page">
@@ -250,30 +284,29 @@
 					</div>
 				</aside>
 		</section>
-	</main>
-
-	<aside class="popup-ads">
-		<div class="salmon-ad">
-			<span class="close-btn">✖</span>
-			<img src="https://media1.tenor.com/m/x9efZijA7aYAAAAC/fsh-spin.gif" alt="Spinning Salmon">
-			<p>Продам лосось оптом 100 рублей за кг. Звонить по телефону: 8(499)978-82-14 </p>
-		</div>
-		<div class="ad-timer">
-			<span class="close-btn">✖</span>
-			<img src="https://i.pinimg.com/736x/9a/0d/49/9a0d4988dcc474a77fdc0d6132d5cb76--cool-kitchen-gadgets-kitchen-tips.jpg" alt="Ad Image">
-			<div class="ad-text">
-				<p><strong>Скидка 99% для первого заказа при регистрации на сайте bajiroo.com.</strong></p>
-				<p><strong>Успейте купить!!!</strong></p>
-				<p><em>Рекламу можно будет закрыть через <span id="timer">5</span> сек...</em></p>
+		<aside class="popup-ads">
+			<div class="salmon-ad">
+				<span class="close-btn">✖</span>
+				<img src="https://media1.tenor.com/m/x9efZijA7aYAAAAC/fsh-spin.gif" alt="Spinning Salmon">
+				<p>Продам лосось оптом 100 рублей за кг. Звонить по телефону: 8(499)978-82-14 </p>
 			</div>
-		</div>
-	</aside>
+			<div class="ad-timer">
+				<span class="close-btn">✖</span>
+				<img src="https://i.pinimg.com/736x/9a/0d/49/9a0d4988dcc474a77fdc0d6132d5cb76--cool-kitchen-gadgets-kitchen-tips.jpg" alt="Ad Image">
+				<div class="ad-text">
+					<p><strong>Скидка 99% для первого заказа при регистрации на сайте bajiroo.com.</strong></p>
+					<p><strong>Успейте купить!!!</strong></p>
+					<p><em>Рекламу можно будет закрыть через <span id="timer">5</span> сек...</em></p>
+				</div>
+			</div>
+		</aside>
+	</main>
 
 	<footer>
 		<p>© 2025 Kalitikov Website</p>
 	</footer>
 
-	<script src="js/11.js"></script>
+	<script src="js/index.js"></script>
 </body>
 
 </html>
