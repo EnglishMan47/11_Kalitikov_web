@@ -1,311 +1,290 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/index.css">
-	<title>Avo Saver - Спасите свои авокадо!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Avo Saver - Спасите свои авокадо!</title>
 </head>
-
 <body>
-	<header class="navbar">
-		<h1 class="product-title">Avo Saver</h1>
-		<nav>
-			<ul>
-				<li><a href="#main" class="tab-link active" data-tab="main">Главная</a></li>
-				<li><a href="#about" class="tab-link" data-tab="about">О нас</a></li>
-				<li><a href="#reviews" class="tab-link" data-tab="reviews">Отзывы</a></li>
-				<li><a href="#buy" class="tab-link" data-tab="buy">Купить</a></li>
-			</ul>
-		</nav>
-	</header>
+    <header class="navbar">
+        <h1 class="product-title">Avo Saver</h1>
+        <nav>
+            <ul>
+                <li><a href="#main" class="tab-link active" data-tab="main">Главная</a></li>
+                <li><a href="#about" class="tab-link" data-tab="about">О нас</a></li>
+                <li><a href="#reviews" class="tab-link" data-tab="reviews">Отзывы</a></li>
+                <li><a href="#buy" class="tab-link" data-tab="buy">Купить</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" class="theme-btn">Тёмная тема</button>
+    </header>
 
-	<main class="tab-content">
-		<section id="main" class="tab active">
-			<header class="main-header">
-				<h1>Avo Saver - Спасите свои авокадо!</h1>
-			</header>
-			<div class="slogans-flex">
-				<p class="slogan">«Спаси авокадо — спаси мир!»</p>
-				<p class="slogan">«Без Avo Saver ты просто не выживешь!»</p>
-				<p class="slogan">«Авокадо плохо? Avo Saver в деле!»</p>
-			</div>
-			<section class="reasons-section">
-				<h2>Топ-5 причин, почему тебе нужно купить Avo Saver:</h2>
-				<div class="reasons-list">
-					<article class="reason-block">
-						<figure>
-							<img src="https://s.alicdn.com/@sc01/kf/Hafcdcd68d10e461f9151e9c8e907c240U.jpg" alt="Свежий авокадо" class="reason-img">
-                        </figure>
-							<div class="block-text">
-								<h3>5-е место: Ты же не варвар!</h3>
-								<p>Ты ведь не из тех людей, кто просто заворачивает авокадо в пакет и бросает в
-									холодильник, правда? У настоящего эстета должен быть специальный гаджет, потому что
-									половинка авокадо – это не просто еда, а образ жизни.</p>
-							</div>
-					</article>
-					<article class="reason-block">
-						<figure>
-							<img src="https://i.pinimg.com/736x/c7/31/8b/c7318b6f7e0e87a77ed18c43576b545b.jpg" alt="Свежий авокадо" class="reason-img">
-                        </figure>
-							<div class="block-text">
-								<h3>4-е место: Авокадо – живое существо (почти)!</h3>
-								<p>Каждый раз, когда ты оставляешь половинку авокадо без защиты на долгое время, она
-									чувствует, как умирает, медленно превращаясь в коричневый ужас. Не будь бездушным
-									монстром – спаси его с Avo Saver!</p>
-							</div>
-					</article>
-					<article class="reason-block">
-						<figure>
-							<img src="https://yandex-images.clstorage.net/ytcJ99338/e5a937vE3Z/3Vf57IHZj-nGuOKS6PJMOLEUU_DyFYbkdOjnbaOK8aLBF1SEed6kkp_MiROvAuKE-KKTpqmOKwW94707Rb5XipMHtb7Kh8jpw6ypmKToQCikWE6z51ef4HOx6z3E5obU4nl-5gmo3r_QlIFF8k3_xbvF-b_8oGgZ6JvAK3HSK-vgecbjgtzx1euvpa3D5ko4i1Jv4-hWtpZkwq930Om-0-dsScM4u-2F2JugS8dPufqn0ezR-ZtMLcW4zxdw1TDZwlf87IX65_DkkomJ-99hMqVgfP7Ud6qXeO6fd8PXsvrObGTiFK3Ng_qQg3fVR53FrcvE_dqDbRnIov8HTdcP3-Jz_OiA5vT2yr-8qODrQCyiYk7s7FWWuGjDq37Y-5Lk9lRU9w6VzqHQtJhS8kW0xrb90vfeoVQh26DaIUfhINXqWvXYgtDk3faHnr7zyFgThldXw_Vbval224x30Omfzepoa9oPreSgxaSLTf9it_ON-9L3zJJyDtWw3gV73hXBxFv46prtxuzSuo2AyMlSDoVpUuTTaI6Xf9auaMvWqfLaQHDOFaPAsOKeuW7tcrD2quzi99ulUCvOh90LQfQv089l--md8-Dw8pqljt3VQTC-WEnnwF6_n3j2nF38wI_sxktQ0zGK_KHBhZ9yzlCDxoTt_vHbmXEz-ZL_DWvVG9ffT-XlmtrX1eC_oa743W8-hWlQz9VbgIpc-phq_OG-2PhsUs0Og9KI6J2cUfN-o_iY-8vO5aBtNtq58ApT2A3i8WDe3afN8dHNmK-e89FlJ590UvPjVLq1W9STfP3XltHsQHn_GqnUvf2nmlPlQ7P4v-PV6c2vUjj-oNMtRdw32uJizsaK5snG8K-Eodj1ShyiYHXGwXWMqljCjVvC6KLh535a-wO-3Indk79G4FSVz5rz3M7Uj3YI77LcDF7kNurvf9fLtPzU8cCkq5n73kk_hEtf4slyrolSzbRE088" alt="Свежий авокадо" class="reason-img">
-                        </figure>
-							<div class="block-text">
-								<h3>3-е место: Ты экономишь деньги… и нервы</h3>
-								<p>Каждый раз, когда твое авокадо портится, ты теряешь деньги. Представь, что ты мог бы
-									уже купить яхту, если бы не выбрасывал все эти загнившие половинки. Ладно, не яхту,
-									но как минимум ещё один авокадо!</p>
-							</div>
-					</article>
-					<article class="reason-block">
-						<figure>
-							<img src="https://www.mosregfermer.ru/upload/iblock/8b9/8b911ef2c6ef75cdf654be4fb68a99e0.jpg" alt="Свежий авокадо" class="reason-img">
-                        </figure>
-							<div class="block-text">
-								<h3>2-е место: Завидуйте, ЗОЖники!</h3>
-								<p>С таким аксессуаром ты официально становишься гуру здорового питания. Люди будут
-									видеть тебя с Avo Saver и думать, что ты разбираешься в здоровом питании.</p>
-							</div>
-					</article>
-					<article class="reason-block">
-						<figure>
-							<img src="https://i.pinimg.com/736x/a5/fe/84/a5fe840128d2a793392c6789e5f0cbde.jpg" alt="Avo Saver в деле" class="reason-img">
-                        </figure>
-							<div class="block-text">
-								<h3>1-е место: Авокадо больше не убьёт тебя ночью</h3>
-								<p>Все мы знаем, что авокадо – коварный фрукт. Если не съесть его вовремя, он
-									превращается в камень и становится смертельно опасным. Представь, что твоё авокадо
-									решит ночью напасть на тебя... Не рискуй! Avo Saver – твой щит!</p>
-							</div>
-					</article>
-				</div>
-			</section>
-			<div class="video-section">
-				<h2>Смотрите наше видео!</h2>
-				<div class="video-placeholder"
-					data-video="https://www.youtube.com/embed/zBm2hbKvyjA?si=hyJmghGUFy6HL4zT"></div>
-			</div>
-			<aside class="ad-banner">
-				<div class="left-ad">
-					<img src="https://via.placeholder.com/300x200" alt="Reload Page">
-					<p>Жми меня, чтобы заново открыть страницу</p>
-				</div>
-				<div class="right-ad">
-					<h2 class="ad-title">Пеньковбанк</h2>
-					<img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
-					<p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
-					<p>Ставка по вкладам – до 12,5% годовых</p>
-					<p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
-					<p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
-					<p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
-				</div>
-			</aside>
-		</section>
-
-		<section id="about" class="tab">
-			<div class="fictional-info">
-				<h2>О нашем продукте</h2>
-				<p>Ты купил идеальное авокадо, разрезал его, съел половину… А вторая? Она уже смотрит на тебя с укором,
-					готовясь стать коричневой и грустной. Но больше никаких жертв! С Avo Saver твоя половинка авокадо
-					останется свежей, зелёной и счастливой, будто только что с дерева!</p>
-				<p>Что такое Avo Saver? Это специальный пластиковый держатель с ремешком, который надежно фиксирует
-					половинку авокадо и замедляет процесс окисления. Без плёнки, без лайфхаков с луком, без слёз!</p>
-			</div>
-			<div class="image-gallery">
-				<img src="https://m.media-amazon.com/images/I/51Kwg6nOS5L._AC_UL960_QL65_.jpg" alt="Avo Saver 1" class="product-img">
-				<img src="https://5armia.ru/pic/678fe109e381a34dd875ac28318c5b38/avo-saver-3.jpg" alt="Avo Saver 2" class="product-img">
+    <main class="tab-content">
+        <section id="main" class="tab active">
+            <header class="main-header">
+                <h1>Avo Saver - Спасите свои авокадо!</h1>
+            </header>
+            <div class="slogans-flex">
+                <p class="slogan">«Спаси авокадо — спаси мир!»</p>
+                <p class="slogan">«Без Avo Saver ты просто не выживешь!»</p>
+                <p class="slogan">«Авокадо плохо? Avo Saver в деле!»</p>
             </div>
-				<div class="video-section">
-					<h3>Если вы не знали:</h3>
-					<div class="video-placeholder"
-						data-video="https://www.youtube.com/embed/3cJp66KE76M?si=4iaojKYW5jRLC5Fp"></div>
-				</div>
-				<aside class="ad-banner">
-					<div class="left-ad">
-						<img src="https://via.placeholder.com/300x200" alt="Reload Page">
-						<p>Жми меня, чтобы заново открыть страницу</p>
-					</div>
-					<div class="right-ad">
-						<h2 class="ad-title">Пеньковбанк</h2>
-						<img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
-						<p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
-						<p>Ставка по вкладам – до 12,5% годовых</p>
-						<p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
-						<p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
-						<p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
-					</div>
-				</aside>
-		</section>
-
-		<section id="reviews" class="tab">
-			<h2>Отзывы наших пользователей</h2>
-    <div id="review-list" class="reviews-grid">
-        <div class="review-card">
-            <img src="https://sun9-72.userapi.com/impg/Bgfn1LEnsVzVEn-u2FSaPN5agBQcX5l0OLtcGw/G3Is0UVPhOE.jpg?size=1536x2048&quality=95&sign=8944e40d3c2ae3318ebf220433e532de&type=album" alt="Алблак Пясятдва" class="review-img">
-            <p>"Моя жизнь изменилась! Авокадо всегда свежие." <span class="stars">★★★★★</span></p>
-            <p><strong>— Алблак Пясятдва, 20 лет</strong></p>
-        </div>
-        <div class="review-card">
-            <img src="https://i.pinimg.com/originals/cf/cb/2d/cfcb2d41a08ba4305c7337ac4cb1f967.jpg" alt="Мария" class="review-img">
-            <p>"Лучшее, что я покупала за 99 рублей!" <span class="stars">★★★★☆</span></p>
-            <p><strong>— Наталья, 300 метров от вас</strong></p>
-        </div>
-        <div class="review-card">
-            <img src="https://sun9-5.userapi.com/impg/oJZwfIBxOUBl5voecuj3KCc4vcM1FdykVkTfdw/3qxLGTeSRBQ.jpg?size=1620x2160&quality=95&sign=94e832da758aab544961f7b2ce85e80d&type=album" alt="Ольга" class="review-img">
-            <p>"Теперь я ем авокадо каждый день!" <span class="stars">★★★★★</span></p>
-            <p><strong>— Строитель Дюрант, 20 лет</strong></p>
-        </div>
-    </div>
-    <h3 class="review-title">Оставьте свой отзыв</h3>
-    <div class="review-form">
-        <form id="review-form">
-            <label for="name">Имя:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="review">Отзыв:</label>
-            <textarea id="review" name="review" required></textarea>
-            <label for="rating">Оценка:</label>
-            <select id="rating" name="rating">
-                <option value="5">5 звёзд</option>
-                <option value="4">4 звезды</option>
-                <option value="3">3 звезды</option>
-                <option value="2">2 звезды</option>
-                <option value="1">1 звезда</option>
-            </select>
-            <label>Иконка:</label>
-			<div class="icon-options">
-				<label>
-				  <input type="radio" name="icon" value="img/gigachad.jpg">
-				  <img src="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg" alt="Иконка 1" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Скала.jpg">
-				  <img src="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc" alt="Иконка 2" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Пеньков удивляется.png">
-				  <img src="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png" alt="Иконка 3" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Cyn.jpg">
-				  <img src="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg" alt="Иконка 4" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Miuing.jpg">
-				  <img src="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg" alt="Иконка 5" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Смотри, лосось.jpg">
-				  <img src="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg" alt="Иконка 6" width="100" height="100">
-				</label>
-				<label>
-				  <input type="radio" name="icon" value="img/Юра Борисов.png">
-				  <img src="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png" alt="Иконка 7" width="100" height="100">
-				</label>
-			  </div>
-            <label for="custom-icon">Или загрузите свою иконку:</label>
-            <input type="file" id="custom-icon" name="custom-icon" accept="image/*">
-            <button type="submit">Отправить</button>
-        </form>
-    </div>
-			<aside class="ad-banner">
-				<div class="left-ad">
-					<img src="https://via.placeholder.com/300x200" alt="Reload Page">
-					<p>Жми меня, чтобы заново открыть страницу</p>
-				</div>
-				<div class="right-ad">
-						<h2 class="ad-title">Пеньковбанк</h2>
-						<img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
-						<p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
-						<p>Ставка по вкладам – до 12,5% годовых</p>
-						<p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
-						<p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
-						<p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
-					</div>
-			</aside>
-		</section>
-
-		<section id="buy" class="tab">
-			<div class="image-gallery">
-				<img src="https://img.joomcdn.net/a19a0e947b42421d78eec8ce50c045627c276815_original.jpeg" alt="Avo Saver 1" class="product-img">
-				<img src="https://i.pinimg.com/736x/02/66/ea/0266ea28a8188c5de408eab80dbbc7f8.jpg" alt="Avo Saver 2" class="product-img">
-				<img src="https://img.joomcdn.net/030fa38b1ad2dbcb4200ff6cd9157b36ea818108_original.jpeg" alt="Avo Saver 3" class="product-img">
+            <section class="reasons-section">
+                <h2>Топ-5 причин, почему тебе нужно купить Avo Saver:</h2>
+                <div class="reasons-list">
+                    <article class="reason-block">
+                        <figure>
+                            <img src="https://s.alicdn.com/@sc01/kf/Hafcdcd68d10e461f9151e9c8e907c240U.jpg" alt="Свежий авокадо" class="reason-img">
+                        </figure>
+                        <div class="block-text">
+                            <h3>5-е место: Ты же не варвар!</h3>
+                            <p>Ты ведь не из тех людей, кто просто заворачивает авокадо в пакет и бросает в холодильник, правда? У настоящего эстета должен быть специальный гаджет, потому что половинка авокадо – это не просто еда, а образ жизни.</p>
+                        </div>
+                    </article>
+                    <article class="reason-block">
+                        <figure>
+                            <img src="https://i.pinimg.com/736x/32/e0/13/32e0130a543b45922da3d2dbb548e500.jpg" alt="Свежий авокадо" class="reason-img">
+                        </figure>
+                        <div class="block-text">
+                            <h3>4-е место: Авокадо – живое существо (почти)!</h3>
+                            <p>Каждый раз, когда ты оставляешь половинку авокадо без защиты на долгое время, она чувствует, как умирает, медленно превращаясь в коричневый ужас. Не будь бездушным монстром – спаси его с Avo Saver!</p>
+                        </div>
+                    </article>
+                    <article class="reason-block">
+                        <figure>
+                            <img src="https://yandex-images.clstorage.net/ytcJ99338/e5a937vE3Z/3Vf57IHZj-nGuOKS6PJMOLEUU_DyFYbkdOjnbaOK8aLBF1SEed6kkp_MiROvAuKE-KKTpqmOKwW94707Rb5XipMHtb7Kh8jpw6ypmKToQCikWE6z51ef4HOx6z3E5obU4nl-5gmo3r_QlIFF8k3_xbvF-b_8oGgZ6JvAK3HSK-vgecbjgtzx1euvpa3D5ko4i1Jv4-hWtpZkwq930Om-0-dsScM4u-2F2JugS8dPufqn0ezR-ZtMLcW4zxdw1TDZwlf87IX65_DkkomJ-99hMqVgfP7Ud6qXeO6fd8PXsvrObGTiFK3Ng_qQg3fVR53FrcvE_dqDbRnIov8HTdcP3-Jz_OiA5vT2yr-8qODrQCyiYk7s7FWWuGjDq37Y-5Lk9lRU9w6VzqHQtJhS8kW0xrb90vfeoVQh26DaIUfhINXqWvXYgtDk3faHnr7zyFgThldXw_Vbval224x30Omfzepoa9oPreSgxaSLTf9it_ON-9L3zJJyDtWw3gV73hXBxFv46prtxuzSuo2AyMlSDoVpUuTTaI6Xf9auaMvWqfLaQHDOFaPAsOKeuW7tcrD2quzi99ulUCvOh90LQfQv089l--md8-Dw8pqljt3VQTC-WEnnwF6_n3j2nF38wI_sxktQ0zGK_KHBhZ9yzlCDxoTt_vHbmXEz-ZL_DWvVG9ffT-XlmtrX1eC_oa743W8-hWlQz9VbgIpc-phq_OG-2PhsUs0Og9KI6J2cUfN-o_iY-8vO5aBtNtq58ApT2A3i8WDe3afN8dHNmK-e89FlJ590UvPjVLq1W9STfP3XltHsQHn_GqnUvf2nmlPlQ7P4v-PV6c2vUjj-oNMtRdw32uJizsaK5snG8K-Eodj1ShyiYHXGwXWMqljCjVvC6KLh535a-wO-3Indk79G4FSVz5rz3M7Uj3YI77LcDF7kNurvf9fLtPzU8cCkq5n73kk_hEtf4slyrolSzbRE088" alt="Свежий авокадо" class="reason-img">
+                        </figure>
+                        <div class="block-text">
+                            <h3>3-е место: Ты экономишь деньги… и нервы</h3>
+                            <p>Каждый раз, когда твое авокадо портится, ты теряешь деньги. Представь, что ты мог бы уже купить яхту, если бы не выбрасывал все эти загнившие половинки. Ладно, не яхту, но как минимум ещё один авокадо!</p>
+                        </div>
+                    </article>
+                    <article class="reason-block">
+                        <figure>
+                            <img src="https://www.mosregfermer.ru/upload/iblock/8b9/8b911ef2c6ef75cdf654be4fb68a99e0.jpg" alt="Свежий авокадо" class="reason-img">
+                        </figure>
+                        <div class="block-text">
+                            <h3>2-е место: Завидуйте, ЗОЖники!</h3>
+                            <p>С таким аксессуаром ты официально становишься гуру здорового питания. Люди будут видеть тебя с Avo Saver и думать, что ты разбираешься в здоровом питании.</p>
+                        </div>
+                    </article>
+                    <article class="reason-block">
+                        <figure>
+                            <img src="https://i.pinimg.com/736x/a5/fe/84/a5fe840128d2a793392c6789e5f0cbde.jpg" alt="Avo Saver в деле" class="reason-img">
+                        </figure>
+                        <div class="block-text">
+                            <h3>1-е место: Авокадо больше не убьёт тебя ночью</h3>
+                            <p>Все мы знаем, что авокадо – коварный фрукт. Если не съесть его вовремя, он превращается в камень и становится смертельно опасным. Представь, что твоё авокадо решит ночью напасть на тебя... Не рискуй! Avo Saver – твой щит!</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <div class="video-section">
+                <h2>Смотрите наше видео!</h2>
+                <div class="video-placeholder" data-video="https://www.youtube.com/embed/zBm2hbKvyjA?si=hyJmghGUFy6HL4zT"></div>
             </div>
-				<div class="fictional-info">
-					<h2>Техническое описание Avo Saver</h2>
-					<p>Модель: Avo Saver Pro 3000</p>
-					<p>Материал: Биополимерная пластмасса с антиоксидантным покрытием</p>
-					<p>Размер: 12 × 8 × 5 см (подходит для 99,9% авокадо)</p>
-					<p>Комплектация: держатель с ремешком, нож для резки авокадо</p>
-					<p>Вес: 65 г (легче половинки авокадо, но прочнее твоих надежд на зрелый фрукт)</p>
-					<p>Цвет: Зелёный (идеально сливается с авокадо, не пугая его в холодильнике)</p>
-					<p>Температурный диапазон: От -20°C до +50°C (авокадо переживёт даже твой холодильник)</p>
-					<p>Фиксирующий механизм: Гиперэластичный ремешок с системой UltraLock™</p>
-					<p>Срок службы: Минимум 10 000 авокадо (или пока ты не перейдёшь на бананы)</p>
-					<p>Дополнительные особенности:</p>
-					<div class="feature-list">
-						<div class="feature-item">Автономная система сохранения свежести – никаких батареек, просто
-							наука и немного магии</div>
-						<div class="feature-item">Антискользящее основание – не упадёт с полки даже при землетрясении в
-							3 балла</div>
-						<div class="feature-item">Эргономичный дизайн – разработан с учётом анатомии авокадо</div>
-						<div class="feature-item">Полностью биоразлагаемая упаковка – экология скажет тебе «спасибо»
-						</div>
-					</div>
-					<p>Факт: Использование Avo Saver увеличивает вероятность, что ты доешь своё авокадо, на 78%!</p>
-				</div>
-				<p>Купите Avo Saver прямо сейчас и получите скидку 10%!</p>
-				<a href="https://www.amazon.com/Simply-Served-Avocados-Effectively-Browning/dp/B08H5TF5F1"
-					class="buy-btn" target="_blank">Купить сейчас</a>
-				<aside class="ad-banner">
-					<div class="left-ad">
-						<img src="https://resizer.mail.ru/p/0f8fa55f-1fa9-509f-9374-d08eab4e64d1/dpr:123/scale:80/AQAKmbT1PiAYFusPn3oHpWUdW8kj88j56zrFqaUviq0rnMvGia8WpNeBqqWAzVXMhMgWv1VUP-ZmMcoFh7jqJKjCUtw.webp" alt="Reload Page">
-						<p>Жми меня, чтобы заново открыть страницу</p>
-					</div>
-					<div class="right-ad">
-						<h2 class="ad-title">Пеньковбанк</h2>
-						<img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
-						<p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
-						<p>Ставка по вкладам – до 12,5% годовых</p>
-						<p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
-						<p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
-						<p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
-					</div>
-				</aside>
-		</section>
-		<aside class="popup-ads">
-			<div class="salmon-ad">
-				<span class="close-btn">✖</span>
-				<img src="https://media1.tenor.com/m/x9efZijA7aYAAAAC/fsh-spin.gif" alt="Spinning Salmon">
-				<p>Продам лосось оптом 100 рублей за кг. Звонить по телефону: 8(499)978-82-14 </p>
-			</div>
-			<div class="ad-timer">
-				<span class="close-btn">✖</span>
-				<img src="https://i.pinimg.com/736x/9a/0d/49/9a0d4988dcc474a77fdc0d6132d5cb76--cool-kitchen-gadgets-kitchen-tips.jpg" alt="Ad Image">
-				<div class="ad-text">
-					<p><strong>Скидка 99% для первого заказа при регистрации на сайте bajiroo.com.</strong></p>
-					<p><strong>Успейте купить!!!</strong></p>
-					<p><em>Рекламу можно будет закрыть через <span id="timer">5</span> сек...</em></p>
-				</div>
-			</div>
-		</aside>
-	</main>
+            <aside class="ad-banner">
+                <div class="left-ad">
+                    <img src="https://resizer.mail.ru/p/0f8fa55f-1fa9-509f-9374-d08eab4e64d1/dpr:123/scale:80/AQAKmbT1PiAYFusPn3oHpWUdW8kj88j56zrFqaUviq0rnMvGia8WpNeBqqWAzVXMhMgWv1VUP-ZmMcoFh7jqJKjCUtw.webp" alt="Reload Page">
+                    <p>Жми меня, чтобы заново открыть страницу</p>
+                </div>
+                <div class="right-ad">
+                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
+                    <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
+                    <p>Ставка по вкладам – до 12,5% годовых</p>
+                    <p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
+                    <p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
+                    <p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
+                </div>
+            </aside>
+        </section>
 
-	<footer>
-		<p>© 2025 Kalitikov Website</p>
-	</footer>
+        <section id="about" class="tab">
+            <div class="fictional-info">
+                <h2>О нашем продукте</h2>
+                <p>Ты купил идеальное авокадо, разрезал его, съел половину… А вторая? Она уже смотрит на тебя с укором, готовясь стать коричневой и грустной. Но больше никаких жертв! С Avo Saver твоя половинка авокадо останется свежей, зелёной и счастливой, будто только что с дерева!</p>
+                <p>Что такое Avo Saver? Это специальный пластиковый держатель с ремешком, который надежно фиксирует половинку авокадо и замедляет процесс окисления. Без плёнки, без лайфхаков с луком, без слёз!</p>
+            </div>
+            <div class="image-gallery">
+                <img src="https://m.media-amazon.com/images/I/51Kwg6nOS5L._AC_UL960_QL65_.jpg" alt="Avo Saver 1" class="product-img">
+                <img src="https://5armia.ru/pic/678fe109e381a34dd875ac28318c5b38/avo-saver-3.jpg" alt="Avo Saver 2" class="product-img">
+            </div>
+            <div class="video-section">
+                <h3>Если вы не знали:</h3>
+                <div class="video-placeholder" data-video="https://www.youtube.com/embed/3cJp66KE76M?si=4iaojKYW5jRLC5Fp"></div>
+            </div>
+            <aside class="ad-banner">
+                <div class="left-ad">
+                    <img src="https://resizer.mail.ru/p/0f8fa55f-1fa9-509f-9374-d08eab4e64d1/dpr:123/scale:80/AQAKmbT1PiAYFusPn3oHpWUdW8kj88j56zrFqaUviq0rnMvGia8WpNeBqqWAzVXMhMgWv1VUP-ZmMcoFh7jqJKjCUtw.webp" alt="Reload Page">
+                    <p>Жми меня, чтобы заново открыть страницу</p>
+                </div>
+                <div class="right-ad">
+                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
+                    <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
+                    <p>Ставка по вкладам – до 12,5% годовых</p>
+                    <p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
+                    <p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
+                    <p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
+                </div>
+            </aside>
+        </section>
 
-	<script src="js/index.js"></script>
+        <section id="reviews" class="tab">
+            <h2>Отзывы наших пользователей</h2>
+            <div class="review-controls">
+                <button id="sort-asc">Сортировать по возрастанию рейтинга</button>
+                <button id="sort-desc">Сортировать по убыванию рейтинга</button>
+                <select id="filter-rating">
+                    <option value="all">Все отзывы</option>
+                    <option value="5">5 звёзд</option>
+                    <option value="4">4 звезды</option>
+                    <option value="3">3 звезды</option>
+                    <option value="2">2 звезды</option>
+                    <option value="1">1 звезда</option>
+                </select>
+            </div>
+            <div id="review-list" class="reviews-grid"></div>
+            <h3 class="review-title">Оставьте свой отзыв</h3>
+            <div class="reviews-container">
+                <form id="review-form">
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="review">Отзыв:</label>
+                    <textarea id="review" name="review" required></textarea>
+                    <label for="rating">Оценка:</label>
+                    <select id="rating" name="rating">
+                        <option value="5">5 звёзд</option>
+                        <option value="4">4 звезды</option>
+                        <option value="3">3 звезды</option>
+                        <option value="2">2 звезды</option>
+                        <option value="1">1 звезда</option>
+                    </select>
+                    <label>Иконка:</label>
+                    <div class="icon-options">
+                        <label>
+                            <input type="radio" name="icon" value="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg">
+                            <img src="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg" alt="Иконка 1" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc">
+                            <img src="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc" alt="Иконка 2" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png">
+                            <img src="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png" alt="Иконка 3" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg">
+                            <img src="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg" alt="Иконка 4" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg">
+                            <img src="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg" alt="Иконка 5" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg">
+                            <img src="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg" alt="Иконка 6" width="100" height="100">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png">
+                            <img src="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png" alt="Иконка 7" width="100" height="100">
+                        </label>
+                    </div>
+                    <label for="custom-icon">Или загрузите свою иконку:</label>
+                    <input type="file" id="custom-icon" name="custom-icon" accept="image/*">
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+            <aside class="ad-banner">
+                <div class="left-ad">
+                    <img src="https://resizer.mail.ru/p/0f8fa55f-1fa9-509f-9374-d08eab4e64d1/dpr:123/scale:80/AQAKmbT1PiAYFusPn3oHpWUdW8kj88j56zrFqaUviq0rnMvGia8WpNeBqqWAzVXMhMgWv1VUP-ZmMcoFh7jqJKjCUtw.webp" alt="Reload Page">
+                    <p>Жми меня, чтобы заново открыть страницу</p>
+                </div>
+                <div class="right-ad">
+                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
+                    <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
+                    <p>Ставка по вкладам – до 12,5% годовых</p>
+                    <p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
+                    <p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
+                    <p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
+                </div>
+            </aside>
+        </section>
+
+        <section id="buy" class="tab">
+            <div class="image-gallery">
+                <img src="https://img.joomcdn.net/a19a0e947b42421d78eec8ce50c045627c276815_original.jpeg" alt="Avo Saver 1" class="product-img">
+                <img src="https://i.pinimg.com/736x/02/66/ea/0266ea28a8188c5de408eab80dbbc7f8.jpg" alt="Avo Saver 2" class="product-img">
+                <img src="https://img.joomcdn.net/030fa38b1ad2dbcb4200ff6cd9157b36ea818108_original.jpeg" alt="Avo Saver 3" class="product-img">
+            </div>
+            <div class="fictional-info">
+                <h2>Техническое описание Avo Saver</h2>
+                <p>Модель: Avo Saver Pro 3000</p>
+                <p>Материал: Биополимерная пластмасса с антиоксидантным покрытием</p>
+                <p>Размер: 12 × 8 × 5 см (подходит для 99,9% авокадо)</p>
+                <p>Комплектация: держатель с ремешком, нож для резки авокадо</p>
+                <p>Вес: 65 г (легче половинки авокадо, но прочнее твоих надежд на зрелый фрукт)</p>
+                <p>Цвет: Зелёный (идеально сливается с авокадо, не пугая его в холодильнике)</p>
+                <p>Температурный диапазон: От -20°C до +50°C (авокадо переживёт даже твой холодильник)</p>
+                <p>Фиксирующий механизм: Гиперэластичный ремешок с системой UltraLock™</p>
+                <p>Срок службы: Минимум 10 000 авокадо (или пока ты не перейдёшь на бананы)</p>
+                <p>Дополнительные особенности:</p>
+                <div class="feature-list">
+                    <div class="feature-item">Автономная система сохранения свежести – никаких батареек, просто наука и немного магии</div>
+                    <div class="feature-item">Антискользящее основание – не упадёт с полки даже при землетрясении в 3 балла</div>
+                    <div class="feature-item">Эргономичный дизайн – разработан с учётом анатомии авокадо</div>
+                    <div class="feature-item">Полностью биоразлагаемая упаковка – экология скажет тебе «спасибо»</div>
+                </div>
+                <p>Факт: Использование Avo Saver увеличивает вероятность, что ты доешь своё авокадо, на 78%!</p>
+            </div>
+            <p>Купите Avo Saver прямо сейчас и получите скидку 10%!</p>
+            <a href="https://www.amazon.com/Simply-Served-Avocados-Effectively-Browning/dp/B08H5TF5F1" class="buy-btn" target="_blank">Купить сейчас</a>
+            <aside class="ad-banner">
+                <div class="left-ad">
+                    <img src="https://resizer.mail.ru/p/0f8fa55f-1fa9-509f-9374-d08eab4e64d1/dpr:123/scale:80/AQAKmbT1PiAYFusPn3oHpWUdW8kj88j56zrFqaUviq0rnMvGia8WpNeBqqWAzVXMhMgWv1VUP-ZmMcoFh7jqJKjCUtw.webp" alt="Reload Page">
+                    <p>Жми меня, чтобы заново открыть страницу</p>
+                </div>
+                <div class="right-ad">
+                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
+                    <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
+                    <p>Ставка по вкладам – до 12,5% годовых</p>
+                    <p>Выдача кредитов – до 10 000 000 ₽ без залога!</p>
+                    <p>Более 500 000 довольных клиентов уже увеличили свой капитал!</p>
+                    <p>Пеньковбанк – потому что в жизни надо не просто сидеть на пеньке, а зарабатывать на нём!</p>
+                </div>
+            </aside>
+        </section>
+
+        <aside class="popup-ads">
+            <div class="salmon-ad">
+                <span class="close-btn">✖</span>
+                <img src="https://media1.tenor.com/m/x9efZijA7aYAAAAC/fsh-spin.gif" alt="Spinning Salmon">
+                <p>Продам лосось оптом 100 рублей за кг. Звонить по телефону: 8(499)978-82-14</p>
+            </div>
+            <div class="ad-timer">
+                <span class="close-btn">✖</span>
+                <img src="https://i.pinimg.com/736x/9a/0d/49/9a0d4988dcc474a77fdc0d6132d5cb76--cool-kitchen-gadgets-kitchen-tips.jpg" alt="Ad Image">
+                <div class="ad-text">
+                    <p><strong>Скидка 99% для первого заказа при регистрации на сайте bajiroo.com.</strong></p>
+                    <p><strong>Успейте купить!!!</strong></p>
+                    <p><em>Рекламу можно будет закрыть через <span id="timer">5</span> сек...</em></p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2025 Kalitikov Website</p>
+    </footer>
+
+    <script type="module" src="js/index.js" defer></script>
+    <script type="module" src="js/cookies.js" defer></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91f6b2809c83bd39',t:'MTc0MTgxODIxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
-
 </html>
