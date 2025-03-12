@@ -1,0 +1,864 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #c7e27b, #a3d165);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    margin: 0 0 16px 0; 
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 4vw;
+}
+h2 {
+    font-size: 3.5vw;
+}
+h3 {
+    font-size: 3vw;
+}
+h4 {
+    font-size: 2.5vw;
+}
+h5 {
+    font-size: 2vw;
+}
+h6 {
+    font-size: 1.5vw;
+}
+
+p {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+a {
+    color: #0000EE;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+button, input, select, textarea {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+}
+
+.navbar {
+    background: rgb(101, 137, 98);
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw 2vw;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.5rem, 2.5vw, 3rem);
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.navbar ul {
+    display: flex;
+    gap: 1.5vw;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    padding: 0.5vw 1vw;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.navbar a.active, .navbar a:hover {
+    background: #28a745;
+    transform: scale(1.05);
+}
+
+.tab-content {
+    flex: 1;
+    padding: 2vw;
+    background: #fff;
+    border-radius: 10px;
+    margin: 2vw auto;
+    max-width: 80vw;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+.main-header h1 {
+    font-size: clamp(2rem, 3vw, 4rem);
+    color: #28a745;
+    text-align: center;
+    margin-bottom: 2vw;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.slogans-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5vw;
+    justify-content: center;
+    padding: 1.5vw;
+    background: #e9ecef;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.slogan {
+    background: #ffd700;
+    padding: 1vw 2vw;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.slogan:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.reasons-section h2 {
+    font-size: clamp(2rem, 3vw, 4rem);
+    color: #28a745;
+    text-align: center;
+    margin: 2vw 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.reasons-list {
+    display: grid;
+    gap: 2vw;
+}
+
+.reason-block {
+    display: flex;
+    gap: 2vw;
+    background: #f8eede;
+    padding: 2vw;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reason-block:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.reason-img {
+    width: 25vw;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #28a745;
+}
+
+.block-text h3 {
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    color: #28a745;
+    margin-bottom: 1vw;
+}
+
+.block-text p {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+    line-height: 1.4;
+}
+
+.video-section {
+    text-align: center;
+    margin: 3vw 0;
+}
+
+.video-section h2 {
+    font-size: clamp(2rem, 3vw, 4rem);
+    color: #28a745;
+    margin-bottom: 1.5vw;
+}
+
+.video-section h3 {
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    color: #28a745;
+    margin-bottom: 1.5vw;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.fictional-info {
+    padding: 2vw;
+    background: #e9ecef;
+    border-radius: 10px;
+    margin: 2vw 0;
+}
+
+.fictional-info h2 {
+    font-size: clamp(2rem, 3vw, 4rem);
+    color: #28a745;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.fictional-info p {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+}
+
+.image-gallery {
+    display: flex;
+    gap: 2vw;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2vw 0;
+}
+
+.product-img {
+    width: 25vw;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #28a745;
+}
+
+#reviews h2 {
+    font-size: clamp(2rem, 3vw, 4rem);
+    color: #28a745;
+    text-align: center;
+    margin: 2vw 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
+    gap: 2vw;
+    padding: 2vw 0;
+}
+
+.review-card {
+    background: #fff;
+    padding: 1.5vw;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.review-card h2 {
+    font-size: clamp(1.2rem, 2vw, 2rem);
+}
+
+.review-img {
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 10px;
+    max-width: 100%; 
+    max-height: 100%; 
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 1.5vw;
+}
+
+.review-title {
+    font-size: clamp(1.4rem, 2vw, 3rem);
+    color: #28a745;
+    text-align: center;
+    margin: 2vw 0;
+}
+
+.review-form {
+    padding: 2vw;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.review-form label {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+}
+
+.review-form input, .review-form textarea, .review-form select {
+    width: 100%;
+    padding: 1vw;
+    margin: 1vw 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+}
+
+.review-form button {
+    background: #28a745;
+    color: #fff;
+    padding: 1vw 2vw;
+    border: none;
+    border-radius: 5px;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.review-form button:hover {
+    background: #218838;
+}
+
+.feature-list {
+    margin: 1vw 0;
+}
+
+.feature-item {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+    padding-left: 2vw;
+    position: relative;
+}
+
+.feature-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+}
+
+.icon-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    justify-content: center;
+    margin: 1vw 0;
+}
+
+.icon-options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon-options input[type="radio"] {
+    margin-bottom: 0.5vw;
+}
+
+.icon-options img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #28a745;
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.icon-options input[type="radio"]:checked + img {
+    transform: scale(1.1);
+    border-color: #ffd700;
+}
+
+.buy-btn {
+    display: block;
+    background: #ffd700;
+    color: #000;
+    padding: 1.5vw 3vw;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: clamp(1.5rem, 1.8vw, 2rem);
+    text-align: center;
+    margin: 2vw auto;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.buy-btn:hover {
+    background: #ffea00;
+    transform: scale(1.05);
+}
+
+.ad-banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    margin: 2vw 0;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 100%;
+    height: auto;
+}
+
+.left-ad {
+    position: relative;
+    width: auto;
+    max-width: 600px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.left-ad img {
+    width: 95%;
+    height: auto;
+    object-fit: scale-down;
+    border: 2px dashed #28a745;
+    display: block;
+}
+
+.left-ad p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.5vw 1vw;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.left-ad:hover {
+    background: #e0e0e0;
+}
+
+.right-ad {
+    background: #f0f0f0;
+    padding: 1.5vw;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border: 2px dashed #28a745;
+    text-align: justify;
+    font-family: 'Verdana', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-ad .bank-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1vw;
+}
+
+.right-ad .ad-title {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 1vw;
+    text-align: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.right-ad p {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+    margin: 0.5vw 0;
+}
+
+.popup-ads {
+    position: fixed;
+    z-index: 1000;
+}
+
+#reviews .ad-banner .right-ad .ad-title {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    color: #000; 
+    font-weight: bold;
+    margin-bottom: 1vw;
+    text-align: center;
+}
+
+.salmon-ad {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: clamp(300px, 40vw, 480px);
+    height: auto;
+    background: white;
+    border: 3px solid rgb(0, 115, 255);
+    display: flex;
+    align-items: center;
+    padding: 1vw;
+    box-sizing: border-box;
+    animation: salmonAnimation 10s infinite linear;
+}
+
+.salmon-ad img {
+    width: 30%;
+    height: auto;
+    margin-right: 1vw;
+}
+
+.salmon-ad p {
+    color: black;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+@keyframes salmonAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(calc(100vw - clamp(300px, 40vw, 480px))); }
+    100% { transform: translateX(0); }
+}
+
+.ad-timer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    width: clamp(300px, 50vw, 550px);
+    height: auto;
+    padding: 1.5vw;
+    background: #ffe4e1;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 3px solid #ff4500;
+}
+
+.ad-timer img {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.ad-timer .ad-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: justify;
+    width: 70%;
+}
+
+.ad-timer p {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #333;
+    margin: 0.5vw 0;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 1rem;
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    color: red;
+    background: #fff;
+    border-radius: 50%;
+    width: 2vw;
+    height: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.close-btn:hover {
+    background: #ff4500;
+    color: #fff;
+}
+
+footer {
+    background: #c7e27b;
+    text-align: center;
+    padding: 1vw;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .ad-timer {
+        display: none !important;
+    }
+    h1 {
+        font-size: 3.5vw;
+    }
+    h2 {
+        font-size: 3vw;
+    }
+    h3 {
+        font-size: 2.5vw;
+    }
+    h4 {
+        font-size: 2vw;
+    }
+    h5 {
+        font-size: 1.8vw;
+    }
+    h6 {
+        font-size: 1.5vw;
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
+        gap: 2vw;
+        padding: 2vw 0;
+    }
+
+    .review-card {
+        background: #fff;
+        padding: 1.5vw;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+    }
+
+    .review-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .review-form input, .review-form textarea, .review-form select {
+        width: 100%;
+        padding: 1vw;
+        margin: 1vw 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: clamp(1rem, 1.2vw, 1.5rem);
+    }
+
+    .icon-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1vw;
+        justify-content: center;
+        margin: 1vw 0;
+    }
+
+    .icon-options img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #28a745;
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+
+    .icon-options input[type="radio"]:checked + img {
+        transform: scale(1.1);
+        border-color: #ffd700;
+    }
+
+    html {
+        font-size: 18px; 
+    }
+
+    .fictional-info h2 {
+        font-size: clamp(1.5rem, 2vw, 3rem);
+    }
+
+    .navbar {
+        flex-direction: column;
+        padding: 2vw;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        gap: 1vw;
+    }
+
+    .left-ad p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5vw 1vw;
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1;
+        max-width: 90%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .left-ad {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        overflow: hidden;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 3vw;
+        overflow-x: hidden;
+    }
+
+    .right-ad {
+        background: #f0f0f0;
+        padding: 3vw;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border: 2px dashed #28a745;
+        text-align: justify;
+        font-family: 'Verdana', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    .right-ad  {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+    }
+
+    .right-ad p {
+        font-family: 'Times New Roman', serif;
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        color: #333;
+        margin: 0.5vw 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        text-align: justify;
+    }
+
+    .right-ad .bank-img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 1vw;
+        object-fit: contain;
+        max-width: 100%;
+    }
+
+    .left-ad img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border: 2px dashed #28a745;
+        display: block;
+    }
+
+    #reviews .ad-banner .right-ad {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        color: #000; 
+        font-family: 'Times New Roman', serif;
+    }
+
+    .reason-block {
+        flex-direction: column;
+    }
+
+    .reason-img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .product-img {
+        width: 100%;
+        max-width: 100%;
+    }
+    .salmon-ad{
+        display: none;
+    }
+    .block-text p,
+    .fictional-info p, .feature-item {
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+    }
+
+    #reviews h2 {
+        font-size: clamp(1.2rem, 2.5vw, 3rem);
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 6vw;
+    }
+    h2 {
+        font-size: 5vw;
+    }
+
+    .ad-timer {
+        display: none; 
+    }
+}
+
+@media (min-width: 1200px) {
+    .review-img {
+        width: 100px; 
+        height: 100px;
+    }
+}
