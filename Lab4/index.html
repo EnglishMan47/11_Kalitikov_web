@@ -91,7 +91,7 @@
                     <p>Жми меня, чтобы заново открыть страницу</p>
                 </div>
                 <div class="right-ad">
-                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <h2 class="penkov-bank-title">Пеньков Банк</h2>
                     <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
                     <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
                     <p>Ставка по вкладам – до 12,5% годовых</p>
@@ -122,7 +122,7 @@
                     <p>Жми меня, чтобы заново открыть страницу</p>
                 </div>
                 <div class="right-ad">
-                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <h2 class="penkov-bank-title">Пеньков Банк</h2>
                     <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
                     <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
                     <p>Ставка по вкладам – до 12,5% годовых</p>
@@ -135,9 +135,15 @@
 
         <section id="reviews" class="tab">
             <h2>Отзывы наших пользователей</h2>
+            <div class="average-rating">
+                <span class="avg-rating-title">Средний рейтинг:</span>
+                <span id="avg-rating-value">?</span>
+                <span id="avg-stars" class="stars"></span>
+                <span id="avg-reviews-count">(основано на ? отзывах)</span>
+            </div>
             <div class="review-controls">
-                <button id="sort-asc">Сортировать по возрастанию рейтинга</button>
-                <button id="sort-desc">Сортировать по убыванию рейтинга</button>
+                <button id="sort-asc">По возрастанию рейтинга</button>
+                <button id="sort-desc">По убыванию рейтинга</button>
                 <select id="filter-rating">
                     <option value="all">Все отзывы</option>
                     <option value="5">5 звёзд</option>
@@ -147,7 +153,7 @@
                     <option value="1">1 звезда</option>
                 </select>
             </div>
-            <div id="review-list" class="reviews-grid"></div>
+            <div id="review-list" class="review-list"></div>
             <h3 class="review-title">Оставьте свой отзыв</h3>
             <div class="reviews-container">
                 <form id="review-form">
@@ -167,31 +173,43 @@
                     <div class="icon-options">
                         <label>
                             <input type="radio" name="icon" value="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg">
-                            <img src="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg" alt="Иконка 1" width="100" height="100">
+                            <img src="https://www.meme-arsenal.com/memes/ee89f727b39ef503c178604f38c2af11.jpg" alt="Иконка 1" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc">
-                            <img src="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc" alt="Иконка 2" width="100" height="100">
+                            <img src="https://yandex-images.clstorage.net/hi9J5f450/ae523cGL-/sP9bFhSP5TRLEAdccrLbGsyQQX_DARJczqMeYs1tqGXuModcD07mGkorHxy62g1wBFa8bgqIFgzJTF2NXdBqk-n2HgtNkpwoSwRWcFuCsyqMxXEKz1QaON6-elLE1Am8PrMj5MvmdrbmWkJwptZlLQlbJc8Smf4pqHE1CbnZ18YA8zseKHcUBFfg0ihG5gNe8HltC4_88tV2b8P_wKBljAbz47ybqnpS-iaKXFaiCFkFU32C2ikaKZyhuaVpbZ_abP9DbrB7CMDTxE7wipZ33gCVfVNf6MZl7qczt5w4IVhms1NQH0r2Bj4yihQifpS1cafpvh4R5q3E9YVZCcVnhnC7mx5047xcZygOxIbm6zJ4FaET-xwWXZLnN4OgbL00ivP7AOPqpq4atvao0tpQ8WGj1W4uIdppgPVVSbVta2pki8t-UM90pMsE2oyGnqdiABWxC4sMFsEiP4czEExBlOpzT9y7JioqdubenBImVJmNhzk-wrlqjaj95UGF8cuqqBNjziD3lJRvoBJAntKrLhjdKYsbzBoRKj83P8QQabxi-8sA29Z2TtJ67vD65lxZ_a8R7lZRCo0kaUERfYnLmuz_b_aEe7gAs-CG1KKug5pEEXXTt9juyXqDK0sYTPl8_o-bvM9eurLOulqgmh6ssQlPceLWsR5tEPE5IZH9z85UE4eGeE80SCe8AgD2pj8SEOm5f2Po8r2qL587LACxPG4Td_SPplaCQp6GZCqiiPGVt3FmBhliHeR1HRVhifvaJKM7atCTDAQr0OKoTrqjopSVOZv7BH6hbm_Hm0T48egWP78wx2oiCj6mzvTq2rS9bbvp1jblfjU0eWFBEVGPfvwbf2KwW-C0OwguTMqKx76Ike1_0zDi8dIDG1fgmDGsDusDEJOK-gpK8g4s7hqgrXlTvdI22QZVmDml3al5h27gz_tCvCf0xCMEDiSy9tveFH09m8Psmhn-p1u3IByc" alt="Иконка 2" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png">
-                            <img src="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png" alt="Иконка 3" width="100" height="100">
+                            <img src="https://psv4.userapi.com/s/v1/d/tV_he1_avm9CG9PxuT_tTr-kZ7jPdHoKoPXlMe17mU9nhp3fTab-hBIoT8__v2xtFCAEn9atM78a1GVfIHWgm8JBS2RUWQBoHNFMWfx1Sod_ttDulSMmCg/Penkov_udivlyaetsya.png" alt="Иконка 3" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg">
-                            <img src="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg" alt="Иконка 4" width="100" height="100">
+                            <img src="https://i.pinimg.com/736x/c7/0e/aa/c70eaa3c930cade3e89e2e8336bdcec2.jpg" alt="Иконка 4" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg">
-                            <img src="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg" alt="Иконка 5" width="100" height="100">
+                            <img src="https://psv4.userapi.com/s/v1/d/9Y39BYly0soYrKT0HTCTg5mGw17bYy0sbY6UD7C4vR3lQ5lkcWtGoepSB5kIsjvbHMyFi0gMcADnAhj_O--oolvRbjI4Ss4WUJ4w9cTxDlImJ9Bo2s_3jA/Miuing.jpg" alt="Иконка 5" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg">
-                            <img src="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg" alt="Иконка 6" width="100" height="100">
+                            <img src="https://psv4.userapi.com/s/v1/d/-BeSjLmYLhv5gfZuOGho09fEPbpvCtnFIOIXHmDpXiQLDoCf3c9BYh5ahsF2aMjPQXFx_zhmgH2xsPT2nFTZa3tcJPXYx_ZAVcfZuXRPy5cfRlT1bPEAXw/Smotri_losos.jpg" alt="Иконка 6" width="50" height="50">
                         </label>
                         <label>
                             <input type="radio" name="icon" value="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png">
-                            <img src="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png" alt="Иконка 7" width="100" height="100">
+                            <img src="https://psv4.userapi.com/s/v1/d/y6-jwF8qOJkUosB62RjrkVeyLaWiMQT_ehhEapCH_KfeY6rtPbpJ0AbMKni7G0aF-4T0qcNGfTaK7UD6zAE60Nrx0kcHP6gCYpJddsyhLjxZOZhm8iqBxg/Yura_Borisov.png" alt="Иконка 7" width="50" height="50">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://avatars.mds.yandex.net/i?id=159dd43d6c8c2bbe4d72dc756e1410d8_l-10767006-images-thumbs&n=13">
+                            <img src="https://avatars.mds.yandex.net/i?id=159dd43d6c8c2bbe4d72dc756e1410d8_l-10767006-images-thumbs&n=13" alt="Иконка 8" width="50" height="50">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://mixtapegarden.com/static/user_avatars/queer_giraffe.jpg">
+                            <img src="https://mixtapegarden.com/static/user_avatars/queer_giraffe.jpg" alt="Иконка 9" width="50" height="50">
+                        </label>
+                        <label>
+                            <input type="radio" name="icon" value="https://i.pinimg.com/originals/7f/00/a4/7f00a4a57e56495b391ec368980eeb3a.jpg">
+                            <img src="https://i.pinimg.com/originals/7f/00/a4/7f00a4a57e56495b391ec368980eeb3a.jpg" alt="Иконка 10" width="50" height="50">
                         </label>
                     </div>
                     <label for="custom-icon">Или загрузите свою иконку:</label>
@@ -205,7 +223,7 @@
                     <p>Жми меня, чтобы заново открыть страницу</p>
                 </div>
                 <div class="right-ad">
-                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <h2 class="penkov-bank-title">Пеньков Банк</h2>
                     <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
                     <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
                     <p>Ставка по вкладам – до 12,5% годовых</p>
@@ -250,7 +268,7 @@
                     <p>Жми меня, чтобы заново открыть страницу</p>
                 </div>
                 <div class="right-ad">
-                    <h2 class="ad-title">Пеньковбанк</h2>
+                    <h2 class="penkov-bank-title">Пеньков Банк</h2>
                     <img src="https://skillbox.ru/upload/setka_images/08480305072023_a21449561049939422c6ccf788bc0c1c90d933e0.jpg" alt="Пеньковбанк" class="bank-img">
                     <p>Хотите стать миллионером? В Пеньковбанке это проще, чем найти пенёк в лесу!</p>
                     <p>Ставка по вкладам – до 12,5% годовых</p>
@@ -283,8 +301,6 @@
         <p>© 2025 Kalitikov Website</p>
     </footer>
 
-    <script type="module" src="js/index.js" defer></script>
-    <script type="module" src="js/cookies.js" defer></script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91f6b2809c83bd39',t:'MTc0MTgxODIxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script src="js/index.js" defer></script>
 </body>
 </html>
