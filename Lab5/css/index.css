@@ -1,0 +1,97 @@
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.character-image {
+    margin-right: 20px;
+}
+
+.character-image img {
+    max-width: 300px;
+    border: 2px solid #ff4d4d;
+    box-shadow: 0 0 15px #ff4d4d;
+}
+
+.character-info {
+    max-width: 600px;
+}
+
+h1 {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px #ff4d4d;
+    font-size: 2.5em;
+    margin: 0 0 10px;
+}
+
+.info-fields .field {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.info-fields label {
+    color: #00ccff;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.info-fields span {
+    color: #e0e0e0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.info-fields span:empty::before {
+    content: attr(data-placeholder);
+    color: #666;
+}
+
+.hidden {
+    display: none;
+}
+
+.edit-image, .add-field {
+    margin-top: 15px;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: #1a1a1a;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    box-shadow: 0 0 5px #ff4d4d;
+}
+
+button:hover {
+    background-color: #ff6666;
+}
+
+.edit-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.remove {
+    color: #ff4d4d;
+    cursor: pointer;
+    margin-left: 10px;
+}
