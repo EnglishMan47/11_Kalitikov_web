@@ -151,6 +151,13 @@ class HeaderTextBlock extends Block {
     }
 }
 
+function saveUserName() {
+    const userName = "Калитиков Лев КС-23";
+    if (!localStorage.getItem("userName")) {
+        localStorage.setItem("userName", userName);
+    }
+}
+
 function renderRemnants() {
     document.body.innerHTML = `
         <div class="controls">
@@ -380,6 +387,7 @@ function saveToLocalStorage() {
     localStorage.setItem("remnantsData", JSON.stringify(data));
 }
 
+// Загрузка данных из localStorage
 function loadFromLocalStorage() {
     const data = JSON.parse(localStorage.getItem("remnantsData"));
 
@@ -417,4 +425,7 @@ function loadFromLocalStorage() {
     renderRemnants();
 }
 
-document.addEventListener("DOMContentLoaded", loadFromLocalStorage);
+document.addEventListener("DOMContentLoaded", () => {
+    saveUserName(); 
+    loadFromLocalStorage(); 
+});
