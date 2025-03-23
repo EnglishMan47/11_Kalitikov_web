@@ -6,54 +6,7 @@
     <title>Личная карточка</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
+    <script src="js/index.js" defer></script>
 </head>
-<body>
-    <div class="container">
-        <!-- Левая часть: изображение персонажа -->
-        <div class="character-image">
-            <img src="images\Remnant   22.03.2025 8_43_58.png" alt="Изображение персонажа" id="character-img">
-            <div class="edit-image hidden">
-                <input type="file" id="image-input" accept="image/*">
-                <button onclick="uploadImage()">Загрузить</button>
-                <button onclick="removeImage()">Удалить</button>
-            </div>
-        </div>
-
-        <!-- Правая часть: информация о персонаже -->
-        <div class="character-info">
-            <h1 id="character-name" contenteditable="false">Лёлик</h1>
-            <div class="info-fields">
-                <div class="field" data-id="default-class">
-                    <label contenteditable="false">Класс:</label>
-                    <span contenteditable="false">Отступник</span>
-                    <span class="remove hidden" onclick="removeField('default-class')">✖</span>
-                </div>
-                <div class="field" data-id="default-strength">
-                    <label contenteditable="false">Возраст:</label>
-                    <span contenteditable="false">45</span>
-                    <span class="remove hidden" onclick="removeField('default-strength')">✖</span>
-                </div>
-                <div class="field" data-id="default-dexterity">
-                    <label contenteditable="false">Уровень таланта:</label>
-                    <span contenteditable="false">56</span>
-                    <span class="remove hidden" onclick="removeField('default-dexterity')">✖</span>
-                </div>
-            </div>
-            <!-- Кнопки для добавления новых элементов -->
-            <div class="add-field hidden">
-                <button onclick="addTextField(true)">+ Текст с заголовком</button>
-                <button onclick="addTextField(false)">+ Текст без заголовка</button>
-                <button onclick="addImageField(true)">+ Изображение с заголовком</button>
-                <button onclick="addImageField(false)">+ Изображение без заголовка</button>
-                <button onclick="addListField(true)">+ Список с заголовком</button>
-                <button onclick="addListField(false)">+ Список без заголовка</button>
-            </div>
-        </div>
-    </div>
-    <div class="edit-controls">
-        <button id="toggle-edit">Режим редактирования</button>
-        <button id="cancel-changes" class="hidden" onclick="cancelChanges()">Отмена</button>
-    </div>
-    <script src="js/index.js"></script>
-</body>
+<body></body>
 </html>
