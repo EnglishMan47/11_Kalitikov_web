@@ -7,6 +7,8 @@ let containerCards = [];
 let currentCard = null;
 let currentPage = "main";
 let currentTab = "avatar";
+let originalRemnants = [];
+let originalContainerCards = [];
 
 class Block {
     constructor(id) {
@@ -92,9 +94,14 @@ class RemnantCard extends Block {
                     </ul>
                 </div>
                 ${this.funPhrase || this.memeUrl ? `
-                    <div class="attributes-block">
-                        <h3>${this.funPhrase || "Без шутки"}</h3>
-                        ${this.memeUrl ? `<img src="${this.memeUrl}" alt="Мем" class="character-image">` : ""}
+                    <div class="attributes-block fun-block" id="${this.id}-fun">
+                        ${editable ? `<button class="delete-block" data-id="${this.id}-fun">X</button>` : ""}
+                        <h3 onclick="${editable ? `editHeader('${this.id}-fun')` : ""}">${this.funPhrase || "Без шутки"}</h3>
+                        ${this.memeUrl ? `
+                            <label for="meme-upload-${this.id}" class="image-label">
+                                <img src="${this.memeUrl}" alt="Мем" class="character-image">
+                                ${editable ? `<input type="file" id="meme-upload-${this.id}" class="meme-upload" data-id="${this.id}" accept="image/*">` : ""}
+                            </label>` : ""}
                     </div>
                 ` : ""}
                 ${this.blocks.map(block => block.render(editable)).join('')}
@@ -118,6 +125,8 @@ class RemnantCard extends Block {
         if (skillsInput) this.skills = skillsInput.value || "Отсутствуют";
         const descInput = cardEl.querySelector(".attribute-input[data-key='description']");
         if (descInput) this.description = descInput.value || "";
+        const funBlock = cardEl.querySelector(`#${this.id}-fun h3`);
+        if (funBlock) this.funPhrase = funBlock.textContent || "";
         this.blocks.forEach(block => block.enableEditing && block.enableEditing());
 
         if (this.serverId) {
@@ -180,7 +189,6 @@ function renderHeader() {
     } else if (currentPage === "container") {
         navButtons = `
             <div class="tab" onclick="navigateTo('main')">На главную</div>
-            <div class="tab" onclick="navigateTo('container')">Контейнер карточек</div>
         `;
     } else if (currentPage === "create") {
         navButtons = `
@@ -209,24 +217,32 @@ function renderHeader() {
 }
 
 function renderMainPage() {
+    console.log("Начало рендеринга главной страницы");
     document.body.innerHTML = `
         ${renderHeader()}
         <div id="remnants-container">
-            ${remnants.map(remnant => remnant.render(isEditing)).join('')}
+            ${remnants.length === 0 ? `<p class="no-cards">Нет карточек</p>` : remnants.map(remnant => remnant.render(isEditing)).join('')}
             ${isEditing ? `<div class="add-card-placeholder" onclick="addRemnant()">Добавить карточку</div>` : ""}
         </div>
     `;
-    if (document.getElementById("edit-toggle"))
-        document.getElementById("edit-toggle").addEventListener("click", toggleEditMode);
-    if (document.getElementById("cancel-btn"))
-        document.getElementById("cancel-btn").addEventListener("click", cancelEditMode);
+    console.log("HTML установлен, добавляем слушатели");
+    const editToggle = document.getElementById("edit-toggle");
+    if (editToggle) {
+        editToggle.addEventListener("click", toggleEditMode);
+    } else {
+        console.warn("Элемент #edit-toggle не найден!");
+    }
+    const cancelBtn = document.getElementById("cancel-btn");
+    if (cancelBtn) {
+        cancelBtn.addEventListener("click", cancelEditMode);
+    }
 
     if (isEditing) {
         document.querySelectorAll(".delete-remnant").forEach(btn => {
             btn.addEventListener("click", e => deleteRemnant(e.target.dataset.id));
         });
         document.querySelectorAll(".add-block").forEach(btn => {
-            btn.addEventListener("click", e => showBlockOptions(e.target.dataset.id, e.clientX, e.clientY));
+            btn.addEventListener("click", e => showBlockOptions(e.target.dataset.id));
         });
         document.querySelectorAll(".delete-block").forEach(btn => {
             btn.addEventListener("click", e => deleteBlock(e.target.dataset.id));
@@ -234,40 +250,69 @@ function renderMainPage() {
         document.querySelectorAll(".image-upload").forEach(input => {
             input.addEventListener("change", e => changeRemnantImage(e.target.dataset.id, e.target.files[0]));
         });
+        document.querySelectorAll(".meme-upload").forEach(input => {
+            input.addEventListener("change", e => changeMemeImage(e.target.dataset.id, e.target.files[0]));
+        });
     }
 }
 
 function renderContainerPage(selectMode = false) {
+    console.log("Начало рендеринга страницы контейнера");
     document.body.innerHTML = `
         ${renderHeader()}
+        <h1 class="container-title">Контейнер карточек</h1>
         <div id="container-cards">
             ${containerCards.map(card => `
-                <div class="remnant-card" id="${card.id}">
-                    ${card.render(isEditing || selectMode)}
+                <div class="container-card-wrapper">
+                    <div class="remnant-card" id="${card.id}" onclick="${selectMode ? `addCardToMain('${card.id}')` : ""}">
+                        ${card.render(isEditing, !selectMode && !isEditing)}
+                    </div>
                     ${!selectMode && !isEditing ? `<button class="edit-card-btn" onclick="navigateTo('create', { edit: '${card.id}' })">Вернуться к работе</button>` : ""}
                 </div>
             `).join('')}
             ${!selectMode && !isEditing ? `<div class="add-card-placeholder" onclick="navigateTo('create')">Создать персонажа</div>` : ""}
-            ${selectMode ? containerCards.map(card => `
-                <button class="add-to-main" data-id="${card.id}">Добавить на главную</button>
-            `).join('') : ""}
         </div>
     `;
-    if (document.getElementById("edit-toggle"))
-        document.getElementById("edit-toggle").addEventListener("click", toggleEditMode);
-    if (document.getElementById("cancel-btn"))
-        document.getElementById("cancel-btn").addEventListener("click", cancelEditMode);
+    const editToggle = document.getElementById("edit-toggle");
+    if (editToggle) {
+        editToggle.addEventListener("click", toggleEditMode);
+    } else {
+        console.warn("Элемент #edit-toggle не найден!");
+    }
+    const cancelBtn = document.getElementById("cancel-btn");
+    if (cancelBtn) {
+        cancelBtn.addEventListener("click", cancelEditMode);
+    }
     if (isEditing) {
         document.querySelectorAll(".delete-remnant").forEach(btn => {
-            btn.addEventListener("click", e => deleteContainerCard(e.target.dataset.id));
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                deleteContainerCard(e.target.dataset.id);
+            });
+        });
+        document.querySelectorAll(".add-block").forEach(btn => {
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                showBlockOptions(e.target.dataset.id);
+            });
         });
         document.querySelectorAll(".delete-block").forEach(btn => {
-            btn.addEventListener("click", e => deleteBlock(e.target.dataset.id));
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                deleteBlock(e.target.dataset.id);
+            });
         });
-    }
-    if (selectMode) {
-        document.querySelectorAll(".add-to-main").forEach(btn => {
-            btn.addEventListener("click", e => addCardToMain(e.target.dataset.id));
+        document.querySelectorAll(".image-upload").forEach(input => {
+            input.addEventListener("change", e => {
+                e.stopPropagation();
+                changeRemnantImage(e.target.dataset.id, e.target.files[0]);
+            });
+        });
+        document.querySelectorAll(".meme-upload").forEach(input => {
+            input.addEventListener("change", e => {
+                e.stopPropagation();
+                changeMemeImage(e.target.dataset.id, e.target.files[0]);
+            });
         });
     }
 }
@@ -364,16 +409,19 @@ function showCreateTab(tab) {
                     <label>Класс</label>
                     <input type="text" class="attribute-input description-input" id="class-input" placeholder="Класс персонажа" value="${currentCard.remnantClass}">
                     <button class="api-btn fixed-btn" onclick="apiFetchRandomClass()">Случайный класс</button>
+                    <div id="class-placeholder" class="loading-placeholder" style="display: none;">Загрузка класса...</div>
                 </div>
                 <div class="form-group">
                     <label>Навыки</label>
                     <textarea class="attribute-input description-input" id="skills-input" placeholder="Навыки (через запятую)">${currentCard.skills}</textarea>
                     <button class="api-btn fixed-btn" onclick="apiFetchRandomSkills()">Случайные навыки</button>
+                    <div id="skills-placeholder" class="loading-placeholder" style="display: none;">Загрузка навыков...</div>
                 </div>
                 <div class="form-group">
                     <label>Описание</label>
                     <textarea class="attribute-input description-input" id="desc-input" placeholder="Описание">${currentCard.description}</textarea>
                     <button class="api-btn fixed-btn" onclick="apiFetchRandomDescription()">Случайное описание</button>
+                    <div id="desc-placeholder" class="loading-placeholder" style="display: none;">Загрузка описания...</div>
                 </div>
                 <div id="custom-blocks">
                     ${currentCard.blocks.map(block => block.render(true)).join('')}
@@ -389,7 +437,6 @@ function showCreateTab(tab) {
         if (skillsInput) skillsInput.addEventListener("input", e => { currentCard.skills = e.target.value || "Отсутствуют"; saveAll(); });
         if (descInput) descInput.addEventListener("input", e => { currentCard.description = e.target.value || ""; saveAll(); });
 
-        // Добавляем обработчики для редактирования заголовков и текста
         document.querySelectorAll(".custom-block h3").forEach(h3 => {
             h3.addEventListener("click", e => {
                 e.preventDefault();
@@ -476,8 +523,17 @@ function saveMainAndContainer() {
 
 function loadAll() {
     const mainData = JSON.parse(localStorage.getItem("remnants") || "[]");
-    remnants = mainData.map(d => new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, d.blocks || [], d.description, d.funPhrase, d.memeUrl));
-    
+    remnants = mainData.map(d => {
+        const blocks = (d.blocks || []).map(block => {
+            if (block.title) {
+                return new HeaderTextBlock(block.id, block.title, block.content);
+            } else {
+                return new TextBlock(block.id, block.content);
+            }
+        });
+        return new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, blocks, d.description, d.funPhrase, d.memeUrl);
+    });
+
     const lolikCard = remnants.find(r => r.id === "remnant-1");
     if (!lolikCard) {
         remnants.push(new RemnantCard(
@@ -494,9 +550,30 @@ function loadAll() {
     }
 
     const contData = JSON.parse(localStorage.getItem("containerCards") || "[]");
-    containerCards = contData.map(d => new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, d.blocks || [], d.description, d.funPhrase, d.memeUrl));
+    containerCards = contData.map(d => {
+        const blocks = (d.blocks || []).map(block => {
+            if (block.title) {
+                return new HeaderTextBlock(block.id, block.title, block.content);
+            } else {
+                return new TextBlock(block.id, block.content);
+            }
+        });
+        return new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, blocks, d.description, d.funPhrase, d.memeUrl);
+    });
+
     const currData = JSON.parse(localStorage.getItem("currentCard") || "null");
-    currentCard = currData ? new RemnantCard(currData.id, currData.name, currData.age, currData.remnantClass, currData.skills, currData.imageUrl, currData.blocks || [], currData.description, currData.funPhrase, currData.memeUrl) : null;
+    if (currData) {
+        const blocks = (currData.blocks || []).map(block => {
+            if (block.title) {
+                return new HeaderTextBlock(block.id, block.title, block.content);
+            } else {
+                return new TextBlock(block.id, block.content);
+            }
+        });
+        currentCard = new RemnantCard(currData.id, currData.name, currData.age, currData.remnantClass, currData.skills, currData.imageUrl, blocks, currData.description, currData.funPhrase, currData.memeUrl);
+    } else {
+        currentCard = null;
+    }
 }
 
 async function saveToContainer() {
@@ -579,17 +656,35 @@ function editHeader(blockId) {
     const input = document.createElement("input");
     input.type = "text";
     input.value = headerEl.textContent;
+    input.className = "edit-input";
     input.addEventListener("blur", () => {
         const newValue = input.value || "Заголовок";
-        if (blockId.endsWith("-age")) remnants.find(r => r.id === blockId.split('-')[0]).ageLabel = newValue;
-        else if (blockId.endsWith("-class")) remnants.find(r => r.id === blockId.split('-')[0]).classLabel = newValue;
-        else if (blockId.endsWith("-skills")) remnants.find(r => r.id === blockId.split('-')[0]).skillsLabel = newValue;
-        else if (blockId.endsWith("-desc")) remnants.find(r => r.id === blockId.split('-')[0]).descriptionLabel = newValue;
-        else if (blockEl.classList.contains("header-text-block")) {
-            const block = currentCard.blocks.find(b => b.id === blockId);
+        if (blockId.endsWith("-age")) {
+            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
+            if (remnant) remnant.ageLabel = newValue;
+        } else if (blockId.endsWith("-class")) {
+            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
+            if (remnant) remnant.classLabel = newValue;
+        } else if (blockId.endsWith("-skills")) {
+            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
+            if (remnant) remnant.skillsLabel = newValue;
+        } else if (blockId.endsWith("-desc")) {
+            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
+            if (remnant) remnant.descriptionLabel = newValue;
+        } else if (blockId.endsWith("-fun")) {
+            const remnant = remnants.find(r => r.id === blockId.split('-')[0]) || containerCards.find(c => c.id === blockId.split('-')[0]) || currentCard;
+            if (remnant) remnant.funPhrase = newValue;
+        } else if (blockEl.classList.contains("header-text-block")) {
+            const block = (currentCard?.blocks || []).find(b => b.id === blockId) || 
+                         remnants.flatMap(r => r.blocks).find(b => b.id === blockId) || 
+                         containerCards.flatMap(c => c.blocks).find(b => b.id === blockId);
             if (block) block.title = newValue;
+        } else {
+            const remnant = remnants.find(r => r.id === blockId) || containerCards.find(c => c.id === blockId) || currentCard;
+            if (remnant) remnant.name = newValue;
         }
         headerEl.textContent = newValue;
+        saveAll();
         if (currentPage === "create") {
             showCreateTab(currentTab);
         } else if (currentPage === "main") {
@@ -610,13 +705,15 @@ function editText(blockId) {
     if (!pEl) return;
     const textarea = document.createElement("textarea");
     textarea.value = pEl.textContent;
+    textarea.className = "edit-textarea";
     textarea.addEventListener("blur", () => {
         const newValue = textarea.value || "Введите текст...";
         pEl.textContent = newValue;
-        if (blockEl.classList.contains("text-block") || blockEl.classList.contains("header-text-block")) {
-            const block = currentCard.blocks.find(b => b.id === blockId);
-            if (block) block.content = newValue;
-        }
+        const block = (currentCard?.blocks || []).find(b => b.id === blockId) || 
+                     remnants.flatMap(r => r.blocks).find(b => b.id === blockId) || 
+                     containerCards.flatMap(c => c.blocks).find(b => b.id === blockId);
+        if (block) block.content = newValue;
+        saveAll();
         if (currentPage === "create") {
             showCreateTab(currentTab);
         } else if (currentPage === "main") {
@@ -637,7 +734,7 @@ function changeRemnantImage(remnantId, file) {
     }
     const reader = new FileReader();
     reader.onload = function(event) {
-        const remnant = remnants.find(r => r.id === remnantId);
+        const remnant = remnants.find(r => r.id === remnantId) || containerCards.find(c => c.id === remnantId);
         if (remnant) {
             remnant.imageUrl = event.target.result;
             const imgElement = document.getElementById(`img-${remnantId}`);
@@ -653,11 +750,38 @@ function changeRemnantImage(remnantId, file) {
     reader.readAsDataURL(file);
 }
 
+function changeMemeImage(remnantId, file) {
+    if (!file || !file.type.includes("image")) {
+        alert("Выбранный файл не является изображением!");
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const remnant = remnants.find(r => r.id === remnantId) || containerCards.find(c => c.id === remnantId);
+        if (remnant) {
+            remnant.memeUrl = event.target.result;
+            saveMainAndContainer();
+            if (currentPage === "main") renderMainPage();
+            else if (currentPage === "container") renderContainerPage();
+        }
+    };
+    reader.onerror = function() {
+        alert("Не удалось загрузить изображение. Попробуйте другой файл.");
+    };
+    reader.readAsDataURL(file);
+}
+
 function toggleEditMode() {
+    console.log("Кнопка Редактировать/Сохранить кликнута");
     if (isEditing) {
         remnants.forEach(remnant => remnant.enableEditing());
         containerCards.forEach(card => card.enableEditing());
         saveMainAndContainer();
+        originalRemnants = JSON.parse(JSON.stringify(remnants));
+        originalContainerCards = JSON.parse(JSON.stringify(containerCards));
+    } else {
+        originalRemnants = JSON.parse(JSON.stringify(remnants));
+        originalContainerCards = JSON.parse(JSON.stringify(containerCards));
     }
     isEditing = !isEditing;
     if (currentPage === "main") renderMainPage();
@@ -665,7 +789,26 @@ function toggleEditMode() {
 }
 
 function cancelEditMode() {
-    loadAll();
+    remnants = originalRemnants.map(d => {
+        const blocks = (d.blocks || []).map(block => {
+            if (block.title) {
+                return new HeaderTextBlock(block.id, block.title, block.content);
+            } else {
+                return new TextBlock(block.id, block.content);
+            }
+        });
+        return new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, blocks, d.description, d.funPhrase, d.memeUrl);
+    });
+    containerCards = originalContainerCards.map(d => {
+        const blocks = (d.blocks || []).map(block => {
+            if (block.title) {
+                return new HeaderTextBlock(block.id, block.title, block.content);
+            } else {
+                return new TextBlock(block.id, block.content);
+            }
+        });
+        return new RemnantCard(d.id, d.name, d.age, d.remnantClass, d.skills, d.imageUrl, blocks, d.description, d.funPhrase, d.memeUrl);
+    });
     isEditing = false;
     if (currentPage === "main") renderMainPage();
     else if (currentPage === "container") renderContainerPage();
@@ -673,22 +816,26 @@ function cancelEditMode() {
 
 function addRemnant() {
     const newId = `remnant-${Date.now()}`;
-    remnants.push(new RemnantCard(newId, "Новый персонаж", 1, "Неизвестно", "Отсутствуют", "https://via.placeholder.com/300x200?text=Avatar"));
+    remnants.push(new RemnantCard(newId, "Новый персонаж", 1, "Неизвестно", "Отсутствуют", "https://cdn-icons-png.flaticon.com/512/6861/6861293.png"));
     saveMainAndContainer();
     renderMainPage();
 }
 
-function showBlockOptions(remnantId, x, y) {
+function showBlockOptions(remnantId) {
     const existingOptions = document.querySelector(".block-options");
-    if (existingOptions) existingOptions.remove();
+    if (existingOptions) return;
 
     const optionsHtml = `
-        <div class="block-options" style="top: ${y + 10}px; left: ${x}px;">
+        <div class="block-options">
+            <button class="close-options">X</button>
             <button onclick="addBlock('${remnantId}', 'text')">Поле ввода</button>
             <button onclick="addBlock('${remnantId}', 'header-text')">Поле ввода с заголовком</button>
         </div>
     `;
     document.body.insertAdjacentHTML("beforeend", optionsHtml);
+    document.querySelector(".close-options").addEventListener("click", () => {
+        document.querySelector(".block-options").remove();
+    });
 }
 
 function addBlock(remnantId, type) {
@@ -752,6 +899,10 @@ function deleteBlock(id) {
         else if (id === `${remnant.id}-class`) remnant.showClass = false;
         else if (id === `${remnant.id}-skills`) remnant.showSkills = false;
         else if (id === `${remnant.id}-desc`) remnant.showDescription = false;
+        else if (id === `${remnant.id}-fun`) {
+            remnant.funPhrase = "";
+            remnant.memeUrl = "";
+        }
         else remnant.blocks = remnant.blocks.filter(block => block.id !== id);
     });
     saveMainAndContainer();
@@ -774,6 +925,10 @@ function addCardToMain(id) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadAll();
-    navigateTo("main");
+    try {
+        loadAll();
+        navigateTo("main");
+    } catch (error) {
+        console.error("Ошибка при загрузке страницы:", error);
+    }
 });

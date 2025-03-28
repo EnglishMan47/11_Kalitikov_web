@@ -37,7 +37,7 @@ async function fetchRandomAge() {
     }
 }
 
-// Функция для генерации случайного класса (новый API)
+// Функция для генерации случайного класса
 async function fetchRandomClass() {
     try {
         const response = await fetch("https://random-word-api.herokuapp.com/word?number=1");
@@ -62,12 +62,14 @@ async function fetchRandomSkills() {
     }
 }
 
-// Функция для генерации случайного описания (новый API)
+// Функция для генерации случайного описания
 async function fetchRandomDescription() {
     try {
-        const response = await fetch("https://baconipsum.com/api/?type=all-meat&sentences=1");
+        const response = await fetch("https://randomuser.me/api/");
         const data = await response.json();
-        return data[0] || "Нет описания";
+        const user = data.results[0];
+        const description = `${currentCard.name} has ${user.picture.thumbnail ? "a distinct appearance" : "an average build"}, with ${user.gender === "male" ? "short" : "long"} ${Math.random() > 0.5 ? "dark" : "light"} hair and ${Math.random() > 0.5 ? "blue" : "brown"} eyes. They are often seen wearing ${Math.random() > 0.5 ? "casual" : "formal"} clothing.`;
+        return description;
     } catch (error) {
         console.error("Ошибка загрузки описания:", error);
         return "Нет описания";
@@ -179,7 +181,8 @@ window.apiFetchRandomImage = async function() {
         const placeholder = document.createElement("div");
         placeholder.className = "loading-placeholder";
         placeholder.textContent = "Загрузка аватарки...";
-        document.getElementById("create-content").appendChild(placeholder);
+        const avatarControls = document.querySelector(".avatar-controls");
+        if (avatarControls) avatarControls.appendChild(placeholder);
 
         const url = await fetchRandomImage();
         currentCard.imageUrl = url;
@@ -227,52 +230,52 @@ window.apiFetchRandomAge = async function() {
 
 window.apiFetchRandomClass = async function() {
     try {
-        const placeholder = document.createElement("div");
-        placeholder.className = "loading-placeholder";
-        placeholder.textContent = "Загрузка класса...";
-        document.getElementById("create-content").appendChild(placeholder);
+        const placeholder = document.getElementById("class-placeholder");
+        if (placeholder) placeholder.style.display = "block";
 
         const className = await fetchRandomClass();
         currentCard.remnantClass = className;
         document.getElementById("class-input").value = className;
         saveAll();
-        placeholder.remove();
+        if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения класса: " + error.message);
+        const placeholder = document.getElementById("class-placeholder");
+        if (placeholder) placeholder.style.display = "none";
     }
 };
 
 window.apiFetchRandomSkills = async function() {
     try {
-        const placeholder = document.createElement("div");
-        placeholder.className = "loading-placeholder";
-        placeholder.textContent = "Загрузка навыков...";
-        document.getElementById("create-content").appendChild(placeholder);
+        const placeholder = document.getElementById("skills-placeholder");
+        if (placeholder) placeholder.style.display = "block";
 
         const skills = await fetchRandomSkills();
         currentCard.skills = skills;
         document.getElementById("skills-input").value = skills;
         saveAll();
-        placeholder.remove();
+        if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения навыков: " + error.message);
+        const placeholder = document.getElementById("skills-placeholder");
+        if (placeholder) placeholder.style.display = "none";
     }
 };
 
 window.apiFetchRandomDescription = async function() {
     try {
-        const placeholder = document.createElement("div");
-        placeholder.className = "loading-placeholder";
-        placeholder.textContent = "Загрузка описания...";
-        document.getElementById("create-content").appendChild(placeholder);
+        const placeholder = document.getElementById("desc-placeholder");
+        if (placeholder) placeholder.style.display = "block";
 
         const description = await fetchRandomDescription();
         currentCard.description = description;
         document.getElementById("desc-input").value = description;
         saveAll();
-        placeholder.remove();
+        if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения описания: " + error.message);
+        const placeholder = document.getElementById("desc-placeholder");
+        if (placeholder) placeholder.style.display = "none";
     }
 };
 

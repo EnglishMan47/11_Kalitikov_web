@@ -55,6 +55,7 @@ body {
     border-radius: 0.5vw;
     cursor: pointer;
     font-size: 1vw;
+    font-weight: bold; /* Добавлен жирный шрифт для всех вкладок */
     transition: background 0.3s, transform 0.2s, color 0.3s;
 }
 
@@ -73,17 +74,41 @@ body {
     min-height: 50vh;
 }
 
+#container-cards {
+    margin-top: 10vw; /* Увеличен отступ для заголовка */
+    position: relative;
+}
+
+.container-title {
+    position: absolute;
+    top: -5vw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5vw;
+    color: #ff4500;
+    text-align: center;
+    font-weight: bold;
+}
+
+.container-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .remnant-card {
     background: #1e1e1e;
     border: 0.3vw solid #4a0e0e;
     border-radius: 1vw;
     padding: 1.5vw;
-    width: 25vw;
     box-shadow: 0 0 1.5vw rgba(74, 14, 14, 0.5);
     transition: transform 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
     position: relative;
-    z-index: 1; /* Исправляем наложение карточек */
+    z-index: 1;
+    width: auto;
+    max-width: 25vw;
+    height: fit-content;
 }
 
 .remnant-card:hover {
@@ -106,6 +131,18 @@ body {
     border: 0.1vw solid #4a0e0e;
     border-radius: 0.5vw;
     font-size: 1vw;
+}
+
+.edit-input, .edit-textarea {
+    width: 100%;
+    padding: 0.5vw;
+    background: #444;
+    color: #fff;
+    border: 0.1vw solid #4a0e0e;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+    position: static;
+    box-sizing: border-box; /* Добавлено для предотвращения выхода за пределы */
 }
 
 h2 {
@@ -200,7 +237,7 @@ h3 {
     font-size: 1.07vw;
     cursor: pointer;
     transition: background 0.3s;
-    z-index: 0; /* Устанавливаем z-index ниже карточек */
+    z-index: 0;
 }
 
 .add-card-placeholder:hover {
@@ -221,7 +258,7 @@ h3 {
     font-size: 1vw;
 }
 
-.image-upload {
+.image-upload, .meme-upload {
     display: none;
 }
 
@@ -232,7 +269,7 @@ h3 {
 
 .fan-options {
     display: flex;
-    flex-direction: column; /* Переносим кнопки в столбец */
+    flex-direction: column;
     gap: 0.5vw;
 }
 
@@ -415,7 +452,7 @@ h3 {
 
 .fan-input {
     width: 100%;
-    max-width: 40vw; /* Расширяем поле ввода вправо */
+    max-width: 40vw;
     height: 10vw;
     font-size: 1.2vw !important;
 }
@@ -423,40 +460,65 @@ h3 {
 .finish-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: 1vw;
     width: 100%;
     max-width: 80vw;
 }
 
 .finish-card {
-    width: 50%;
+    width: auto;
+    max-width: 50%;
 }
 
 .finish-buttons {
     display: flex;
     gap: 1vw;
+    justify-content: center;
 }
 
 .block-options {
-    position: fixed; /* Делаем всплывающее окно фиксированным */
-    z-index: 2000; /* Высокий z-index для отображения поверх карточек */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
     background: #333;
-    padding: 1vw;
-    border-radius: 0.5vw;
-    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.5);
+    padding: 2vw;
+    border-radius: 1vw;
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 0.5);
+    width: 20vw;
+    position: relative; /* Добавлено для крестика */
+}
+
+.block-options .close-options {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .block-options button {
     display: block;
     width: 100%;
-    padding: 0.5vw;
-    margin: 0.5vw 0;
+    padding: 1vw;
+    margin: 1vw 0;
     background: #4a0e0e;
     color: #fff;
     border: none;
-    border-radius: 0.5vw;
+    border-radius: 1vw;
     cursor: pointer;
+    font-size: 2vw;
 }
 
 .block-options button:hover {
@@ -464,7 +526,7 @@ h3 {
 }
 
 .custom-block input, .custom-block textarea {
-    position: static; /* Фиксируем форму на месте в режиме редактирования */
+    position: static;
 }
 
 @media (max-width: 600px) {
@@ -486,12 +548,18 @@ h3 {
         margin-top: 20vw;
     }
 
+    .container-title {
+        font-size: 5vw;
+        top: -10vw;
+    }
+
     .remnant-card, .add-card-placeholder {
         width: 90%;
+        max-width: 90%;
         height: auto;
     }
 
-    .remnant-name-input, .attribute-input, .block-content-input {
+    .remnant-name-input, .attribute-input, .block-content-input, .edit-input, .edit-textarea {
         font-size: 2.5vw;
     }
 
@@ -540,6 +608,7 @@ h3 {
 
     .finish-card {
         width: 90%;
+        max-width: 90%;
     }
 
     .fan-right p {
@@ -548,5 +617,22 @@ h3 {
 
     .fan-right img {
         max-height: 80vw;
+    }
+
+    .block-options {
+        width: 40vw;
+        padding: 4vw;
+    }
+
+    .block-options button {
+        font-size: 4vw;
+        padding: 2vw;
+        margin: 2vw 0;
+    }
+
+    .block-options .close-options {
+        width: 3vw;
+        height: 3vw;
+        font-size: 2vw;
     }
 }
