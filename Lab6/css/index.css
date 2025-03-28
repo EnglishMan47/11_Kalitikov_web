@@ -1,0 +1,552 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #121212;
+    color: #fff;
+    margin: 0;
+    padding: 2vw;
+    overflow-x: hidden;
+}
+
+.controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(45deg, #4a0e0e, #2a2a2a);
+    padding: 1vw;
+    text-align: center;
+    box-shadow: 0 0.4vw 1.2vw rgba(74, 14, 14, 0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls button, .controls a {
+    background: #333;
+    color: #ffcc00;
+    border: 0.2vw solid #4a0e0e;
+    padding: 0.8vw 1.6vw;
+    margin: 0 0.5vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85vw;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
+}
+
+.controls button:hover, .controls a:hover {
+    background: #4a0e0e;
+    transform: scale(1.05);
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+}
+
+.tab {
+    background: #333;
+    color: #ffcc00;
+    border: 0.2vw solid #4a0e0e;
+    padding: 0.8vw 1.6vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background 0.3s, transform 0.2s, color 0.3s;
+}
+
+.tab:hover, .tab.active {
+    background: #4a0e0e;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+#remnants-container, #container-cards, #create-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+    margin-top: 7vw;
+    justify-content: space-around;
+    min-height: 50vh;
+}
+
+.remnant-card {
+    background: #1e1e1e;
+    border: 0.3vw solid #4a0e0e;
+    border-radius: 1vw;
+    padding: 1.5vw;
+    width: 25vw;
+    box-shadow: 0 0 1.5vw rgba(74, 14, 14, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1; /* Исправляем наложение карточек */
+}
+
+.remnant-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 2vw rgba(255, 204, 0, 0.7);
+}
+
+.character-image {
+    width: 100%;
+    max-height: 20vw;
+    object-fit: contain;
+    border-radius: 0.8vw;
+}
+
+.remnant-name-input, .attribute-input, .block-content-input {
+    width: 100%;
+    padding: 0.5vw;
+    background: #444;
+    color: #fff;
+    border: 0.1vw solid #4a0e0e;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+}
+
+h2 {
+    color: #ff4500;
+    font-size: 1.78vw;
+    margin: 1vw 0;
+    text-align: center;
+}
+
+h3 {
+    color: #ffcc00;
+    font-size: 1.07vw;
+    margin: 1vw 0;
+}
+
+.attributes-block, .custom-block {
+    background: #333;
+    padding: 1vw;
+    border-radius: 0.8vw;
+    margin-top: 1vw;
+    position: relative;
+}
+
+.attributes-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.attributes-block li {
+    margin: 0.5vw 0;
+    padding: 0.5vw;
+    background: #444;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+}
+
+.attributes-block li ul {
+    list-style: none;
+    padding-left: 1vw;
+}
+
+.attributes-block li ul li::before {
+    content: "•";
+    color: #ffcc00;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.custom-block p {
+    font-size: 1vw;
+    margin: 0.5vw 0;
+}
+
+.add-block, .create-btn, .api-btn, .add-to-main {
+    background: #4a0e0e;
+    color: #fff;
+    border: none;
+    padding: 0.8vw 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background 0.3s, transform 0.2s;
+    margin: 0.5vw;
+}
+
+.add-block:hover, .create-btn:hover, .api-btn:hover, .add-to-main:hover {
+    background: #ffcc00;
+    transform: scale(1.05);
+}
+
+.create-btn:active {
+    animation: clickAnimation 0.3s ease;
+}
+
+@keyframes clickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.add-card-placeholder {
+    background: #444;
+    border: 0.3vw dashed #ffcc00;
+    border-radius: 1vw;
+    width: 25vw;
+    height: 37vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffcc00;
+    font-size: 1.07vw;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 0; /* Устанавливаем z-index ниже карточек */
+}
+
+.add-card-placeholder:hover {
+    background: #555;
+}
+
+.delete-remnant, .delete-block {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+}
+
+.image-upload {
+    display: none;
+}
+
+.image-label {
+    cursor: pointer;
+    display: block;
+}
+
+.fan-options {
+    display: flex;
+    flex-direction: column; /* Переносим кнопки в столбец */
+    gap: 0.5vw;
+}
+
+.fan-options input, .fan-options button {
+    width: 15vw !important;
+    height: 3vw !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1vw;
+}
+
+.edit-card-btn {
+    background: #4a0e0e;
+    color: #fff;
+    border: none;
+    padding: 0.8vw 1.2vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background 0.3s, transform 0.2s;
+    margin: 0.5vw;
+}
+
+.edit-card-btn:hover {
+    background: #ffcc00;
+    transform: scale(1.05);
+}
+
+.loading-placeholder {
+    background: #333;
+    color: #ffcc00;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    text-align: center;
+    margin: 1vw 0;
+}
+
+#create-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 7vw;
+}
+
+.tab-title {
+    font-size: 2.5vw;
+    color: #ff4500;
+    text-align: center;
+    margin: 1vw 0;
+}
+
+.create-btn {
+    align-self: flex-end;
+    margin-top: 2vw;
+}
+
+.avatar-container {
+    display: flex;
+    gap: 2vw;
+    width: 100%;
+    max-width: 80vw;
+}
+
+.avatar-image {
+    flex: 2;
+}
+
+.avatar-image img {
+    width: 100%;
+    max-height: 40vw;
+    object-fit: contain;
+    border-radius: 0.8vw;
+}
+
+.avatar-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.avatar-controls input, .avatar-controls button {
+    width: 100%;
+    padding: 0.8vw;
+    font-size: 1vw;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 100%;
+    max-width: 40vw;
+}
+
+.name-input {
+    width: 100%;
+    font-size: 1.5vw !important;
+}
+
+.fixed-btn {
+    width: 15vw !important;
+    height: 3vw !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.age-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 100%;
+    max-width: 40vw;
+}
+
+.age-input {
+    width: 100%;
+    font-size: 1.5vw !important;
+}
+
+.description-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 100%;
+    max-width: 50vw;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+}
+
+.form-group label {
+    font-size: 1.2vw;
+    color: #ffcc00;
+}
+
+.description-input {
+    width: 100%;
+    font-size: 1.2vw !important;
+}
+
+.fan-container {
+    display: flex;
+    gap: 2vw;
+    width: 100%;
+    max-width: 80vw;
+}
+
+.fan-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.fan-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+}
+
+.fan-right p {
+    font-size: 1.5vw;
+    margin: 0;
+}
+
+.fan-right img {
+    width: 100%;
+    max-height: 60vw;
+    object-fit: contain;
+}
+
+.fan-input {
+    width: 100%;
+    max-width: 40vw; /* Расширяем поле ввода вправо */
+    height: 10vw;
+    font-size: 1.2vw !important;
+}
+
+.finish-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1vw;
+    width: 100%;
+    max-width: 80vw;
+}
+
+.finish-card {
+    width: 50%;
+}
+
+.finish-buttons {
+    display: flex;
+    gap: 1vw;
+}
+
+.block-options {
+    position: fixed; /* Делаем всплывающее окно фиксированным */
+    z-index: 2000; /* Высокий z-index для отображения поверх карточек */
+    background: #333;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.5);
+}
+
+.block-options button {
+    display: block;
+    width: 100%;
+    padding: 0.5vw;
+    margin: 0.5vw 0;
+    background: #4a0e0e;
+    color: #fff;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+.block-options button:hover {
+    background: #ffcc00;
+}
+
+.custom-block input, .custom-block textarea {
+    position: static; /* Фиксируем форму на месте в режиме редактирования */
+}
+
+@media (max-width: 600px) {
+    .controls {
+        flex-direction: column;
+        padding: 2vw;
+    }
+
+    .controls button, .controls a, .tab {
+        width: 100%;
+        margin: 1vw 0;
+        font-size: 3vw;
+        padding: 2vw 3vw;
+    }
+
+    #remnants-container, #container-cards, #create-content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20vw;
+    }
+
+    .remnant-card, .add-card-placeholder {
+        width: 90%;
+        height: auto;
+    }
+
+    .remnant-name-input, .attribute-input, .block-content-input {
+        font-size: 2.5vw;
+    }
+
+    h2 {
+        font-size: 4vw;
+    }
+
+    h3 {
+        font-size: 3vw;
+    }
+
+    .attributes-block li, .custom-block p {
+        font-size: 2.5vw;
+    }
+
+    .add-block, .create-btn, .api-btn, .add-to-main {
+        font-size: 2.5vw;
+        padding: 2vw 3vw;
+    }
+
+    .tab-title {
+        font-size: 5vw;
+    }
+
+    .avatar-container, .fan-container {
+        flex-direction: column;
+    }
+
+    .avatar-image, .fan-right {
+        width: 100%;
+    }
+
+    .avatar-controls, .fan-left {
+        width: 100%;
+    }
+
+    .name-container, .age-container, .description-container {
+        max-width: 90%;
+    }
+
+    .fixed-btn {
+        width: 30vw !important;
+        height: 6vw !important;
+        font-size: 2.5vw !important;
+    }
+
+    .finish-card {
+        width: 90%;
+    }
+
+    .fan-right p {
+        font-size: 3vw;
+    }
+
+    .fan-right img {
+        max-height: 80vw;
+    }
+}
