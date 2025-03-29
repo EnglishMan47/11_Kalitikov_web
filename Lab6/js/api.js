@@ -1,14 +1,11 @@
-// api.js
 "use strict";
 
-// Функция для генерации случайной аватарки
 async function fetchRandomImage() {
     const randomSeed = Math.random().toString(36).substring(2, 15);
     const imageUrl = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${randomSeed}`;
     return imageUrl;
 }
 
-// Функция для генерации случайного имени
 async function fetchRandomFantasyName() {
     try {
         const response = await fetch("https://random-data-api.com/api/users/random_user");
@@ -20,7 +17,6 @@ async function fetchRandomFantasyName() {
     }
 }
 
-// Функция для генерации случайного возраста
 async function fetchRandomAge() {
     try {
         const response = await fetch("https://randomuser.me/api/");
@@ -38,7 +34,6 @@ async function fetchRandomAge() {
     }
 }
 
-// Функция для генерации случайного класса
 async function fetchRandomClass() {
     try {
         const response = await fetch("https://random-word-api.vercel.app/api?words=1");
@@ -50,7 +45,6 @@ async function fetchRandomClass() {
     }
 }
 
-// Функция для генерации случайных навыков
 async function fetchRandomSkills() {
     try {
         const response = await fetch("https://random-word-api.vercel.app/api?words=3");
@@ -63,7 +57,6 @@ async function fetchRandomSkills() {
     }
 }
 
-// Функция для генерации случайного описания
 async function fetchRandomDescription() {
     try {
         const response = await fetch("https://randomuser.me/api/");
@@ -72,7 +65,7 @@ async function fetchRandomDescription() {
         const gender = user.gender === "male" ? "male" : "female";
         const city = user.location.city || "an unknown city";
         const country = user.location.country || "an unknown land";
-        const description = `${currentCard.name} is a ${gender} character from ${city}, ${country}. They are known for their unique style and adventurous spirit.`;
+        const description = `${currentCard.name} is a ${gender} character from ${city}, ${country}.`;
         return description;
     } catch (error) {
         console.error("Ошибка загрузки описания:", error);
@@ -80,7 +73,6 @@ async function fetchRandomDescription() {
     }
 }
 
-// Функция для генерации случайной шутки
 async function fetchRandomJoke() {
     try {
         const response = await fetch("https://v2.jokeapi.dev/joke/Any");
@@ -93,13 +85,11 @@ async function fetchRandomJoke() {
     }
 }
 
-// Функция для генерации мема
 async function fetchMeme() {
     try {
         const response = await fetch("https://api.imgflip.com/get_memes");
         const data = await response.json();
         const randomMeme = data.data.memes[Math.floor(Math.random() * data.data.memes.length)];
-        // Проверяем доступность изображения
         const img = new Image();
         img.src = randomMeme.url;
         await new Promise((resolve, reject) => {
@@ -114,7 +104,6 @@ async function fetchMeme() {
     }
 }
 
-// Функции для работы с сервером (JSONPlaceholder)
 async function fetchCardsFromServer() {
     try {
         const response = await fetch("https://jsonplaceholder.typicode.com/posts?userId=1");
@@ -241,7 +230,6 @@ async function deleteCardOnServer(cardId) {
     }
 }
 
-// Обёртки для вызова API с заглушками
 window.apiFetchRandomImage = async function() {
     try {
         const placeholder = document.createElement("div");

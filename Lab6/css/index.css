@@ -1,10 +1,3 @@
-/* Общие стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Arial', sans-serif;
     background: #121212;
@@ -14,7 +7,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Стили для шапки (controls) */
 .controls {
     position: fixed;
     top: 0;
@@ -50,7 +42,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Стили для вкладок */
 .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -77,7 +68,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Стили для контейнеров */
 #remnants-container,
 #container-cards,
 #create-content {
@@ -94,7 +84,6 @@ body {
     margin-top: 10vw;
 }
 
-/* Заголовок главной страницы */
 .main-title {
     position: absolute;
     top: 2vw;
@@ -106,7 +95,6 @@ body {
     font-weight: bold;
 }
 
-/* Заголовок контейнера */
 .container-title {
     position: absolute;
     top: 2vw;
@@ -118,7 +106,6 @@ body {
     font-weight: bold;
 }
 
-/* Стили для карточки */
 .remnant-card {
     position: relative;
     background: #2a2a2a;
@@ -164,7 +151,6 @@ body {
     background: #cc0000;
 }
 
-/* Стили для изображения персонажа */
 .character-image {
     width: 100%;
     max-height: 20vw;
@@ -174,7 +160,6 @@ body {
     margin: 0;
 }
 
-/* Стили для полей ввода */
 .remnant-name-input,
 .attribute-input,
 .block-content-input {
@@ -208,7 +193,6 @@ body {
     max-height: 15vw;
 }
 
-/* Стили для заголовков */
 h2 {
     color: #ff4500;
     font-size: 1.78vw;
@@ -223,7 +207,6 @@ h3 {
     text-align: center;
 }
 
-/* Стили для блока характеристик */
 .attributes-block {
     background: #333;
     padding: 0.2vw;
@@ -277,7 +260,6 @@ h3 {
     margin-left: -1em;
 }
 
-/* Стили для атрибутов (с крестиком) */
 .attribute-item {
     position: relative;
     margin-bottom: 0.2vw;
@@ -309,7 +291,6 @@ h3 {
     background: #cc0000;
 }
 
-/* Стили для блока шутки/мема */
 .fun-block {
     position: relative;
     margin: 0;
@@ -357,7 +338,6 @@ h3 {
     background: #cc0000;
 }
 
-/* Стили для пользовательских блоков */
 .custom-block {
     position: relative;
     background: #333;
@@ -401,7 +381,6 @@ h3 {
     background: #cc0000;
 }
 
-/* Стили для кнопок */
 .add-block,
 .create-btn,
 .api-btn,
@@ -444,7 +423,6 @@ h3 {
     transform: scale(1.05);
 }
 
-/* Стили для всплывающего окна */
 .block-options {
     position: fixed;
     top: 50%;
@@ -515,7 +493,6 @@ h3 {
     background: #cc0000;
 }
 
-/* Стили для загрузки изображений */
 .image-upload,
 .meme-upload {
     display: none;
@@ -526,7 +503,6 @@ h3 {
     display: block;
 }
 
-/* Стили для индикатора загрузки */
 .loading-placeholder {
     position: fixed;
     top: 50%;
@@ -541,7 +517,6 @@ h3 {
     text-align: center;
 }
 
-/* Стили для страницы создания */
 #create-content {
     display: flex;
     flex-direction: column;
@@ -619,7 +594,6 @@ h3 {
     justify-content: center;
 }
 
-/* Стили для сообщения "Нет карточек" */
 .no-cards {
     color: #fff;
     font-size: 1.5vw;
@@ -627,7 +601,6 @@ h3 {
     width: 100%;
 }
 
-/* Стили для футера */
 .footer {
     position: relative;
     background: #2a2a2a;
@@ -639,23 +612,40 @@ h3 {
     z-index: 1000;
 }
 
-/* Адаптация для экранов меньше 600px */
+.add-card-placeholder {
+    background: #444;
+    border: 0.3vw dashed #ffcc00;
+    border-radius: 1vw;
+    width: 25vw;
+    height: 37vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffcc00;
+    font-size: 1.07vw;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 1.5vw;
+    box-sizing: border-box;
+}
+
+.add-card-placeholder:hover {
+    background: #555;
+}
+
+/* Адаптация для мобильных устройств */
 @media (max-width: 600px) {
-    body {
-        padding: 2vw;
+    .add-card-placeholder {
+        font-size: 2.5vw;
+        padding: 1.5vw 2vw;
+        border-width: 0.3vw;
+        margin: 2vw auto;
     }
 
-    /* Шапка */
     .controls {
         flex-direction: column;
         padding: 1vw;
         gap: 1vw;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        min-height: auto;
     }
 
     .controls button,
@@ -682,7 +672,6 @@ h3 {
         border-width: 0.3vw;
     }
 
-    /* Контейнеры */
     #remnants-container,
     #container-cards,
     #create-content {
@@ -701,7 +690,6 @@ h3 {
         font-size: 4vw;
     }
 
-    /* Карточка */
     .remnant-card {
         width: 80vw;
         max-width: 80vw;
@@ -718,12 +706,10 @@ h3 {
         right: 0.5vw;
     }
 
-    /* Изображение персонажа */
     .character-image {
         max-height: 30vw;
     }
 
-    /* Поля ввода */
     .remnant-name-input,
     .attribute-input,
     .block-content-input {
@@ -743,7 +729,6 @@ h3 {
         max-height: 20vw;
     }
 
-    /* Заголовки */
     h2 {
         font-size: 4vw;
         margin: 0;
@@ -754,7 +739,6 @@ h3 {
         margin: 0;
     }
 
-    /* Блок характеристик */
     .attributes-block {
         padding: 0.5vw;
         margin: 0;
@@ -779,7 +763,6 @@ h3 {
         right: 0.5vw;
     }
 
-    /* Блок шутки/мема */
     .fun-block {
         padding: 0.5vw;
         margin: 0;
@@ -802,7 +785,6 @@ h3 {
         right: 0.5vw;
     }
 
-    /* Пользовательские блоки */
     .custom-block {
         padding: 0.5vw;
         margin: 0;
@@ -821,7 +803,6 @@ h3 {
         right: 0.5vw;
     }
 
-    /* Кнопки */
     .add-block,
     .create-btn,
     .api-btn,
@@ -838,7 +819,6 @@ h3 {
         width: 100%;
     }
 
-    /* Всплывающее окно */
     .block-options {
         min-width: 50vw;
         padding: 2vw;
@@ -863,13 +843,11 @@ h3 {
         font-size: 2vw;
     }
 
-    /* Индикатор загрузки */
     .loading-placeholder {
         font-size: 2.5vw;
         padding: 1.5vw 3vw;
     }
 
-    /* Страница создания */
     .tab-title {
         font-size: 4vw;
     }
@@ -913,7 +891,6 @@ h3 {
         font-size: 3vw;
     }
 
-    /* Футер */
     .footer {
         padding: 2vw;
         font-size: 2.5vw;

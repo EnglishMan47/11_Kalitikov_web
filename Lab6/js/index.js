@@ -1,6 +1,5 @@
 "use strict";
 
-// Глобальные переменные
 let isEditing = false;
 let remnants = [];
 let containerCards = [];
@@ -226,34 +225,7 @@ function renderMainPage() {
         </div>
     `;
     console.log("HTML установлен, добавляем слушатели");
-    const editToggle = document.getElementById("edit-toggle");
-    if (editToggle) {
-        editToggle.addEventListener("click", toggleEditMode);
-    } else {
-        console.warn("Элемент #edit-toggle не найден!");
-    }
-    const cancelBtn = document.getElementById("cancel-btn");
-    if (cancelBtn) {
-        cancelBtn.addEventListener("click", cancelEditMode);
-    }
-
-    if (isEditing) {
-        document.querySelectorAll(".delete-remnant").forEach(btn => {
-            btn.addEventListener("click", e => deleteRemnant(e.target.dataset.id));
-        });
-        document.querySelectorAll(".add-block").forEach(btn => {
-            btn.addEventListener("click", e => showBlockOptions(e.target.dataset.id));
-        });
-        document.querySelectorAll(".delete-block").forEach(btn => {
-            btn.addEventListener("click", e => deleteBlock(e.target.dataset.id));
-        });
-        document.querySelectorAll(".image-upload").forEach(input => {
-            input.addEventListener("change", e => changeRemnantImage(e.target.dataset.id, e.target.files[0]));
-        });
-        document.querySelectorAll(".meme-upload").forEach(input => {
-            input.addEventListener("change", e => changeMemeImage(e.target.dataset.id, e.target.files[0]));
-        });
-    }
+    addEventListeners(); 
 }
 
 function renderContainerPage(selectMode = false) {
@@ -264,55 +236,85 @@ function renderContainerPage(selectMode = false) {
         <div id="container-cards">
             ${containerCards.map(card => `
                 <div class="remnant-card" id="${card.id}" onclick="${selectMode ? `addCardToMain('${card.id}')` : ""}">
-                        ${card.render(isEditing, !selectMode && !isEditing)}
+                    ${card.render(isEditing, !selectMode && !isEditing)}
                     ${!selectMode && !isEditing ? `<button class="edit-card-btn" onclick="navigateTo('create', { edit: '${card.id}' })">Вернуться к работе</button>` : ""}
                 </div>
             `).join('')}
             ${!selectMode && !isEditing ? `<div class="add-card-placeholder" onclick="navigateTo('create')">Создать персонажа</div>` : ""}
         </div>
     `;
+    addEventListeners(); 
+}
+function addEventListeners() {
     const editToggle = document.getElementById("edit-toggle");
     if (editToggle) {
+        editToggle.removeEventListener("click", toggleEditMode);
         editToggle.addEventListener("click", toggleEditMode);
     } else {
         console.warn("Элемент #edit-toggle не найден!");
     }
+
     const cancelBtn = document.getElementById("cancel-btn");
     if (cancelBtn) {
+        cancelBtn.removeEventListener("click", cancelEditMode);
         cancelBtn.addEventListener("click", cancelEditMode);
     }
+
     if (isEditing) {
         document.querySelectorAll(".delete-remnant").forEach(btn => {
-            btn.addEventListener("click", e => {
-                e.stopPropagation();
-                deleteContainerCard(e.target.dataset.id);
-            });
+            btn.removeEventListener("click", handleDeleteRemnant);
+            btn.addEventListener("click", handleDeleteRemnant);
         });
+
         document.querySelectorAll(".add-block").forEach(btn => {
-            btn.addEventListener("click", e => {
-                e.stopPropagation();
-                showBlockOptions(e.target.dataset.id);
-            });
+            btn.removeEventListener("click", handleAddBlock);
+            btn.addEventListener("click", handleAddBlock);
         });
+
         document.querySelectorAll(".delete-block").forEach(btn => {
-            btn.addEventListener("click", e => {
-                e.stopPropagation();
-                deleteBlock(e.target.dataset.id);
-            });
+            btn.removeEventListener("click", handleDeleteBlock);
+            btn.addEventListener("click", handleDeleteBlock);
         });
+
         document.querySelectorAll(".image-upload").forEach(input => {
-            input.addEventListener("change", e => {
-                e.stopPropagation();
-                changeRemnantImage(e.target.dataset.id, e.target.files[0]);
-            });
+            input.removeEventListener("change", handleImageUpload);
+            input.addEventListener("change", handleImageUpload);
         });
+
         document.querySelectorAll(".meme-upload").forEach(input => {
-            input.addEventListener("change", e => {
-                e.stopPropagation();
-                changeMemeImage(e.target.dataset.id, e.target.files[0]);
-            });
+            input.removeEventListener("change", handleMemeUpload);
+            input.addEventListener("change", handleMemeUpload);
         });
     }
+}
+
+function handleDeleteRemnant(e) {
+    e.stopPropagation();
+    if (currentPage === "main") {
+        deleteRemnant(e.target.dataset.id);
+    } else if (currentPage === "container") {
+        deleteContainerCard(e.target.dataset.id);
+    }
+}
+
+function handleAddBlock(e) {
+    e.stopPropagation();
+    showBlockOptions(e.target.dataset.id);
+}
+
+function handleDeleteBlock(e) {
+    e.stopPropagation();
+    deleteBlock(e.target.dataset.id);
+}
+
+function handleImageUpload(e) {
+    e.stopPropagation();
+    changeRemnantImage(e.target.dataset.id, e.target.files[0]);
+}
+
+function handleMemeUpload(e) {
+    e.stopPropagation();
+    changeMemeImage(e.target.dataset.id, e.target.files[0]);
 }
 
 function renderCreatePage(activeTab) {
