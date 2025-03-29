@@ -1,3 +1,10 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: #121212;
@@ -7,6 +14,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Стили для шапки (controls) */
 .controls {
     position: fixed;
     top: 0;
@@ -14,7 +22,6 @@ body {
     right: 0;
     background: linear-gradient(45deg, #4a0e0e, #2a2a2a);
     padding: 1vw;
-    text-align: center;
     box-shadow: 0 0.4vw 1.2vw rgba(74, 14, 14, 0.6);
     z-index: 1000;
     display: flex;
@@ -22,7 +29,8 @@ body {
     align-items: center;
 }
 
-.controls button, .controls a {
+.controls button,
+.controls a {
     background: #333;
     color: #ffcc00;
     border: 0.2vw solid #4a0e0e;
@@ -36,14 +44,17 @@ body {
     text-decoration: none;
 }
 
-.controls button:hover, .controls a:hover {
+.controls button:hover,
+.controls a:hover {
     background: #4a0e0e;
     transform: scale(1.05);
 }
 
+/* Стили для вкладок */
 .tabs {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
     gap: 0.5vw;
 }
 
@@ -55,33 +66,38 @@ body {
     border-radius: 0.5vw;
     cursor: pointer;
     font-size: 1vw;
-    font-weight: bold; /* Добавлен жирный шрифт для всех вкладок */
+    font-weight: bold;
     transition: background 0.3s, transform 0.2s, color 0.3s;
 }
 
-.tab:hover, .tab.active {
+.tab:hover,
+.tab.active {
     background: #4a0e0e;
     color: #fff;
     transform: scale(1.05);
 }
 
-#remnants-container, #container-cards, #create-content {
+/* Стили для контейнеров */
+#remnants-container,
+#container-cards,
+#create-content {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5vw;
     margin-top: 7vw;
+    margin-bottom: 2vw;
     justify-content: space-around;
     min-height: 50vh;
 }
 
 #container-cards {
-    margin-top: 10vw; /* Увеличен отступ для заголовка */
-    position: relative;
+    margin-top: 10vw;
 }
 
-.container-title {
+/* Заголовок главной страницы */
+.main-title {
     position: absolute;
-    top: -5vw;
+    top: 2vw;
     left: 50%;
     transform: translateX(-50%);
     font-size: 2.5vw;
@@ -90,40 +106,78 @@ body {
     font-weight: bold;
 }
 
-.container-card-wrapper {
+/* Заголовок контейнера */
+.container-title {
+    position: absolute;
+    top: 2vw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5vw;
+    color: #ff4500;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Стили для карточки */
+.remnant-card {
+    position: relative;
+    background: #2a2a2a;
+    border: 0.1vw solid #4a0e0e;
+    border-radius: 0.5vw;
+    padding: 0.2vw;
+    margin-bottom: 2vw;
+    width: 20vw;
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.remnant-card {
-    background: #1e1e1e;
-    border: 0.3vw solid #4a0e0e;
-    border-radius: 1vw;
-    padding: 1.5vw;
-    box-shadow: 0 0 1.5vw rgba(74, 14, 14, 0.5);
-    transition: transform 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    width: auto;
-    max-width: 25vw;
-    height: fit-content;
+    height: auto;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .remnant-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 2vw rgba(255, 204, 0, 0.7);
+    transform: scale(1.05);
+    box-shadow: 0 0 1vw #ffcc00;
 }
 
+.remnant-card .delete-remnant {
+    position: absolute;
+    top: 0.2vw;
+    right: 0.2vw;
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1vw;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.remnant-card .delete-remnant:hover {
+    background: #cc0000;
+}
+
+/* Стили для изображения персонажа */
 .character-image {
     width: 100%;
     max-height: 20vw;
     object-fit: contain;
     border-radius: 0.8vw;
+    cursor: pointer;
+    margin: 0;
 }
 
-.remnant-name-input, .attribute-input, .block-content-input {
+/* Стили для полей ввода */
+.remnant-name-input,
+.attribute-input,
+.block-content-input {
     width: 100%;
     padding: 0.5vw;
     background: #444;
@@ -133,55 +187,86 @@ body {
     font-size: 1vw;
 }
 
-.edit-input, .edit-textarea {
+.edit-input,
+.edit-textarea {
     width: 100%;
+    max-width: 90%;
     padding: 0.5vw;
+    margin: 0;
     background: #444;
     color: #fff;
     border: 0.1vw solid #4a0e0e;
     border-radius: 0.5vw;
     font-size: 1vw;
-    position: static;
-    box-sizing: border-box; /* Добавлено для предотвращения выхода за пределы */
+    box-sizing: border-box;
+    resize: vertical;
+    overflow: auto;
 }
 
+.edit-textarea {
+    min-height: 5vw;
+    max-height: 15vw;
+}
+
+/* Стили для заголовков */
 h2 {
     color: #ff4500;
     font-size: 1.78vw;
-    margin: 1vw 0;
+    margin: 0;
     text-align: center;
 }
 
 h3 {
     color: #ffcc00;
     font-size: 1.07vw;
-    margin: 1vw 0;
+    margin: 0;
+    text-align: center;
 }
 
-.attributes-block, .custom-block {
+/* Стили для блока характеристик */
+.attributes-block {
     background: #333;
-    padding: 1vw;
+    padding: 0.2vw;
     border-radius: 0.8vw;
-    margin-top: 1vw;
-    position: relative;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .attributes-block ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .attributes-block li {
-    margin: 0.5vw 0;
+    margin: 0.2vw 0;
     padding: 0.5vw;
+    font-size: 1vw;
     background: #444;
     border-radius: 0.5vw;
-    font-size: 1vw;
+    text-align: left;
+    color: #fff;
+    position: relative;
+}
+
+.attributes-block li strong {
+    display: inline;
+    color: #ffcc00;
+}
+
+.attributes-block li span,
+.attributes-block li textarea {
+    display: inline;
+    color: #fff;
 }
 
 .attributes-block li ul {
     list-style: none;
     padding-left: 1vw;
+    text-align: left;
 }
 
 .attributes-block li ul li::before {
@@ -192,12 +277,135 @@ h3 {
     margin-left: -1em;
 }
 
-.custom-block p {
-    font-size: 1vw;
-    margin: 0.5vw 0;
+/* Стили для атрибутов (с крестиком) */
+.attribute-item {
+    position: relative;
+    margin-bottom: 0.2vw;
+    padding: 0.5vw;
+    background: #444;
+    border-radius: 0.5vw;
 }
 
-.add-block, .create-btn, .api-btn, .add-to-main {
+.attribute-item .delete-block {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1vw;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.attribute-item .delete-block:hover {
+    background: #cc0000;
+}
+
+/* Стили для блока шутки/мема */
+.fun-block {
+    position: relative;
+    margin: 0;
+    background: #333;
+    padding: 0.2vw;
+    border-radius: 0.8vw;
+    width: 100%;
+    text-align: center;
+}
+
+.fun-block p {
+    color: #ffcc00;
+    font-size: 1.5vw;
+    margin: 0;
+    text-align: center;
+}
+
+.fun-block img {
+    width: 100%;
+    max-height: 20vw;
+    object-fit: contain;
+    border-radius: 0.8vw;
+}
+
+.fun-block .delete-block {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1vw;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.fun-block .delete-block:hover {
+    background: #cc0000;
+}
+
+/* Стили для пользовательских блоков */
+.custom-block {
+    position: relative;
+    background: #333;
+    padding: 0.2vw;
+    border-radius: 0.8vw;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.custom-block p {
+    font-size: 1vw;
+    margin: 0;
+    text-align: center;
+    word-wrap: break-word;
+    color: #fff;
+}
+
+.custom-block .delete-block {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1vw;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.custom-block .delete-block:hover {
+    background: #cc0000;
+}
+
+/* Стили для кнопок */
+.add-block,
+.create-btn,
+.api-btn,
+.add-to-main {
     background: #4a0e0e;
     color: #fff;
     border: none;
@@ -209,46 +417,90 @@ h3 {
     margin: 0.5vw;
 }
 
-.add-block:hover, .create-btn:hover, .api-btn:hover, .add-to-main:hover {
+.add-block:hover,
+.create-btn:hover,
+.api-btn:hover,
+.add-to-main:hover {
     background: #ffcc00;
     transform: scale(1.05);
 }
 
-.create-btn:active {
-    animation: clickAnimation 0.3s ease;
+.edit-card-btn {
+    background: #4a0e0e;
+    color: #fff;
+    padding: 0.5vw 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background 0.3s, transform 0.2s;
+    margin: 0;
+    width: 100%;
+    text-align: center;
 }
 
-@keyframes clickAnimation {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+.edit-card-btn:hover {
+    background: #6b1c1c;
+    transform: scale(1.05);
 }
 
-.add-card-placeholder {
-    background: #444;
-    border: 0.3vw dashed #ffcc00;
-    border-radius: 1vw;
-    width: 25vw;
-    height: 37vw;
+/* Стили для всплывающего окна */
+.block-options {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border: 0.1vw solid #4a0e0e;
+    padding: 0.5vw;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+}
+
+.block-options button {
+    background: #4a0e0e;
+    color: #fff;
+    border: none;
+    padding: 0.5vw 1vw;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.block-options button:hover {
+    background: #6b1c1c;
+    transform: scale(1.05);
+}
+
+.block-options::after {
+    content: "X";
+    position: absolute;
+    top: 0.2vw;
+    right: 0.2vw;
+    background: #ff3333;
+    color: #fff;
+    width: 1.5vw;
+    height: 1.5vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffcc00;
-    font-size: 1.07vw;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background 0.3s;
-    z-index: 0;
+    font-size: 1vw;
+    transition: background 0.2s;
 }
 
-.add-card-placeholder:hover {
-    background: #555;
+.block-options::after:hover {
+    background: #cc0000;
 }
 
-.delete-remnant, .delete-block {
+.close-options {
     position: absolute;
     top: 0.5vw;
     right: 0.5vw;
-    background: #ff4500;
+    background: #ff3333;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -256,9 +508,16 @@ h3 {
     height: 1.5vw;
     cursor: pointer;
     font-size: 1vw;
+    transition: background 0.2s;
 }
 
-.image-upload, .meme-upload {
+.close-options:hover {
+    background: #cc0000;
+}
+
+/* Стили для загрузки изображений */
+.image-upload,
+.meme-upload {
     display: none;
 }
 
@@ -267,48 +526,22 @@ h3 {
     display: block;
 }
 
-.fan-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5vw;
-}
-
-.fan-options input, .fan-options button {
-    width: 15vw !important;
-    height: 3vw !important;
-    padding: 0 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1vw;
-}
-
-.edit-card-btn {
-    background: #4a0e0e;
-    color: #fff;
-    border: none;
-    padding: 0.8vw 1.2vw;
-    border-radius: 0.5vw;
-    cursor: pointer;
-    font-size: 1vw;
-    transition: background 0.3s, transform 0.2s;
-    margin: 0.5vw;
-}
-
-.edit-card-btn:hover {
-    background: #ffcc00;
-    transform: scale(1.05);
-}
-
+/* Стили для индикатора загрузки */
 .loading-placeholder {
-    background: #333;
-    color: #ffcc00;
-    padding: 1vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 1vw 2vw;
     border-radius: 0.5vw;
+    z-index: 1000;
+    font-size: 1.2vw;
     text-align: center;
-    margin: 1vw 0;
 }
 
+/* Стили для страницы создания */
 #create-content {
     display: flex;
     flex-direction: column;
@@ -323,20 +556,51 @@ h3 {
     margin: 1vw 0;
 }
 
-.create-btn {
-    align-self: flex-end;
-    margin-top: 2vw;
+.avatar-container,
+.name-container,
+.age-container,
+.description-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 100%;
+    max-width: 50vw;
 }
 
-.avatar-container {
+.fan-container {
     display: flex;
+    flex-direction: row;
     gap: 2vw;
     width: 100%;
-    max-width: 80vw;
+    max-width: 50vw;
 }
 
-.avatar-image {
-    flex: 2;
+.fan-left,
+.fan-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.fan-left {
+    align-items: flex-start;
+}
+
+.fan-right {
+    align-items: center;
+}
+
+.fan-options,
+.fan-meme-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+    width: 100%;
+}
+
+.fan-meme-controls {
+    margin-top: 1vw;
 }
 
 .avatar-image img {
@@ -346,293 +610,312 @@ h3 {
     border-radius: 0.8vw;
 }
 
-.avatar-controls {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-}
-
-.avatar-controls input, .avatar-controls button {
-    width: 100%;
-    padding: 0.8vw;
-    font-size: 1vw;
-}
-
-.name-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    width: 100%;
-    max-width: 40vw;
-}
-
-.name-input {
-    width: 100%;
-    font-size: 1.5vw !important;
-}
-
 .fixed-btn {
-    width: 15vw !important;
-    height: 3vw !important;
-    padding: 0 !important;
+    width: 15vw;
+    height: 3vw;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.age-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    width: 100%;
-    max-width: 40vw;
-}
-
-.age-input {
-    width: 100%;
-    font-size: 1.5vw !important;
-}
-
-.description-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    width: 100%;
-    max-width: 50vw;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5vw;
-}
-
-.form-group label {
-    font-size: 1.2vw;
-    color: #ffcc00;
-}
-
-.description-input {
-    width: 100%;
-    font-size: 1.2vw !important;
-}
-
-.fan-container {
-    display: flex;
-    gap: 2vw;
-    width: 100%;
-    max-width: 80vw;
-}
-
-.fan-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-}
-
-.fan-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5vw;
-}
-
-.fan-right p {
+/* Стили для сообщения "Нет карточек" */
+.no-cards {
+    color: #fff;
     font-size: 1.5vw;
-    margin: 0;
-}
-
-.fan-right img {
+    text-align: center;
     width: 100%;
-    max-height: 60vw;
-    object-fit: contain;
 }
 
-.fan-input {
-    width: 100%;
-    max-width: 40vw;
-    height: 10vw;
-    font-size: 1.2vw !important;
-}
-
-.finish-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1vw;
-    width: 100%;
-    max-width: 80vw;
-}
-
-.finish-card {
-    width: auto;
-    max-width: 50%;
-}
-
-.finish-buttons {
-    display: flex;
-    gap: 1vw;
-    justify-content: center;
-}
-
-.block-options {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2000;
-    background: #333;
-    padding: 2vw;
-    border-radius: 1vw;
-    box-shadow: 0 0 2vw rgba(0, 0, 0, 0.5);
-    width: 20vw;
-    position: relative; /* Добавлено для крестика */
-}
-
-.block-options .close-options {
-    position: absolute;
-    top: 0.5vw;
-    right: 0.5vw;
-    background: #ff4500;
+/* Стили для футера */
+.footer {
+    position: relative;
+    background: #2a2a2a;
     color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 1.5vw;
-    height: 1.5vw;
-    cursor: pointer;
-    font-size: 1vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.block-options button {
-    display: block;
-    width: 100%;
+    text-align: center;
     padding: 1vw;
-    margin: 1vw 0;
-    background: #4a0e0e;
-    color: #fff;
-    border: none;
-    border-radius: 1vw;
-    cursor: pointer;
-    font-size: 2vw;
+    font-size: 1vw;
+    border-top: 0.1vw solid #4a0e0e;
+    z-index: 1000;
 }
 
-.block-options button:hover {
-    background: #ffcc00;
-}
-
-.custom-block input, .custom-block textarea {
-    position: static;
-}
-
+/* Адаптация для экранов меньше 600px */
 @media (max-width: 600px) {
-    .controls {
-        flex-direction: column;
+    body {
         padding: 2vw;
     }
 
-    .controls button, .controls a, .tab {
-        width: 100%;
-        margin: 1vw 0;
-        font-size: 3vw;
-        padding: 2vw 3vw;
-    }
-
-    #remnants-container, #container-cards, #create-content {
+    /* Шапка */
+    .controls {
         flex-direction: column;
-        align-items: center;
-        margin-top: 20vw;
+        padding: 1vw;
+        gap: 1vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        min-height: auto;
     }
 
-    .container-title {
-        font-size: 5vw;
-        top: -10vw;
-    }
-
-    .remnant-card, .add-card-placeholder {
-        width: 90%;
-        max-width: 90%;
-        height: auto;
-    }
-
-    .remnant-name-input, .attribute-input, .block-content-input, .edit-input, .edit-textarea {
+    .controls button,
+    .controls a {
+        width: 100%;
+        margin: 0.5vw 0;
+        padding: 1.5vw;
         font-size: 2.5vw;
+        border-width: 0.3vw;
     }
 
+    .tabs {
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 0.5vw;
+        width: 100%;
+    }
+
+    .tab {
+        width: 100%;
+        margin: 0.5vw 0;
+        padding: 1.5vw;
+        font-size: 2.5vw;
+        border-width: 0.3vw;
+    }
+
+    /* Контейнеры */
+    #remnants-container,
+    #container-cards,
+    #create-content {
+        margin-top: 20vw;
+        margin-bottom: 2vw;
+        gap: 1vw;
+    }
+
+    #container-cards {
+        margin-top: 25vw;
+    }
+
+    .main-title,
+    .container-title {
+        top: 15vw;
+        font-size: 4vw;
+    }
+
+    /* Карточка */
+    .remnant-card {
+        width: 80vw;
+        max-width: 80vw;
+        padding: 0.5vw;
+        margin-bottom: 2vw;
+        border-width: 0.4vw;
+    }
+
+    .remnant-card .delete-remnant {
+        width: 4vw;
+        height: 4vw;
+        font-size: 2vw;
+        top: 0.5vw;
+        right: 0.5vw;
+    }
+
+    /* Изображение персонажа */
+    .character-image {
+        max-height: 30vw;
+    }
+
+    /* Поля ввода */
+    .remnant-name-input,
+    .attribute-input,
+    .block-content-input {
+        font-size: 2.5vw;
+        padding: 0.8vw;
+    }
+
+    .edit-input,
+    .edit-textarea {
+        font-size: 2.5vw;
+        padding: 0.8vw;
+        max-width: 100%;
+    }
+
+    .edit-textarea {
+        min-height: 8vw;
+        max-height: 20vw;
+    }
+
+    /* Заголовки */
     h2 {
         font-size: 4vw;
+        margin: 0;
     }
 
     h3 {
         font-size: 3vw;
+        margin: 0;
     }
 
-    .attributes-block li, .custom-block p {
+    /* Блок характеристик */
+    .attributes-block {
+        padding: 0.5vw;
+        margin: 0;
+    }
+
+    .attributes-block li {
         font-size: 2.5vw;
+        padding: 0.8vw;
+        margin: 0.3vw 0;
     }
 
-    .add-block, .create-btn, .api-btn, .add-to-main {
+    .attribute-item {
+        padding: 0.8vw;
+        margin-bottom: 0.3vw;
+    }
+
+    .attribute-item .delete-block {
+        width: 4vw;
+        height: 4vw;
+        font-size: 2vw;
+        top: 0.5vw;
+        right: 0.5vw;
+    }
+
+    /* Блок шутки/мема */
+    .fun-block {
+        padding: 0.5vw;
+        margin: 0;
+    }
+
+    .fun-block p {
         font-size: 2.5vw;
-        padding: 2vw 3vw;
+        margin: 0;
     }
 
-    .tab-title {
-        font-size: 5vw;
+    .fun-block img {
+        max-height: 30vw;
     }
 
-    .avatar-container, .fan-container {
-        flex-direction: column;
+    .fun-block .delete-block {
+        width: 4vw;
+        height: 4vw;
+        font-size: 2vw;
+        top: 0.5vw;
+        right: 0.5vw;
     }
 
-    .avatar-image, .fan-right {
+    /* Пользовательские блоки */
+    .custom-block {
+        padding: 0.5vw;
+        margin: 0;
+    }
+
+    .custom-block p {
+        font-size: 2.5vw;
+        margin: 0;
+    }
+
+    .custom-block .delete-block {
+        width: 4vw;
+        height: 4vw;
+        font-size: 2vw;
+        top: 0.5vw;
+        right: 0.5vw;
+    }
+
+    /* Кнопки */
+    .add-block,
+    .create-btn,
+    .api-btn,
+    .add-to-main {
+        padding: 1.5vw 2vw;
+        font-size: 2.5vw;
+        margin: 0.5vw;
+    }
+
+    .edit-card-btn {
+        padding: 1.5vw 2vw;
+        font-size: 2.5vw;
+        margin: 0;
         width: 100%;
     }
 
-    .avatar-controls, .fan-left {
-        width: 100%;
-    }
-
-    .name-container, .age-container, .description-container {
-        max-width: 90%;
-    }
-
-    .fixed-btn {
-        width: 30vw !important;
-        height: 6vw !important;
-        font-size: 2.5vw !important;
-    }
-
-    .finish-card {
-        width: 90%;
-        max-width: 90%;
-    }
-
-    .fan-right p {
-        font-size: 3vw;
-    }
-
-    .fan-right img {
-        max-height: 80vw;
-    }
-
+    /* Всплывающее окно */
     .block-options {
-        width: 40vw;
-        padding: 4vw;
+        min-width: 50vw;
+        padding: 2vw;
     }
 
     .block-options button {
-        font-size: 4vw;
-        padding: 2vw;
-        margin: 2vw 0;
+        padding: 1.5vw 2vw;
+        font-size: 2.5vw;
     }
 
-    .block-options .close-options {
-        width: 3vw;
-        height: 3vw;
+    .block-options::after {
+        width: 4vw;
+        height: 4vw;
         font-size: 2vw;
+        top: 0.5vw;
+        right: 0.5vw;
+    }
+
+    .close-options {
+        width: 4vw;
+        height: 4vw;
+        font-size: 2vw;
+    }
+
+    /* Индикатор загрузки */
+    .loading-placeholder {
+        font-size: 2.5vw;
+        padding: 1.5vw 3vw;
+    }
+
+    /* Страница создания */
+    .tab-title {
+        font-size: 4vw;
+    }
+
+    .avatar-container,
+    .name-container,
+    .age-container,
+    .description-container {
+        max-width: 80vw;
+        gap: 1vw;
+    }
+
+    .fan-container {
+        flex-direction: column;
+        max-width: 80vw;
+        gap: 2vw;
+    }
+
+    .fan-left,
+    .fan-right {
+        width: 100%;
+    }
+
+    .fan-options,
+    .fan-meme-controls {
+        flex-direction: column;
+        gap: 1vw;
+    }
+
+    .avatar-image img {
+        max-height: 50vw;
+    }
+
+    .fixed-btn {
+        width: 30vw;
+        height: 6vw;
+        font-size: 2.5vw;
+    }
+
+    .no-cards {
+        font-size: 3vw;
+    }
+
+    /* Футер */
+    .footer {
+        padding: 2vw;
+        font-size: 2.5vw;
     }
 }

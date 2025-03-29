@@ -263,10 +263,8 @@ function renderContainerPage(selectMode = false) {
         <h1 class="container-title">Контейнер карточек</h1>
         <div id="container-cards">
             ${containerCards.map(card => `
-                <div class="container-card-wrapper">
-                    <div class="remnant-card" id="${card.id}" onclick="${selectMode ? `addCardToMain('${card.id}')` : ""}">
+                <div class="remnant-card" id="${card.id}" onclick="${selectMode ? `addCardToMain('${card.id}')` : ""}">
                         ${card.render(isEditing, !selectMode && !isEditing)}
-                    </div>
                     ${!selectMode && !isEditing ? `<button class="edit-card-btn" onclick="navigateTo('create', { edit: '${card.id}' })">Вернуться к работе</button>` : ""}
                 </div>
             `).join('')}
