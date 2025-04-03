@@ -106,15 +106,15 @@ async function fetchMeme() {
 
 async function fetchCardsFromServer() {
     try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts?userId=1");
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
+        console.log("GET: Загрузка карточек с сервера...");
+        const response = await fetch("https://reqres.in/api/users");
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
         const data = await response.json();
-        return data.map(item => ({
+        console.log("Получены карточки:", data);
+        return data.data.map(item => ({
             id: `server-${item.id}`,
-            name: item.title,
-            description: item.body,
+            name: item.first_name + " " + item.last_name,
+            description: item.email,
             serverId: item.id
         }));
     } catch (error) {
@@ -125,126 +125,90 @@ async function fetchCardsFromServer() {
 
 async function createCardOnServer(card) {
     try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        console.log("POST: Создание карточки на сервере:", card);
+        const response = await fetch("https://reqres.in/api/users", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                title: card.name,
-                body: card.description,
-                userId: 1,
+                name: card.name,
+                job: "character"
             }),
         });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
         const data = await response.json();
+        console.log("Карточка создана (POST):", data);
         return data.id;
     } catch (error) {
-        console.error("Ошибка создания карточки:", error);
+        console.error("Ошибка создания карточки (POST):", error);
         return null;
     }
 }
 
 async function updateCardOnServer(cardId, card) {
     try {
-        if (cardId > 100) {
-            console.warn(`ID ${cardId} превышает допустимый диапазон для JSONPlaceholder. Обновление пропущено.`);
-            return card;
-        }
-
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${cardId}`, {
+        console.log("PUT: Полное обновление карточки:", cardId, card);
+        const response = await fetch(`https://reqres.in/api/users/${cardId}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id: cardId,
-                title: card.name,
-                body: card.description,
-                userId: 1,
+                name: card.name,
+                job: "character"
             }),
         });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
         const data = await response.json();
+        console.log("Карточка обновлена (PUT):", data);
         return data;
     } catch (error) {
-        console.error("Ошибка обновления карточки:", error);
+        console.error("Ошибка обновления (PUT):", error);
         return null;
     }
 }
 
 async function patchCardOnServer(cardId, updates) {
     try {
-        if (cardId > 100) {
-            console.warn(`ID ${cardId} превышает допустимый диапазон для JSONPlaceholder. Частичное обновление пропущено, но считается успешным локально.`);
-            return updates;
-        }
-
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${cardId}`, {
+        console.log("PATCH: Частичное обновление карточки:", cardId, updates);
+        const response = await fetch(`https://reqres.in/api/users/${cardId}`, {
             method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updates),
         });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
         const data = await response.json();
+        console.log("Карточка частично обновлена (PATCH):", data);
         return data;
     } catch (error) {
-        console.error("Ошибка частичного обновления карточки:", error);
+        console.error("Ошибка частичного обновления (PATCH):", error);
         return null;
     }
 }
 
 async function deleteCardOnServer(cardId) {
     try {
-        if (cardId > 100) {
-            console.warn(`ID ${cardId} превышает допустимый диапазон для JSONPlaceholder. Удаление пропущено, но считается успешным локально.`);
-            return true;
-        }
-
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${cardId}`, {
+        console.log("DELETE: Удаление карточки:", cardId);
+        const response = await fetch(`https://reqres.in/api/users/${cardId}`, {
             method: "DELETE",
         });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
-        return response.ok;
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
+        console.log("Карточка удалена (DELETE) с сервера");
+        return true;
     } catch (error) {
-        console.error("Ошибка удаления карточки:", error);
+        console.error("Ошибка удаления (DELETE):", error);
         return false;
     }
 }
 
 window.apiFetchRandomImage = async function() {
     try {
-        const placeholder = document.createElement("div");
-        placeholder.className = "loading-placeholder";
-        placeholder.textContent = "Загрузка аватарки...";
-        const avatarControls = document.querySelector(".avatar-controls");
-        if (avatarControls) avatarControls.appendChild(placeholder);
-
-        const url = await fetchRandomImage();
-        currentCard.imageUrl = url;
-        showCreateTab("avatar");
+        console.log("GET: Запрос случайного изображения с DiceBear...");
+        const imageUrl = await fetchRandomImage();
+        currentCard.imageUrl = imageUrl;
         saveAll();
-        placeholder.remove();
+        await syncPartialCard();
+        showCreateTab("avatar");
     } catch (error) {
-        alert("Ошибка получения аватарки: " + error.message);
+        console.error("Ошибка загрузки изображения:", error);
+        return null;
     }
 };
 
@@ -259,6 +223,7 @@ window.apiFetchRandomName = async function() {
         currentCard.name = name;
         document.getElementById("name-input").value = name;
         saveAll();
+        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения имени: " + error.message);
@@ -276,6 +241,7 @@ window.apiFetchRandomAge = async function() {
         currentCard.age = age;
         document.getElementById("age-input").value = age;
         saveAll();
+        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения возраста: " + error.message);
@@ -291,6 +257,7 @@ window.apiFetchRandomClass = async function() {
         currentCard.remnantClass = className;
         document.getElementById("class-input").value = className;
         saveAll();
+        await syncPartialCard();
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения класса: " + error.message);
@@ -308,6 +275,7 @@ window.apiFetchRandomSkills = async function() {
         currentCard.skills = skills;
         document.getElementById("skills-input").value = skills;
         saveAll();
+        await syncPartialCard();
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения навыков: " + error.message);
@@ -332,6 +300,7 @@ window.apiFetchRandomDescription = async function() {
         }
 
         saveAll();
+        await syncPartialCard();
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         console.error("Ошибка получения описания:", error);
@@ -353,6 +322,7 @@ window.apiFetchRandomJoke = async function() {
         document.getElementById("fun-input").value = joke;
         showCreateTab("fan");
         saveAll();
+        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения шутки: " + error.message);
@@ -370,6 +340,7 @@ window.apiFetchMeme = async function() {
         currentCard.memeUrl = memeUrl;
         showCreateTab("fan");
         saveAll();
+        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения мема: " + error.message);
@@ -381,11 +352,37 @@ window.clearJoke = function() {
     const funInput = document.getElementById("fun-input");
     if (funInput) funInput.value = "";
     saveAll();
+    syncPartialCard();
     showCreateTab("fan");
 };
 
 window.removeMeme = function() {
     currentCard.memeUrl = "";
     saveAll();
+    syncPartialCard();
     showCreateTab("fan");
 };
+
+async function syncPartialCard() {
+    if (!currentCard) return;
+    if (currentCard.serverId) {
+        await patchCardOnServer(currentCard.serverId, currentCard);
+    } else {
+        const serverId = await createCardOnServer(currentCard);
+        if (serverId) {
+            currentCard.serverId = serverId;
+        }
+    }
+}
+
+async function fullSyncCurrentCard() {
+    if (!currentCard) return;
+    if (currentCard.serverId) {
+        await updateCardOnServer(currentCard.serverId, currentCard);
+    } else {
+        const serverId = await createCardOnServer(currentCard);
+        if (serverId) {
+            currentCard.serverId = serverId;
+        }
+    }
+}

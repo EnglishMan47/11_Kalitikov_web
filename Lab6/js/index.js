@@ -23,8 +23,8 @@ class RemnantCard extends Block {
     constructor(id, name, age, remnantClass, skills, imageUrl, blocks = [], description = "", funPhrase = "", memeUrl = "") {
         super(id);
         this.id = id;
-        this.name = name;
-        this.age = age;
+        this.name = name || "Безымянный";
+        this.age = age > 0 ? age : 1;
         this.remnantClass = remnantClass || "Неизвестно";
         this.skills = skills || "Отсутствуют";
         this.description = description || "";
@@ -41,6 +41,7 @@ class RemnantCard extends Block {
         this.skillsLabel = "Навыки";
         this.descriptionLabel = "Описание";
         this.serverId = null;
+        this.keys = [];
     }
     render(editable = false, withEditLink = false) {
         return `
@@ -111,13 +112,11 @@ class RemnantCard extends Block {
     async enableEditing() {
         const cardEl = document.getElementById(this.id);
         if (!cardEl) return;
+    
         const nameInput = cardEl.querySelector(".remnant-name-input");
         if (nameInput) this.name = nameInput.value || "Безымянный";
         const ageInput = cardEl.querySelector(".attribute-input[data-key='age']");
-        if (ageInput) {
-            const age = parseInt(ageInput.value);
-            this.age = age > 0 ? age : 1;
-        }
+        if (ageInput) this.age = parseInt(ageInput.value) > 0 ? parseInt(ageInput.value) : 1;
         const classInput = cardEl.querySelector(".attribute-input[data-key='class']");
         if (classInput) this.remnantClass = classInput.value || "Неизвестно";
         const skillsInput = cardEl.querySelector(".attribute-input[data-key='skills']");
@@ -126,12 +125,13 @@ class RemnantCard extends Block {
         if (descInput) this.description = descInput.value || "";
         const funBlock = cardEl.querySelector(`#${this.id}-fun h3`);
         if (funBlock) this.funPhrase = funBlock.textContent || "";
-        this.blocks.forEach(block => block.enableEditing && block.enableEditing());
-
-        if (this.serverId) {
-            await updateCardOnServer(this.serverId, this);
-            await patchCardOnServer(this.serverId, { title: this.name });
+        if (Array.isArray(this.keys)) {
+            this.keys.forEach(block => block.enableEditing && block.enableEditing());
+        } else {
+            console.warn("this.keys не является массивом:", this.keys);
+            this.keys = []; 
         }
+        await fullSyncCurrentCard();
     }
 }
 
@@ -186,9 +186,7 @@ function renderHeader() {
     if (currentPage === "main") {
         navButtons = `<div class="tab" onclick="navigateTo('container')">Окунуться в мир создания персонажей</div>`;
     } else if (currentPage === "container") {
-        navButtons = `
-            <div class="tab" onclick="navigateTo('main')">На главную</div>
-        `;
+        navButtons = `<div class="tab" onclick="navigateTo('main')">На главную</div>`;
     } else if (currentPage === "create") {
         navButtons = `
             <div class="tab" onclick="navigateTo('main')">На главную</div>
@@ -245,6 +243,7 @@ function renderContainerPage(selectMode = false) {
     `;
     addEventListeners(); 
 }
+
 function addEventListeners() {
     const editToggle = document.getElementById("edit-toggle");
     if (editToggle) {
@@ -285,15 +284,37 @@ function addEventListeners() {
             input.removeEventListener("change", handleMemeUpload);
             input.addEventListener("change", handleMemeUpload);
         });
+
+        const closeModal = document.querySelector(".close-modal");
+        if (closeModal) {
+            closeModal.removeEventListener("click", closeBlockOptions);
+            closeModal.addEventListener("click", closeBlockOptions);
+        }
     }
 }
 
-function handleDeleteRemnant(e) {
+function closeBlockOptions() {
+    const blockOptions = document.querySelector(".block-options");
+    if (blockOptions) {
+        blockOptions.remove();
+    }
+}
+
+async function handleDeleteRemnant(e) {
     e.stopPropagation();
+    let cardId = e.target.dataset.id;
+    let card = remnants.find(r => r.id === cardId) || containerCards.find(c => c.id === cardId);
+    if (card && card.serverId) {
+        const success = await deleteCardOnServer(card.serverId);
+        if (!success) {
+            alert("Ошибка удаления карточки с сервера.");
+            return;
+        }
+    }
     if (currentPage === "main") {
-        deleteRemnant(e.target.dataset.id);
+        deleteRemnant(cardId);
     } else if (currentPage === "container") {
-        deleteContainerCard(e.target.dataset.id);
+        deleteContainerCard(cardId);
     }
 }
 
@@ -363,6 +384,7 @@ function showCreateTab(tab) {
                     reader.onload = () => {
                         currentCard.imageUrl = reader.result;
                         saveAll();
+                        syncPartialCard();
                         showCreateTab("avatar");
                     };
                     reader.readAsDataURL(file);
@@ -383,6 +405,7 @@ function showCreateTab(tab) {
             nameInput.addEventListener("input", e => {
                 currentCard.name = e.target.value || "Безымянный";
                 saveAll();
+                syncPartialCard();
             });
         }
     } else if (tab === "age") {
@@ -399,6 +422,7 @@ function showCreateTab(tab) {
             ageInput.addEventListener("input", e => {
                 currentCard.age = parseInt(e.target.value) || 1;
                 saveAll();
+                syncPartialCard();
             });
         }
     } else if (tab === "description") {
@@ -433,9 +457,9 @@ function showCreateTab(tab) {
         const classInput = document.getElementById("class-input");
         const skillsInput = document.getElementById("skills-input");
         const descInput = document.getElementById("desc-input");
-        if (classInput) classInput.addEventListener("input", e => { currentCard.remnantClass = e.target.value || "Неизвестно"; saveAll(); });
-        if (skillsInput) skillsInput.addEventListener("input", e => { currentCard.skills = e.target.value || "Отсутствуют"; saveAll(); });
-        if (descInput) descInput.addEventListener("input", e => { currentCard.description = e.target.value || ""; saveAll(); });
+        if (classInput) classInput.addEventListener("input", e => { currentCard.remnantClass = e.target.value || "Неизвестно"; saveAll(); syncPartialCard(); });
+        if (skillsInput) skillsInput.addEventListener("input", e => { currentCard.skills = e.target.value || "Отсутствуют"; saveAll(); syncPartialCard(); });
+        if (descInput) descInput.addEventListener("input", e => { currentCard.description = e.target.value || ""; saveAll(); syncPartialCard(); });
 
         document.querySelectorAll(".custom-block h3").forEach(h3 => {
             h3.addEventListener("click", e => {
@@ -473,7 +497,7 @@ function showCreateTab(tab) {
         `;
         const funInput = document.getElementById("fun-input");
         const memeUpload = document.getElementById("meme-upload");
-        if (funInput) funInput.addEventListener("input", e => { currentCard.funPhrase = e.target.value || ""; saveAll(); });
+        if (funInput) funInput.addEventListener("input", e => { currentCard.funPhrase = e.target.value || ""; saveAll(); syncPartialCard(); });
         if (memeUpload) {
             memeUpload.addEventListener("change", e => {
                 const file = e.target.files[0];
@@ -482,6 +506,7 @@ function showCreateTab(tab) {
                     reader.onload = () => {
                         currentCard.memeUrl = reader.result;
                         saveAll();
+                        syncPartialCard();
                         showCreateTab("fan");
                     };
                     reader.readAsDataURL(file);
@@ -508,6 +533,7 @@ function addCustomBlock() {
     const newBlockId = `block-${Date.now()}`;
     currentCard.blocks.push(new HeaderTextBlock(newBlockId, "Новый заголовок", "Введите текст..."));
     saveAll();
+    syncPartialCard();
     showCreateTab("description");
 }
 
@@ -583,8 +609,11 @@ async function saveToContainer() {
     document.getElementById("create-content").appendChild(loadingPlaceholder);
 
     const serverId = await createCardOnServer(currentCard);
+    loadingPlaceholder.remove();
+
     if (serverId) {
         currentCard.serverId = serverId;
+        console.log("POST: Карточка создана на сервере с ID:", serverId);
         const existingCardIndex = containerCards.findIndex(c => c.id === currentCard.id);
         if (existingCardIndex !== -1) {
             containerCards[existingCardIndex] = currentCard;
@@ -595,7 +624,7 @@ async function saveToContainer() {
         localStorage.removeItem("currentCard");
         navigateTo("container");
     } else {
-        loadingPlaceholder.textContent = "Ошибка сохранения карточки. Попробуйте снова.";
+        alert("Ошибка сохранения карточки на сервере.");
     }
 }
 
@@ -657,7 +686,7 @@ function editHeader(blockId) {
     input.type = "text";
     input.value = headerEl.textContent;
     input.className = "edit-input";
-    input.addEventListener("blur", () => {
+    input.addEventListener("blur", async () => {
         const newValue = input.value || "Заголовок";
         if (blockId.endsWith("-age")) {
             const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
@@ -685,6 +714,7 @@ function editHeader(blockId) {
         }
         headerEl.textContent = newValue;
         saveAll();
+        await syncPartialCard();
         if (currentPage === "create") {
             showCreateTab(currentTab);
         } else if (currentPage === "main") {
@@ -706,7 +736,7 @@ function editText(blockId) {
     const textarea = document.createElement("textarea");
     textarea.value = pEl.textContent;
     textarea.className = "edit-textarea";
-    textarea.addEventListener("blur", () => {
+    textarea.addEventListener("blur", async () => {
         const newValue = textarea.value || "Введите текст...";
         pEl.textContent = newValue;
         const block = (currentCard?.blocks || []).find(b => b.id === blockId) || 
@@ -714,6 +744,7 @@ function editText(blockId) {
                      containerCards.flatMap(c => c.blocks).find(b => b.id === blockId);
         if (block) block.content = newValue;
         saveAll();
+        await syncPartialCard();
         if (currentPage === "create") {
             showCreateTab(currentTab);
         } else if (currentPage === "main") {
@@ -742,6 +773,7 @@ function changeRemnantImage(remnantId, file) {
                 imgElement.src = event.target.result;
             }
             saveMainAndContainer();
+            syncPartialCard();
         }
     };
     reader.onerror = function() {
@@ -761,6 +793,7 @@ function changeMemeImage(remnantId, file) {
         if (remnant) {
             remnant.memeUrl = event.target.result;
             saveMainAndContainer();
+            syncPartialCard();
             if (currentPage === "main") renderMainPage();
             else if (currentPage === "container") renderContainerPage();
         }
@@ -779,6 +812,7 @@ function toggleEditMode() {
         saveMainAndContainer();
         originalRemnants = JSON.parse(JSON.stringify(remnants));
         originalContainerCards = JSON.parse(JSON.stringify(containerCards));
+        fullSyncCurrentCard();
     } else {
         originalRemnants = JSON.parse(JSON.stringify(remnants));
         originalContainerCards = JSON.parse(JSON.stringify(containerCards));
@@ -818,6 +852,7 @@ function addRemnant() {
     const newId = `remnant-${Date.now()}`;
     remnants.push(new RemnantCard(newId, "Новый персонаж", 1, "Неизвестно", "Отсутствуют", "https://cdn-icons-png.flaticon.com/512/6861/6861293.png"));
     saveMainAndContainer();
+    syncPartialCard();
     renderMainPage();
 }
 
@@ -827,15 +862,17 @@ function showBlockOptions(remnantId) {
 
     const optionsHtml = `
         <div class="block-options">
-            <button class="close-options">X</button>
+            <span class="close-modal">X</span>
             <button onclick="addBlock('${remnantId}', 'text')">Поле ввода</button>
             <button onclick="addBlock('${remnantId}', 'header-text')">Поле ввода с заголовком</button>
         </div>
     `;
     document.body.insertAdjacentHTML("beforeend", optionsHtml);
-    document.querySelector(".close-options").addEventListener("click", () => {
-        document.querySelector(".block-options").remove();
-    });
+
+    const closeModal = document.querySelector(".close-modal");
+    if (closeModal) {
+        closeModal.addEventListener("click", closeBlockOptions);
+    }
 }
 
 function addBlock(remnantId, type) {
@@ -857,6 +894,7 @@ function addBlock(remnantId, type) {
     }
     document.querySelector(".block-options")?.remove();
     saveMainAndContainer();
+    syncPartialCard();
     if (currentPage === "create") {
         showCreateTab("description");
     } else if (currentPage === "main") {
@@ -873,17 +911,30 @@ function deleteRemnant(id) {
 }
 
 async function deleteContainerCard(id) {
+    const loading = document.createElement("div");
+    loading.className = "loading-placeholder";
+    loading.textContent = "Удаление...";
+    document.body.appendChild(loading);
+
     const card = containerCards.find(c => c.id === id);
     if (card && card.serverId) {
         const success = await deleteCardOnServer(card.serverId);
-        if (!success) {
+        loading.remove();
+        if (success) {
+            console.log("DELETE: Карточка успешно удалена с сервера:", card.serverId);
+            containerCards = containerCards.filter(c => c.id !== id);
+            saveMainAndContainer();
+            renderContainerPage();
+        } else {
             alert("Ошибка удаления карточки с сервера.");
-            return;
         }
+    } else {
+        console.log("Карточка не имеет serverId или не найдена. Удаляем локально.");
+        loading.remove();
+        containerCards = containerCards.filter(c => c.id !== id);
+        saveMainAndContainer();
+        renderContainerPage();
     }
-    containerCards = containerCards.filter(card => card.id !== id);
-    saveMainAndContainer();
-    renderContainerPage();
 }
 
 function deleteBlock(id) {
@@ -906,6 +957,7 @@ function deleteBlock(id) {
         else remnant.blocks = remnant.blocks.filter(block => block.id !== id);
     });
     saveMainAndContainer();
+    syncPartialCard();
     if (currentPage === "create") {
         showCreateTab("description");
     } else if (currentPage === "main") {
@@ -920,6 +972,7 @@ function addCardToMain(id) {
     if (card) {
         remnants.push(card);
         saveMainAndContainer();
+        syncPartialCard();
         navigateTo("main");
     }
 }

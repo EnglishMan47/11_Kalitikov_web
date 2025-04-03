@@ -435,6 +435,8 @@ h3 {
     display: flex;
     flex-direction: column;
     gap: 0.5vw;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 1vw rgba(74, 14, 14, 0.6);
 }
 
 .block-options button {
@@ -445,6 +447,7 @@ h3 {
     cursor: pointer;
     font-size: 1vw;
     transition: background 0.3s, transform 0.2s;
+    border-radius: 0.5vw;
 }
 
 .block-options button:hover {
@@ -452,29 +455,7 @@ h3 {
     transform: scale(1.05);
 }
 
-.block-options::after {
-    content: "X";
-    position: absolute;
-    top: 0.2vw;
-    right: 0.2vw;
-    background: #ff3333;
-    color: #fff;
-    width: 1.5vw;
-    height: 1.5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1vw;
-    transition: background 0.2s;
-}
-
-.block-options::after:hover {
-    background: #cc0000;
-}
-
-.close-options {
+.close-modal {
     position: absolute;
     top: 0.5vw;
     right: 0.5vw;
@@ -484,12 +465,15 @@ h3 {
     border-radius: 50%;
     width: 1.5vw;
     height: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     font-size: 1vw;
     transition: background 0.2s;
 }
 
-.close-options:hover {
+.close-modal:hover {
     background: #cc0000;
 }
 
@@ -829,18 +813,12 @@ h3 {
         font-size: 2.5vw;
     }
 
-    .block-options::after {
+    .close-modal {
         width: 4vw;
         height: 4vw;
         font-size: 2vw;
         top: 0.5vw;
         right: 0.5vw;
-    }
-
-    .close-options {
-        width: 4vw;
-        height: 4vw;
-        font-size: 2vw;
     }
 
     .loading-placeholder {
