@@ -28,8 +28,8 @@ class RemnantCard extends Block {
         this.remnantClass = remnantClass || "Неизвестно";
         this.skills = skills || "Отсутствуют";
         this.description = description || "";
-        this.imageUrl = imageUrl;
-        this.blocks = blocks;
+        this.imageUrl = imageUrl || "https://picsum.photos/300/200";
+        this.blocks = Array.isArray(blocks) ? blocks : [];
         this.funPhrase = funPhrase || "";
         this.memeUrl = memeUrl || "";
         this.showAge = true;
@@ -41,7 +41,6 @@ class RemnantCard extends Block {
         this.skillsLabel = "Навыки";
         this.descriptionLabel = "Описание";
         this.serverId = null;
-        this.keys = [];
     }
     render(editable = false, withEditLink = false) {
         return `
@@ -49,7 +48,8 @@ class RemnantCard extends Block {
                 ${editable ? `<button class="delete-remnant" data-id="${this.id}">X</button>` : ""}
                 <div class="character-info">
                     <label for="upload-${this.id}" class="image-label">
-                        <img src="${this.imageUrl}" alt="${this.name}" class="character-image" id="img-${this.id}">
+                        <img src="${this.imageUrl}" alt="${this.name}" class="character-image" id="img-${this.id}" 
+                             onerror="this.src='https://cdn-icons-png.flaticon.com/512/6861/6861293.png';">
                         ${editable ? `<input type="file" id="upload-${this.id}" class="image-upload" data-id="${this.id}" accept="image/*">` : ""}
                     </label>
                     ${editable 
@@ -99,7 +99,8 @@ class RemnantCard extends Block {
                         <h3 onclick="${editable ? `editHeader('${this.id}-fun')` : ""}">${this.funPhrase || "Без шутки"}</h3>
                         ${this.memeUrl ? `
                             <label for="meme-upload-${this.id}" class="image-label">
-                                <img src="${this.memeUrl}" alt="Мем" class="character-image">
+                                <img src="${this.memeUrl}" alt="Мем" class="character-image" 
+                                     onerror="this.src='https://cdn-icons-png.flaticon.com/512/6861/6861293.png';">
                                 ${editable ? `<input type="file" id="meme-upload-${this.id}" class="meme-upload" data-id="${this.id}" accept="image/*">` : ""}
                             </label>` : ""}
                     </div>
@@ -112,7 +113,7 @@ class RemnantCard extends Block {
     async enableEditing() {
         const cardEl = document.getElementById(this.id);
         if (!cardEl) return;
-    
+
         const nameInput = cardEl.querySelector(".remnant-name-input");
         if (nameInput) this.name = nameInput.value || "Безымянный";
         const ageInput = cardEl.querySelector(".attribute-input[data-key='age']");
@@ -125,13 +126,13 @@ class RemnantCard extends Block {
         if (descInput) this.description = descInput.value || "";
         const funBlock = cardEl.querySelector(`#${this.id}-fun h3`);
         if (funBlock) this.funPhrase = funBlock.textContent || "";
-        if (Array.isArray(this.keys)) {
-            this.keys.forEach(block => block.enableEditing && block.enableEditing());
+
+        if (Array.isArray(this.blocks)) {
+            this.blocks.forEach(block => block.enableEditing && block.enableEditing());
         } else {
-            console.warn("this.keys не является массивом:", this.keys);
-            this.keys = []; 
+            console.warn("this.blocks не является массивом:", this.blocks);
+            this.blocks = [];
         }
-        await fullSyncCurrentCard();
     }
 }
 
@@ -152,7 +153,9 @@ class TextBlock extends Block {
         const blockEl = document.getElementById(this.id);
         if (!blockEl) return;
         const pEl = blockEl.querySelector("p");
-        if (pEl) this.content = pEl.textContent || "Введите текст...";
+        if (pEl) {
+            this.content = pEl.textContent || "Введите текст...";
+        }
     }
 }
 
@@ -223,7 +226,7 @@ function renderMainPage() {
         </div>
     `;
     console.log("HTML установлен, добавляем слушатели");
-    addEventListeners(); 
+    addEventListeners();
 }
 
 function renderContainerPage(selectMode = false) {
@@ -241,7 +244,7 @@ function renderContainerPage(selectMode = false) {
             ${!selectMode && !isEditing ? `<div class="add-card-placeholder" onclick="navigateTo('create')">Создать персонажа</div>` : ""}
         </div>
     `;
-    addEventListeners(); 
+    addEventListeners();
 }
 
 function addEventListeners() {
@@ -285,12 +288,46 @@ function addEventListeners() {
             input.addEventListener("change", handleMemeUpload);
         });
 
+        // Добавляем обработчики для полей ввода
+        document.querySelectorAll(".remnant-name-input").forEach(input => {
+            input.removeEventListener("input", handleInputChange);
+            input.addEventListener("input", handleInputChange);
+        });
+
+        document.querySelectorAll(".attribute-input").forEach(input => {
+            input.removeEventListener("input", handleInputChange);
+            input.addEventListener("input", handleInputChange);
+        });
+
         const closeModal = document.querySelector(".close-modal");
         if (closeModal) {
             closeModal.removeEventListener("click", closeBlockOptions);
             closeModal.addEventListener("click", closeBlockOptions);
         }
     }
+}
+
+function handleInputChange(e) {
+    const id = e.target.dataset.id;
+    const key = e.target.dataset.key;
+    const value = e.target.value;
+
+    const remnant = findRemnant(id);
+    if (!remnant) return;
+
+    if (e.target.classList.contains("remnant-name-input")) {
+        remnant.name = value || "Безымянный";
+    } else if (key === "age") {
+        remnant.age = parseInt(value) > 0 ? parseInt(value) : 1;
+    } else if (key === "class") {
+        remnant.remnantClass = value || "Неизвестно";
+    } else if (key === "skills") {
+        remnant.skills = value || "Отсутствуют";
+    } else if (key === "description") {
+        remnant.description = value || "";
+    }
+
+    saveMainAndContainer(); // Сохраняем изменения локально
 }
 
 function closeBlockOptions() {
@@ -303,18 +340,10 @@ function closeBlockOptions() {
 async function handleDeleteRemnant(e) {
     e.stopPropagation();
     let cardId = e.target.dataset.id;
-    let card = remnants.find(r => r.id === cardId) || containerCards.find(c => c.id === cardId);
-    if (card && card.serverId) {
-        const success = await deleteCardOnServer(card.serverId);
-        if (!success) {
-            alert("Ошибка удаления карточки с сервера.");
-            return;
-        }
-    }
     if (currentPage === "main") {
         deleteRemnant(cardId);
     } else if (currentPage === "container") {
-        deleteContainerCard(cardId);
+        await deleteContainerCard(cardId);
     }
 }
 
@@ -366,7 +395,8 @@ function showCreateTab(tab) {
             <h2 class="tab-title">Аватарка</h2>
             <div class="avatar-container">
                 <div class="avatar-image">
-                    ${currentCard.imageUrl ? `<img src="${currentCard.imageUrl}" alt="Аватар" class="character-image">` : "<p>Выберите изображение</p>"}
+                    <img src="${currentCard.imageUrl || 'https://picsum.photos/300/200'}" alt="Аватар" class="character-image" 
+                         onerror="this.src='https://cdn-icons-png.flaticon.com/512/6861/6861293.png';">
                 </div>
                 <div class="avatar-controls">
                     <input type="file" id="avatar-upload" accept="image/*">
@@ -384,12 +414,17 @@ function showCreateTab(tab) {
                     reader.onload = () => {
                         currentCard.imageUrl = reader.result;
                         saveAll();
-                        syncPartialCard();
                         showCreateTab("avatar");
+                    };
+                    reader.onerror = () => {
+                        console.error("Ошибка загрузки изображения");
+                        alert("Не удалось загрузить изображение.");
                     };
                     reader.readAsDataURL(file);
                 }
             });
+        } else {
+            console.warn("Элемент #avatar-upload не найден после рендеринга");
         }
     } else if (tab === "name") {
         content.innerHTML = `
@@ -405,7 +440,6 @@ function showCreateTab(tab) {
             nameInput.addEventListener("input", e => {
                 currentCard.name = e.target.value || "Безымянный";
                 saveAll();
-                syncPartialCard();
             });
         }
     } else if (tab === "age") {
@@ -422,7 +456,6 @@ function showCreateTab(tab) {
             ageInput.addEventListener("input", e => {
                 currentCard.age = parseInt(e.target.value) || 1;
                 saveAll();
-                syncPartialCard();
             });
         }
     } else if (tab === "description") {
@@ -457,9 +490,9 @@ function showCreateTab(tab) {
         const classInput = document.getElementById("class-input");
         const skillsInput = document.getElementById("skills-input");
         const descInput = document.getElementById("desc-input");
-        if (classInput) classInput.addEventListener("input", e => { currentCard.remnantClass = e.target.value || "Неизвестно"; saveAll(); syncPartialCard(); });
-        if (skillsInput) skillsInput.addEventListener("input", e => { currentCard.skills = e.target.value || "Отсутствуют"; saveAll(); syncPartialCard(); });
-        if (descInput) descInput.addEventListener("input", e => { currentCard.description = e.target.value || ""; saveAll(); syncPartialCard(); });
+        if (classInput) classInput.addEventListener("input", e => { currentCard.remnantClass = e.target.value || "Неизвестно"; saveAll(); });
+        if (skillsInput) skillsInput.addEventListener("input", e => { currentCard.skills = e.target.value || "Отсутствуют"; saveAll(); });
+        if (descInput) descInput.addEventListener("input", e => { currentCard.description = e.target.value || ""; saveAll(); });
 
         document.querySelectorAll(".custom-block h3").forEach(h3 => {
             h3.addEventListener("click", e => {
@@ -497,7 +530,7 @@ function showCreateTab(tab) {
         `;
         const funInput = document.getElementById("fun-input");
         const memeUpload = document.getElementById("meme-upload");
-        if (funInput) funInput.addEventListener("input", e => { currentCard.funPhrase = e.target.value || ""; saveAll(); syncPartialCard(); });
+        if (funInput) funInput.addEventListener("input", e => { currentCard.funPhrase = e.target.value || ""; saveAll(); });
         if (memeUpload) {
             memeUpload.addEventListener("change", e => {
                 const file = e.target.files[0];
@@ -506,7 +539,6 @@ function showCreateTab(tab) {
                     reader.onload = () => {
                         currentCard.memeUrl = reader.result;
                         saveAll();
-                        syncPartialCard();
                         showCreateTab("fan");
                     };
                     reader.readAsDataURL(file);
@@ -533,18 +565,19 @@ function addCustomBlock() {
     const newBlockId = `block-${Date.now()}`;
     currentCard.blocks.push(new HeaderTextBlock(newBlockId, "Новый заголовок", "Введите текст..."));
     saveAll();
-    syncPartialCard();
     showCreateTab("description");
 }
 
 function saveAll() {
-    localStorage.setItem("currentCard", JSON.stringify(currentCard));
-    saveMainAndContainer();
+    if (currentCard) {
+        localStorage.setItem("currentCard", JSON.stringify(currentCard));
+    }
+    saveMainAndContainer(); 
 }
 
 function saveMainAndContainer() {
     localStorage.setItem("remnants", JSON.stringify(remnants));
-    localStorage.setItem("containerCards", JSON.stringify(containerCards));
+    localStorage.setItem("containerCards", JSON.stringify(containerCards)); 
 }
 
 function loadAll() {
@@ -608,24 +641,63 @@ async function saveToContainer() {
     loadingPlaceholder.textContent = "Сохранение...";
     document.getElementById("create-content").appendChild(loadingPlaceholder);
 
-    const serverId = await createCardOnServer(currentCard);
-    loadingPlaceholder.remove();
-
-    if (serverId) {
+    let serverId = currentCard.serverId;
+    if (!serverId) {
+        serverId = await createCardOnServer(currentCard);
+        if (!serverId) {
+            console.error("Не удалось создать карточку на сервере:", currentCard);
+            alert("Ошибка сохранения карточки на сервере.");
+            loadingPlaceholder.remove();
+            return;
+        }
         currentCard.serverId = serverId;
         console.log("POST: Карточка создана на сервере с ID:", serverId);
-        const existingCardIndex = containerCards.findIndex(c => c.id === currentCard.id);
-        if (existingCardIndex !== -1) {
-            containerCards[existingCardIndex] = currentCard;
-        } else {
-            containerCards.push(currentCard);
-        }
-        saveMainAndContainer();
-        localStorage.removeItem("currentCard");
-        navigateTo("container");
     } else {
-        alert("Ошибка сохранения карточки на сервере.");
+        const originalCard = containerCards.find(c => c.id === currentCard.id) || {};
+        const cardData = {
+            name: currentCard.name,
+            age: currentCard.age,
+            remnantClass: currentCard.remnantClass,
+            skills: currentCard.skills,
+            description: currentCard.description,
+            funPhrase: currentCard.funPhrase,
+            blocks: currentCard.blocks,
+            showAge: currentCard.showAge,
+            showClass: currentCard.showClass,
+            showSkills: currentCard.showSkills,
+            showDescription: currentCard.showDescription,
+            ageLabel: currentCard.ageLabel,
+            classLabel: currentCard.classLabel,
+            skillsLabel: currentCard.skillsLabel,
+            descriptionLabel: currentCard.descriptionLabel
+        };
+        if (currentCard.imageUrl !== originalCard.imageUrl) {
+            cardData.imageUrl = currentCard.imageUrl;
+        }
+        if (currentCard.memeUrl !== originalCard.memeUrl) {
+            cardData.memeUrl = currentCard.memeUrl;
+        }
+
+        const success = await putCardOnServer(serverId, cardData);
+        if (!success) {
+            console.error("Не удалось обновить карточку на сервере с PUT:", cardData);
+            alert("Ошибка обновления карточки на сервере.");
+            loadingPlaceholder.remove();
+            return;
+        }
+        console.log("PUT: Карточка полностью обновлена на сервере с ID:", serverId);
     }
+
+    const existingCardIndex = containerCards.findIndex(c => c.id === currentCard.id);
+    if (existingCardIndex !== -1) {
+        containerCards[existingCardIndex] = currentCard;
+    } else {
+        containerCards.push(currentCard);
+    }
+    saveMainAndContainer();
+    localStorage.removeItem("currentCard");
+    loadingPlaceholder.remove();
+    navigateTo("container");
 }
 
 async function saveToBoth() {
@@ -634,22 +706,62 @@ async function saveToBoth() {
     loadingPlaceholder.textContent = "Сохранение...";
     document.getElementById("create-content").appendChild(loadingPlaceholder);
 
-    const serverId = await createCardOnServer(currentCard);
-    if (serverId) {
-        currentCard.serverId = serverId;
-        const existingCardIndex = containerCards.findIndex(c => c.id === currentCard.id);
-        if (existingCardIndex !== -1) {
-            containerCards[existingCardIndex] = currentCard;
-        } else {
-            containerCards.push(currentCard);
+    let serverId = currentCard.serverId;
+    if (!serverId) {
+        serverId = await createCardOnServer(currentCard);
+        if (!serverId) {
+            console.error("Не удалось создать карточку на сервере:", currentCard);
+            loadingPlaceholder.textContent = "Ошибка сохранения карточки. Попробуйте снова.";
+            return;
         }
-        remnants.push(currentCard);
-        saveMainAndContainer();
-        localStorage.removeItem("currentCard");
-        navigateTo("main");
+        currentCard.serverId = serverId;
+        console.log("POST: Карточка создана на сервере с ID:", serverId);
     } else {
-        loadingPlaceholder.textContent = "Ошибка сохранения карточки. Попробуйте снова.";
+        const originalCard = containerCards.find(c => c.id === currentCard.id) || {};
+        const cardData = {
+            name: currentCard.name,
+            age: currentCard.age,
+            remnantClass: currentCard.remnantClass,
+            skills: currentCard.skills,
+            description: currentCard.description,
+            funPhrase: currentCard.funPhrase,
+            blocks: currentCard.blocks,
+            showAge: currentCard.showAge,
+            showClass: currentCard.showClass,
+            showSkills: currentCard.showSkills,
+            showDescription: currentCard.showDescription,
+            ageLabel: currentCard.ageLabel,
+            classLabel: currentCard.classLabel,
+            skillsLabel: currentCard.skillsLabel,
+            descriptionLabel: currentCard.descriptionLabel
+        };
+        if (currentCard.imageUrl !== originalCard.imageUrl) {
+            cardData.imageUrl = currentCard.imageUrl;
+        }
+        if (currentCard.memeUrl !== originalCard.memeUrl) {
+            cardData.memeUrl = currentCard.memeUrl;
+        }
+
+        const success = await putCardOnServer(serverId, cardData);
+        if (!success) {
+            console.error("Не удалось обновить карточку на сервере с PUT:", cardData);
+            loadingPlaceholder.textContent = "Ошибка обновления карточки. Попробуйте снова.";
+            return;
+        }
+        console.log("PUT: Карточка полностью обновлена на сервере с ID:", serverId);
     }
+
+    const existingCardIndex = containerCards.findIndex(c => c.id === currentCard.id);
+    if (existingCardIndex !== -1) {
+        containerCards[existingCardIndex] = currentCard;
+    } else {
+        containerCards.push(currentCard);
+    }
+    remnants.push(currentCard);
+    saveMainAndContainer();
+    localStorage.removeItem("currentCard");
+    loadingPlaceholder.remove();
+    navigateTo("main");
 }
 
 function navigateTo(page, params = {}) {
@@ -670,7 +782,14 @@ function navigateTo(page, params = {}) {
         if (params.edit) {
             currentCard = containerCards.find(c => c.id === params.edit) || new RemnantCard(params.edit);
         } else {
-            currentCard = new RemnantCard(`card-${Date.now()}`, "", 1, "Неизвестно", "Отсутствуют", "https://via.placeholder.com/300x200?text=Avatar");
+            currentCard = new RemnantCard(
+                `card-${Date.now()}`,
+                "",
+                1,
+                "Неизвестно",
+                "Отсутствуют",
+                "https://picsum.photos/300/200"
+            );
         }
         saveAll();
         renderCreatePage("avatar");
@@ -682,49 +801,27 @@ function editHeader(blockId) {
     if (!blockEl) return;
     let headerEl = blockEl.querySelector("h2, h3, strong");
     if (!headerEl) return;
+
     const input = document.createElement("input");
     input.type = "text";
     input.value = headerEl.textContent;
     input.className = "edit-input";
-    input.addEventListener("blur", async () => {
+
+    input.addEventListener("blur", () => {
         const newValue = input.value || "Заголовок";
-        if (blockId.endsWith("-age")) {
-            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
-            if (remnant) remnant.ageLabel = newValue;
-        } else if (blockId.endsWith("-class")) {
-            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
-            if (remnant) remnant.classLabel = newValue;
-        } else if (blockId.endsWith("-skills")) {
-            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
-            if (remnant) remnant.skillsLabel = newValue;
-        } else if (blockId.endsWith("-desc")) {
-            const remnant = remnants.find(r => r.id === blockId.split('-')[0]);
-            if (remnant) remnant.descriptionLabel = newValue;
-        } else if (blockId.endsWith("-fun")) {
-            const remnant = remnants.find(r => r.id === blockId.split('-')[0]) || containerCards.find(c => c.id === blockId.split('-')[0]) || currentCard;
-            if (remnant) remnant.funPhrase = newValue;
-        } else if (blockEl.classList.contains("header-text-block")) {
-            const block = (currentCard?.blocks || []).find(b => b.id === blockId) || 
-                         remnants.flatMap(r => r.blocks).find(b => b.id === blockId) || 
-                         containerCards.flatMap(c => c.blocks).find(b => b.id === blockId);
-            if (block) block.title = newValue;
-        } else {
-            const remnant = remnants.find(r => r.id === blockId) || containerCards.find(c => c.id === blockId) || currentCard;
-            if (remnant) remnant.name = newValue;
-        }
+        updateHeaderValue(blockId, newValue);
         headerEl.textContent = newValue;
-        saveAll();
-        await syncPartialCard();
-        if (currentPage === "create") {
-            showCreateTab(currentTab);
-        } else if (currentPage === "main") {
-            renderMainPage();
-        } else if (currentPage === "container") {
-            renderContainerPage();
-        }
+        headerEl.style.display = "block";
+        input.remove();
+        const block = findBlock(blockId);
+        if (block && block.enableEditing) block.enableEditing();
+
+        saveAll(); 
+        reRenderPage(); 
     });
-    headerEl.textContent = "";
-    headerEl.appendChild(input);
+
+    headerEl.style.display = "none";
+    headerEl.parentNode.insertBefore(input, headerEl.nextSibling);
     input.focus();
 }
 
@@ -733,29 +830,89 @@ function editText(blockId) {
     if (!blockEl) return;
     let pEl = blockEl.querySelector("p");
     if (!pEl) return;
+
     const textarea = document.createElement("textarea");
     textarea.value = pEl.textContent;
     textarea.className = "edit-textarea";
-    textarea.addEventListener("blur", async () => {
+
+    textarea.addEventListener("blur", () => {
         const newValue = textarea.value || "Введите текст...";
+        updateTextValue(blockId, newValue);
         pEl.textContent = newValue;
-        const block = (currentCard?.blocks || []).find(b => b.id === blockId) || 
-                     remnants.flatMap(r => r.blocks).find(b => b.id === blockId) || 
-                     containerCards.flatMap(c => c.blocks).find(b => b.id === blockId);
-        if (block) block.content = newValue;
-        saveAll();
-        await syncPartialCard();
-        if (currentPage === "create") {
-            showCreateTab(currentTab);
-        } else if (currentPage === "main") {
-            renderMainPage();
-        } else if (currentPage === "container") {
-            renderContainerPage();
-        }
+        pEl.style.display = "block";
+        textarea.remove();
+        const block = findBlock(blockId);
+        if (block && block.enableEditing) block.enableEditing();
+
+        saveAll(); 
+        reRenderPage(); 
     });
-    pEl.textContent = "";
-    pEl.appendChild(textarea);
+
+    pEl.style.display = "none";
+    pEl.parentNode.insertBefore(textarea, pEl.nextSibling);
     textarea.focus();
+}
+
+function updateHeaderValue(blockId, newValue) {
+    if (blockId.endsWith("-age")) {
+        const remnant = findRemnant(blockId.split('-')[0]);
+        if (remnant) remnant.ageLabel = newValue;
+    } else if (blockId.endsWith("-class")) {
+        const remnant = findRemnant(blockId.split('-')[0]);
+        if (remnant) remnant.classLabel = newValue;
+    } else if (blockId.endsWith("-skills")) {
+        const remnant = findRemnant(blockId.split('-')[0]);
+        if (remnant) remnant.skillsLabel = newValue;
+    } else if (blockId.endsWith("-desc")) {
+        const remnant = findRemnant(blockId.split('-')[0]);
+        if (remnant) remnant.descriptionLabel = newValue;
+    } else if (blockId.endsWith("-fun")) {
+        const remnant = findRemnant(blockId.split('-')[0]) || currentCard;
+        if (remnant) remnant.funPhrase = newValue;
+    } else if (document.getElementById(blockId)?.classList.contains("header-text-block")) {
+        const block = findBlock(blockId);
+        if (block) block.title = newValue; 
+    } else {
+        const remnant = findRemnant(blockId) || currentCard;
+        if (remnant) remnant.name = newValue;
+    }
+}
+
+function updateTextValue(blockId, newValue) {
+    const block = findBlock(blockId);
+    if (block) block.content = newValue; 
+}
+
+function findRemnant(id) {
+    return remnants.find(r => r.id === id) || containerCards.find(c => c.id === id);
+}
+
+function findBlock(blockId) {
+    let block;
+    if (currentPage === "create" && currentCard) {
+        block = currentCard.blocks.find(b => b.id === blockId);
+    } else if (currentPage === "main") {
+        remnants.forEach(remnant => {
+            const found = remnant.blocks.find(b => b.id === blockId);
+            if (found) block = found;
+        });
+    } else if (currentPage === "container") {
+        containerCards.forEach(card => {
+            const found = card.blocks.find(b => b.id === blockId);
+            if (found) block = found;
+        });
+    }
+    return block;
+}
+
+function reRenderPage() {
+    if (currentPage === "create") {
+        showCreateTab(currentTab);
+    } else if (currentPage === "main") {
+        renderMainPage();
+    } else if (currentPage === "container") {
+        renderContainerPage();
+    }
 }
 
 function changeRemnantImage(remnantId, file) {
@@ -773,7 +930,6 @@ function changeRemnantImage(remnantId, file) {
                 imgElement.src = event.target.result;
             }
             saveMainAndContainer();
-            syncPartialCard();
         }
     };
     reader.onerror = function() {
@@ -793,7 +949,6 @@ function changeMemeImage(remnantId, file) {
         if (remnant) {
             remnant.memeUrl = event.target.result;
             saveMainAndContainer();
-            syncPartialCard();
             if (currentPage === "main") renderMainPage();
             else if (currentPage === "container") renderContainerPage();
         }
@@ -804,15 +959,53 @@ function changeMemeImage(remnantId, file) {
     reader.readAsDataURL(file);
 }
 
+function getCardChanges(original, current) {
+    const changes = {};
+    for (const key in current) {
+        if (key === "blocks") {
+            if (JSON.stringify(original.blocks) !== JSON.stringify(current.blocks)) {
+                changes.blocks = current.blocks;
+            }
+        } else if (original[key] !== current[key] && key !== "serverId") {
+            changes[key] = current[key];
+        }
+    }
+    return changes;
+}
+
+async function fullSyncCurrentCard() {
+    const cardsToSync = [...remnants, ...containerCards];
+    for (const card of cardsToSync) {
+        if (!card.serverId) {
+            const serverId = await createCardOnServer(card);
+            if (serverId) {
+                card.serverId = serverId;
+                console.log("POST: Карточка создана на сервере с ID:", serverId);
+            } else {
+                console.error("Не удалось создать карточку на сервере:", card);
+            }
+        } else {
+            const originalCard = originalRemnants.find(r => r.id === card.id) || originalContainerCards.find(c => c.id === card.id);
+            if (originalCard) {
+                const changes = getCardChanges(originalCard, card);
+                if (Object.keys(changes).length > 0) {
+                    const success = await patchCardOnServer(card.serverId, changes);
+                    if (!success) {
+                        console.error("Не удалось обновить карточку на сервере:", card.serverId, changes);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function toggleEditMode() {
     console.log("Кнопка Редактировать/Сохранить кликнута");
     if (isEditing) {
-        remnants.forEach(remnant => remnant.enableEditing());
-        containerCards.forEach(card => card.enableEditing());
         saveMainAndContainer();
+        fullSyncCurrentCard(); 
         originalRemnants = JSON.parse(JSON.stringify(remnants));
         originalContainerCards = JSON.parse(JSON.stringify(containerCards));
-        fullSyncCurrentCard();
     } else {
         originalRemnants = JSON.parse(JSON.stringify(remnants));
         originalContainerCards = JSON.parse(JSON.stringify(containerCards));
@@ -850,9 +1043,8 @@ function cancelEditMode() {
 
 function addRemnant() {
     const newId = `remnant-${Date.now()}`;
-    remnants.push(new RemnantCard(newId, "Новый персонаж", 1, "Неизвестно", "Отсутствуют", "https://cdn-icons-png.flaticon.com/512/6861/6861293.png"));
+    remnants.push(new RemnantCard(newId, "Новый персонаж", 1, "Неизвестно", "Отсутствуют", "https://picsum.photos/300/200"));
     saveMainAndContainer();
-    syncPartialCard();
     renderMainPage();
 }
 
@@ -894,7 +1086,6 @@ function addBlock(remnantId, type) {
     }
     document.querySelector(".block-options")?.remove();
     saveMainAndContainer();
-    syncPartialCard();
     if (currentPage === "create") {
         showCreateTab("description");
     } else if (currentPage === "main") {
@@ -917,27 +1108,43 @@ async function deleteContainerCard(id) {
     document.body.appendChild(loading);
 
     const card = containerCards.find(c => c.id === id);
-    if (card && card.serverId) {
-        const success = await deleteCardOnServer(card.serverId);
+    if (!card) {
+        console.log("Карточка не найдена:", id);
         loading.remove();
-        if (success) {
-            console.log("DELETE: Карточка успешно удалена с сервера:", card.serverId);
-            containerCards = containerCards.filter(c => c.id !== id);
-            saveMainAndContainer();
-            renderContainerPage();
-        } else {
-            alert("Ошибка удаления карточки с сервера.");
+        return;
+    }
+
+    let serverId = card.serverId;
+    if (!serverId) {
+        console.log("serverId отсутствует, создаём карточку перед удалением:", card);
+        serverId = await createCardOnServer(card);
+        if (!serverId) {
+            console.error("Не удалось создать карточку на сервере перед удалением:", card);
+            alert("Ошибка: не удалось синхронизировать карточку с сервером перед удалением.");
+            loading.remove();
+            return;
         }
-    } else {
-        console.log("Карточка не имеет serverId или не найдена. Удаляем локально.");
-        loading.remove();
+        card.serverId = serverId;
+        saveMainAndContainer();
+        console.log("POST: Карточка создана на сервере с ID:", serverId);
+    }
+
+    console.log("Отправка DELETE-запроса для serverId:", serverId);
+    const success = await deleteCardOnServer(serverId);
+    loading.remove();
+
+    if (success) {
+        console.log("DELETE: Карточка успешно удалена с сервера:", serverId);
         containerCards = containerCards.filter(c => c.id !== id);
         saveMainAndContainer();
         renderContainerPage();
+    } else {
+        console.error("Ошибка удаления карточки с сервера:", serverId);
+        alert("Ошибка: не удалось удалить карточку с сервера.");
     }
 }
 
-function deleteBlock(id) {
+async function deleteBlock(id) {
     let targetArray = remnants;
     if (currentPage === "create") {
         targetArray = [currentCard];
@@ -945,19 +1152,64 @@ function deleteBlock(id) {
         targetArray = containerCards;
     }
 
+    let modifiedRemnant = null;
     targetArray.forEach(remnant => {
-        if (id === `${remnant.id}-age`) remnant.showAge = false;
-        else if (id === `${remnant.id}-class`) remnant.showClass = false;
-        else if (id === `${remnant.id}-skills`) remnant.showSkills = false;
-        else if (id === `${remnant.id}-desc`) remnant.showDescription = false;
-        else if (id === `${remnant.id}-fun`) {
+        if (id === `${remnant.id}-age`) {
+            remnant.showAge = false;
+            modifiedRemnant = remnant;
+        } else if (id === `${remnant.id}-class`) {
+            remnant.showClass = false;
+            modifiedRemnant = remnant;
+        } else if (id === `${remnant.id}-skills`) {
+            remnant.showSkills = false;
+            modifiedRemnant = remnant;
+        } else if (id === `${remnant.id}-desc`) {
+            remnant.showDescription = false;
+            modifiedRemnant = remnant;
+        } else if (id === `${remnant.id}-fun`) {
             remnant.funPhrase = "";
             remnant.memeUrl = "";
+            modifiedRemnant = remnant;
+        } else if (remnant.blocks.some(block => block.id === id)) {
+            remnant.blocks = remnant.blocks.filter(block => block.id !== id);
+            modifiedRemnant = remnant;
         }
-        else remnant.blocks = remnant.blocks.filter(block => block.id !== id);
     });
-    saveMainAndContainer();
-    syncPartialCard();
+
+    if (modifiedRemnant) {
+        const loading = document.createElement("div");
+        loading.className = "loading-placeholder";
+        loading.textContent = "Обновление...";
+        document.body.appendChild(loading);
+
+        if (modifiedRemnant.serverId) {
+            console.log("Отправка DELETE-запроса для serverId перед обновлением:", modifiedRemnant.serverId);
+            const success = await deleteCardOnServer(modifiedRemnant.serverId);
+            if (!success) {
+                console.error("Ошибка удаления карточки с сервера:", modifiedRemnant.serverId);
+                alert("Ошибка: не удалось удалить старую версию карточки с сервера.");
+                loading.remove();
+                return;
+            }
+            console.log("DELETE: Карточка успешно удалена с сервера:", modifiedRemnant.serverId);
+            modifiedRemnant.serverId = null;
+        }
+
+        console.log("Создание обновлённой карточки на сервере:", modifiedRemnant);
+        const newServerId = await createCardOnServer(modifiedRemnant);
+        loading.remove();
+
+        if (newServerId) {
+            modifiedRemnant.serverId = newServerId;
+            saveMainAndContainer();
+            console.log("POST: Обновлённая карточка создана на сервере с ID:", newServerId);
+        } else {
+            console.error("Не удалось создать обновлённую карточку на сервере:", modifiedRemnant);
+            alert("Ошибка: не удалось сохранить обновлённую карточку на сервере.");
+        }
+    }
+
+    saveAll();
     if (currentPage === "create") {
         showCreateTab("description");
     } else if (currentPage === "main") {
@@ -972,7 +1224,6 @@ function addCardToMain(id) {
     if (card) {
         remnants.push(card);
         saveMainAndContainer();
-        syncPartialCard();
         navigateTo("main");
     }
 }

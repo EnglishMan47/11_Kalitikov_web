@@ -100,7 +100,7 @@ async function fetchMeme() {
         return randomMeme.url;
     } catch (error) {
         console.error("Ошибка создания мема:", error);
-        return "https://via.placeholder.com/300x200?text=Meme";
+        return "https://cdn-icons-png.flaticon.com/512/6861/6861293.png";
     }
 }
 
@@ -165,35 +165,58 @@ async function updateCardOnServer(cardId, card) {
     }
 }
 
-async function patchCardOnServer(cardId, updates) {
+async function putCardOnServer(serverId, cardData) {
     try {
-        console.log("PATCH: Частичное обновление карточки:", cardId, updates);
-        const response = await fetch(`https://reqres.in/api/users/${cardId}`, {
-            method: "PATCH",
+        console.log("PUT: Полное обновление карточки на сервере с ID:", serverId, "данные:", cardData);
+        const response = await fetch(`https://reqres.in/api/users/${serverId}`, {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updates),
+            body: JSON.stringify(cardData)
         });
-        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-        console.log("Карточка частично обновлена (PATCH):", data);
-        return data;
-    } catch (error) {
-        console.error("Ошибка частичного обновления (PATCH):", error);
-        return null;
-    }
-}
-
-async function deleteCardOnServer(cardId) {
-    try {
-        console.log("DELETE: Удаление карточки:", cardId);
-        const response = await fetch(`https://reqres.in/api/users/${cardId}`, {
-            method: "DELETE",
-        });
-        if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
-        console.log("Карточка удалена (DELETE) с сервера");
+        console.log("PUT: Успешно обновлено на сервере:", data);
         return true;
     } catch (error) {
-        console.error("Ошибка удаления (DELETE):", error);
+        console.error("Ошибка PUT-запроса:", error);
+        return false;
+    }
+}
+window.putCardOnServer = putCardOnServer;
+
+async function patchCardOnServer(serverId, updatedFields) {
+    try {
+        console.log("PATCH: Обновление карточки на сервере с ID:", serverId, "изменённые поля:", updatedFields);
+        const response = await fetch(`https://reqres.in/api/users/${serverId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedFields)
+        });
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+        console.log("PATCH: Успешно обновлено на сервере:", data);
+        return true;
+    } catch (error) {
+        console.error("Ошибка PATCH-запроса:", error);
+        return false;
+    }
+}
+window.patchCardOnServer = patchCardOnServer;
+
+async function deleteCardOnServer(serverId) {
+    try {
+        console.log("Отправка DELETE-запроса для serverId:", serverId);
+        const response = await fetch(`https://reqres.in/api/users/${serverId}`, {
+            method: "DELETE",
+        });
+        if (response.status === 204) {
+            console.log("DELETE: Успешно удалено с сервера:", serverId);
+            return true;
+        }
+        console.error("Ошибка DELETE: сервер вернул статус", response.status);
+        return false;
+    } catch (error) {
+        console.error("Ошибка при DELETE-запросе:", error);
         return false;
     }
 }
@@ -203,8 +226,7 @@ window.apiFetchRandomImage = async function() {
         console.log("GET: Запрос случайного изображения с DiceBear...");
         const imageUrl = await fetchRandomImage();
         currentCard.imageUrl = imageUrl;
-        saveAll();
-        await syncPartialCard();
+        saveAll(); 
         showCreateTab("avatar");
     } catch (error) {
         console.error("Ошибка загрузки изображения:", error);
@@ -222,8 +244,7 @@ window.apiFetchRandomName = async function() {
         const name = await fetchRandomFantasyName();
         currentCard.name = name;
         document.getElementById("name-input").value = name;
-        saveAll();
-        await syncPartialCard();
+        saveAll(); 
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения имени: " + error.message);
@@ -241,7 +262,6 @@ window.apiFetchRandomAge = async function() {
         currentCard.age = age;
         document.getElementById("age-input").value = age;
         saveAll();
-        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения возраста: " + error.message);
@@ -257,7 +277,6 @@ window.apiFetchRandomClass = async function() {
         currentCard.remnantClass = className;
         document.getElementById("class-input").value = className;
         saveAll();
-        await syncPartialCard();
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения класса: " + error.message);
@@ -274,8 +293,7 @@ window.apiFetchRandomSkills = async function() {
         const skills = await fetchRandomSkills();
         currentCard.skills = skills;
         document.getElementById("skills-input").value = skills;
-        saveAll();
-        await syncPartialCard();
+        saveAll(); 
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         alert("Ошибка получения навыков: " + error.message);
@@ -291,16 +309,9 @@ window.apiFetchRandomDescription = async function() {
 
         const description = await fetchRandomDescription();
         currentCard.description = description;
-
         const descInput = document.getElementById("desc-input");
-        if (descInput) {
-            descInput.value = description;
-        } else {
-            console.warn("Элемент #desc-input не найден в DOM.");
-        }
-
-        saveAll();
-        await syncPartialCard();
+        if (descInput) descInput.value = description;
+        saveAll(); 
         if (placeholder) placeholder.style.display = "none";
     } catch (error) {
         console.error("Ошибка получения описания:", error);
@@ -322,7 +333,6 @@ window.apiFetchRandomJoke = async function() {
         document.getElementById("fun-input").value = joke;
         showCreateTab("fan");
         saveAll();
-        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения шутки: " + error.message);
@@ -340,7 +350,6 @@ window.apiFetchMeme = async function() {
         currentCard.memeUrl = memeUrl;
         showCreateTab("fan");
         saveAll();
-        await syncPartialCard();
         placeholder.remove();
     } catch (error) {
         alert("Ошибка получения мема: " + error.message);
@@ -352,25 +361,37 @@ window.clearJoke = function() {
     const funInput = document.getElementById("fun-input");
     if (funInput) funInput.value = "";
     saveAll();
-    syncPartialCard();
     showCreateTab("fan");
 };
 
 window.removeMeme = function() {
     currentCard.memeUrl = "";
-    saveAll();
-    syncPartialCard();
+    saveAll(); 
     showCreateTab("fan");
 };
 
-async function syncPartialCard() {
-    if (!currentCard) return;
+async function syncPartialCard(changedFields = {}) {
+    if (!currentCard) {
+        console.warn("syncPartialCard: currentCard отсутствует");
+        return;
+    }
+    const updates = {};
+    for (const [key, value] of Object.entries(changedFields)) {
+        updates[key] = currentCard[key];
+    }
+    if (Object.keys(updates).length === 0) {
+        console.log("Нет изменений для синхронизации");
+        return;
+    }
     if (currentCard.serverId) {
-        await patchCardOnServer(currentCard.serverId, currentCard);
+        console.log("PATCH: Синхронизация изменений для serverId:", currentCard.serverId);
+        await patchCardOnServer(currentCard.serverId, updates);
     } else {
+        console.log("POST: Создание новой карточки на сервере");
         const serverId = await createCardOnServer(currentCard);
         if (serverId) {
             currentCard.serverId = serverId;
+            console.log("POST: Установлен serverId:", serverId);
         }
     }
 }
