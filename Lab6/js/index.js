@@ -288,7 +288,6 @@ function addEventListeners() {
             input.addEventListener("change", handleMemeUpload);
         });
 
-        // Добавляем обработчики для полей ввода
         document.querySelectorAll(".remnant-name-input").forEach(input => {
             input.removeEventListener("input", handleInputChange);
             input.addEventListener("input", handleInputChange);
@@ -327,7 +326,7 @@ function handleInputChange(e) {
         remnant.description = value || "";
     }
 
-    saveMainAndContainer(); // Сохраняем изменения локально
+    saveMainAndContainer(); 
 }
 
 function closeBlockOptions() {
